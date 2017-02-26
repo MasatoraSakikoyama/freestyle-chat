@@ -13,7 +13,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_my_session',
+    'apps.session',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +88,7 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-AUTH_USER_MODEL = 'django_my_session.User'
+AUTH_USER_MODEL = 'session.User'
 
 LOGIN_URL = '/api/session/login'
 
