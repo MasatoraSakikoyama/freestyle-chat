@@ -21,4 +21,10 @@ LOGGING = {
     },
 }
 
-BROKER_URL = 'redis://localhost'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgref.inmemory.ChannelLayer',
+        'ROUTING': 'ws.routing.channel_routing',
+    },
+}
+

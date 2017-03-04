@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 import dj_database_url
@@ -13,4 +14,12 @@ db_from_env = dj_database_url.config(conn_max_age=400)
 
 DATABASES['default'].update(db_from_env)
 
-BROKER_URL = os.environ['REDIS_URL']
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'ws.routing.channel_routing',
+    },
+}
