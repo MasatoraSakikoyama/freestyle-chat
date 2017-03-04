@@ -23,8 +23,8 @@ LOGGING = {
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgref.inmemory.ChannelLayer',
-        'ROUTING': 'ws.routing.channel_routing',
+        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        'ROUTING': 'apps.ws.routing.channel_routing',
     },
 }
 

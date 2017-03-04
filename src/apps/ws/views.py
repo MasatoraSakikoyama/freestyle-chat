@@ -1,3 +1,10 @@
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
+from channels import Group
 
-# Create your views here.
+
+
+def publish(request):
+    m = request.GET.get('message')
+    Group('sample').send({'text': m})
+    return HttpResponse('Success')

@@ -20,6 +20,6 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             'hosts': [('localhost', 6379)],
         },
-        'ROUTING': 'ws.routing.channel_routing',
+        'ROUTING': 'apps.ws.routing.channel_routing',
     },
 }
