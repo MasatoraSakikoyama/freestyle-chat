@@ -4,6 +4,8 @@ from settings.base import *
 
 DEBUG = True
 
+ALLOWED_HOSTS = ['*']
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -24,7 +26,7 @@ LOGGING = {
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgiref.inmemory.ChannelLayer',
-        'ROUTING': 'apps.ws.routing.channel_routing',
+        'ROUTING': 'apps.chat.routing.channel_routing',
     },
 }
 

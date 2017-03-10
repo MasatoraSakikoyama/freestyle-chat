@@ -8,6 +8,8 @@ from settings.base import *
 
 DEBUG = False
 
+ALLOWED_HOSTS = ['*']
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 db_from_env = dj_database_url.config(conn_max_age=400)
@@ -20,6 +22,6 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             'hosts': [('localhost', 6379)],
         },
-        'ROUTING': 'apps.ws.routing.channel_routing',
+        'ROUTING': 'apps.chat.routing.channel_routing',
     },
 }

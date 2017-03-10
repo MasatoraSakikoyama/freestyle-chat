@@ -6,4 +6,4 @@ from channels import Group
 def publish(request):
     m = request.GET.get('message')
     Group('sample').send({'text': m})
-    return HttpResponse('Success')
+    return HttpResponse('Success')rom django.shortcuts import render

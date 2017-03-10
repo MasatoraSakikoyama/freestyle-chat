@@ -2,5 +2,5 @@
 from django.apps import AppConfig
 
 
-class WsConfig(AppConfig):
-    name = 'ws'
+class ChatConfig(AppConfig):
+    name = 'chat'

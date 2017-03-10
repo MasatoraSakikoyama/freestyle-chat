@@ -5,8 +5,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'jr&r#)5y%i$_!+yob#g+vmk)^kl=p-j5!#lg6lb3@&ccq=@bf#'
 
-ALLOWED_HOSTS = ['vagrant']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -16,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'apps.session',
+    'apps.room',
+    'apps.chat',
 ]
 
 MIDDLEWARE = [
