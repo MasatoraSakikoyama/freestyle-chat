@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'apps.session',
     'apps.room',
     'apps.chat',
+    'apps.orm',
 ]
 
 MIDDLEWARE = [
