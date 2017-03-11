@@ -15,11 +15,11 @@ from apps.session.models import User
 
 
 class BaseModel(Model):
-    create_by = CharField(max_length=255, blank=False, null=False)
+    create_by = PositiveSmallIntegerField(blank=True, null=False)
     create_at = DateTimeField(auto_now_add=True, blank=True, null=False)
-    modified_by = CharField(max_length=255, blank=False, null=False)
+    modified_by = PositiveSmallIntegerField(blank=True, null=False)
     modified_at = DateTimeField(auto_now=True, blank=True, null=False)
-    deleted_by = CharField(max_length=255, blank=False, null=False)
+    deleted_by = PositiveSmallIntegerField(blank=True, null=True)
     deleted_at = DateTimeField(blank=True, null=True)
 
     class Meta:
