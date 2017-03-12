@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'check$', check_view),
     url(r'login$', login_view, name='login'),
     url(r'logout$', logout_view, name='logout'),
-    url(r'user/(?P<user_id>[0-9]+)$', user_view),
+    url(r'user/(?P<user_id>[a-zA-Z0-9_-]+)$', user_view),
 ]

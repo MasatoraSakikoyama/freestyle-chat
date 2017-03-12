@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
+from json import loads, dumps, JSONDecodeError
 
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
@@ -24,28 +24,28 @@ def check_view(request):
 @atomic
 def login_view(request):
     try:
-        data = json.loads(request.body.decode('utf-8'))
-    except Exception:
+        data = loads(request.body.decode('utf-8'))
+    except JSONDecodeError or ValueError:
         return HttpResponse(
-            content=json.dumps({'message': 'Request body is invalid'}),
+            content=dumps({'message': 'Request body is invalid'}),
             status=400,
             content_type='application/json',
         )
     # user form class
     user = authenticate(
-        employeenumber=data.get('employeeNumber'),
+        user_id=data.get('user_id'),
         password=data.get('password'),
     )
     if user:
         login(request, user)
         return HttpResponse(
-            content=json.dumps({'message': 'Login success'}),
+            content=dumps({'message': 'Login success'}),
             status=200,
             content_type='application/json',
         )
     else:
         return HttpResponse(
-            content=json.dumps({'message': 'Invalid param'}),
+            content=dumps({'message': 'Invalid param'}),
             status=400,
             content_type='application/json',
         )
@@ -56,7 +56,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponse(
-        content=json.dumps({'message': 'Logout success'}),
+        content=dumps({'message': 'Logout success'}),
         status=200,
         content_type='application/json',
     )
@@ -67,40 +67,44 @@ def logout_view(request):
 @atomic
 def user_view(request, user_id):
     if request.method == 'GET':
-        user = get_object_or_404(User, user_id=user_id)
+        user = get_object_or_404(
+            User,
+            user_id=user_id,
+            deleted_at=None,
+        )
         return HttpResponse(
-            content=json.dumps(user.to_dict()),
+            content=dumps(user.to_dict()),
             status=200,
             content_type='application_json',
         )
-    elif request.method == 'POST':
+    elif request.method == 'POST' and user_id == 'create':
         try:
-            form = UserForm(json.loads(request.body.decode('utf-8')))
-        except UnicodeDecodeError or ValueError:
+            form = UserForm(loads(request.body.decode('utf-8')))
+        except JSONDecodeError or ValueError:
             return HttpResponse(
-                content=json.dumps({'message': 'Request body is invalid'}),
+                content=dumps({'message': 'Request body is invalid'}),
                 status=400,
                 content_type='application/json',
             )
         if form.is_valid():
             user = User.objects.create(form.cleaned_data)
             return HttpResponse(
-                content=json.dumps(user.to_dict()),
+                content=dumps(user.to_dict()),
                 status=200,
                 content_type='application_json',
             )
         else:
             return HttpResponse(
-                content=json.dumps(form.errors),
+                content=dumps(form.errors),
                 status=400,
                 content_type='application/json',
             )
     elif request.method == 'PUT':
         try:
-            form = UserForm(json.loads(request.body.decode('utf-8')))
+            form = UserForm(loads(request.body.decode('utf-8')))
         except UnicodeDecodeError or ValueError:
             return HttpResponse(
-                content=json.dumps({'message': 'Request body is invalid'}),
+                content=dumps({'message': 'Request body is invalid'}),
                 status=400,
                 content_type='application/json',
             )
@@ -112,13 +116,13 @@ def user_view(request, user_id):
             user.deleted_at = data.deleted_at
             user.save()
             return HttpResponse(
-                content=json.dumps(user.to_dict()),
+                content=dumps(user.to_dict()),
                 status=200,
                 content_type='application_json',
             )
         else:
             return HttpResponse(
-                content=json.dumps(form.errors),
+                content=dumps(form.errors),
                 status=400,
                 content_type='application/json',
             )

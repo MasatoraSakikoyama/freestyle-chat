@@ -2,6 +2,7 @@
 from django.db.models import (
     Model,
     CharField,
+    PositiveIntegerField,
     PositiveSmallIntegerField,
     DateTimeField,
     BooleanField,
@@ -15,11 +16,11 @@ from apps.session.models import User
 
 
 class BaseModel(Model):
-    create_by = PositiveSmallIntegerField(blank=True, null=False)
-    create_at = DateTimeField(auto_now_add=True, blank=True, null=False)
-    modified_by = PositiveSmallIntegerField(blank=True, null=False)
+    created_by = PositiveIntegerField(blank=True, null=False)
+    created_at = DateTimeField(auto_now_add=True, blank=True, null=False)
+    modified_by = PositiveIntegerField(blank=True, null=False)
     modified_at = DateTimeField(auto_now=True, blank=True, null=False)
-    deleted_by = PositiveSmallIntegerField(blank=True, null=True)
+    deleted_by = PositiveIntegerField(blank=True, null=True)
     deleted_at = DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -27,9 +28,12 @@ class BaseModel(Model):
 
     def to_dict(self):
         d = {
+            'created_by': self.created_by,
             'created_at': self.created_at.isoformat(),
+            'modified_by': self.modified_by,
             'modified_at': self.modified_at.isoformat(),
-            'deleted_at': self.deleted_at.isoformat(),
+            'deleted_by': self.deleted_by,
+            'deleted_at': self.deleted_at.isoformat() if self.deleted_at else None,
         }
         if hasattr(self, '_to_dict'):
             d.update(self._to_dict())
@@ -47,8 +51,7 @@ class Room(BaseModel):
 
     def _to_dict(self):
         return {
-            'room_id': self.pk,
-            'label': self.label,
+            'room_id': self.room_id,
             'title': self.title,
             'is_private': self.is_private,
             'is_anonymous': self.is_anonymous,

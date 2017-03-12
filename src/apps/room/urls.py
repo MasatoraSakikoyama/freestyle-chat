@@ -3,7 +3,10 @@ from django.conf.urls import url
 
 from .views import rooms_view, room_view
 
-urlpatterns = [
+rooms_urlpatterns = [
     url(r'$', rooms_view, name='rooms'),
-    url(r'/(?P<room_id>[a-zA-Z0-9]+)$', room_view, name='room'),
+]
+
+room_urlpatterns = [
+    url(r'/(?P<room_id>[a-z0-9-]+)$', room_view, name='room'),
 ]

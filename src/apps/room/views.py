@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import json
+from json import loads, dumps, JSONDecodeError
 from functools import wraps
 
-import haikunator
+from haikunator import Haikunator
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.db.transaction import atomic
@@ -16,22 +16,22 @@ from apps.orm.models import Room
 def room_id_generator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if args[0].content.get('method') == 'GET':
-            while True:
-                room_id = haikunator.haikunator()
-                if Room.objects.filter(room_id=room_id).exists():
-                    continue
-                kwargs['room_id'] = room_id
-                break
+        if args[0].method == 'POST' and kwargs.get('room_id') == 'create':
+                while True:
+                    room_id = Haikunator.haikunate(100000)
+                    if Room.objects.filter(room_id=room_id).exists():
+                        continue
+                    kwargs['room_id'] = room_id
+                    break
         return func(*args, **kwargs)
     return wrapper
 
 
 @require_http_methods(['GET'])
 @atomic
-def rooms_view(request, order_by='user_id', limit=30, offset=0, **kwargs):
+def rooms_view(request, order_by='room_id', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
-        query = Room.objects
+        query = Room.objects.filter(deleted_by=None).filter(deleted_at=None)
         search_by = kwargs.get('search_by')
         search = kwargs.get('search')
         if search_by and search:
@@ -39,7 +39,7 @@ def rooms_view(request, order_by='user_id', limit=30, offset=0, **kwargs):
         step = limit * offset
         query = query.order_by(order_by)[0 + step:limit - 1 + step]
         return HttpResponse(
-            content=json.dumps([r.to_dict() for r in query]),
+            content=dumps([r.to_dict() for r in query]),
             status=200,
             content_type='application/json',
         )
@@ -55,59 +55,69 @@ def rooms_view(request, order_by='user_id', limit=30, offset=0, **kwargs):
 @room_id_generator
 def room_view(request, room_id):
     if request.method == 'GET':
-        room = get_object_or_404(Room, room_id=room_id)
+        room = get_object_or_404(
+            Room,
+            room_id=room_id,
+            deleted_by=None,
+            deleted_at=None
+        )
         return HttpResponse(
-            content=json.dumps(room.to_dict()),
+            content=dumps(room.to_dict()),
             status=200,
             content_type='application/json',
         )
     elif request.method == 'POST':
         try:
-            form = RoomForm(json.loads(request.body.decode('utf-8')))
-        except UnicodeDecodeError or ValueError:
+            data = loads(request.body.decode('utf-8'))
+            data['room_id'] = room_id
+            data['created_by'] = request.user.user_id
+            data['modified_by'] = request.user.user_id
+            form = RoomForm(data)
+        except JSONDecodeError or ValueError:
             return HttpResponse(
-                content=json.dumps({'message': 'Request body is invalid'}),
+                content=dumps({'message': 'Request body is invalid'}),
                 status=400,
                 content_type='application/json',
             )
         if form.is_valid():
-            room = Room.objects.create(form.cleaned_data)
+            room = Room.objects.create(**form.cleaned_data)
             return HttpResponse(
-                content=json.dumps(room.to_dict()),
+                content=dumps(room.to_dict()),
                 status=200,
                 content_type='application_json',
             )
         else:
             return HttpResponse(
-                content=json.dumps(form.errors),
+                content=dumps(form.errors),
                 status=400,
                 content_type='application/json',
             )
     elif request.method == 'PUT':
         try:
-            form = RoomForm(json.loads(request.body.decode('utf-8')))
-        except UnicodeDecodeError or ValueError:
+            form = RoomForm(loads(request.body.decode('utf-8')))
+        except JSONDecodeError or ValueError:
             return HttpResponse(
-                content=json.dumps({'message': 'Request body is invalid'}),
+                content=dumps({'message': 'Request body is invalid'}),
                 status=400,
                 content_type='application/json',
             )
         if form.is_valid():
             data = form.cleaned_data
             room = get_object_or_404(room_id=room_id)
-            room.title = data.title
-            room.password = data.password
-            room.is_private = data.is_private
-            room.is_anonymous = data.is_anonymous
+            room.title = data['title']
+            room.password = data['password']
+            room.is_private = data['is_private']
+            room.is_anonymous = data['is_anonymous']
+            room.modified_by = request.user.user_id
             room.save()
             return HttpResponse(
-                content=json.dumps(room.to_dict()),
+                content=dumps(room.to_dict()),
                 status=200,
                 content_type='application_json',
             )
         else:
             return HttpResponse(
-                content=json.dumps(form.errors),
+                content=dumps(form.errors),
                 status=400,
                 content_type='application/json',
             )

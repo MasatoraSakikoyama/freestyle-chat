@@ -15,7 +15,7 @@ def get_user(func):
         if args[0].user.is_anonymous:
             user = User.objects.get(pk=0)  # dummy user
         else:
-            user = User.objects.get(pk=message.user.pk)
+            user = User.objects.get(user_id=args[0].user.user_id)
         kwargs['user'] = user
         return func(*args, **kwargs)
     return wrapper
@@ -43,7 +43,8 @@ def connect(message, room_id, user):
             role=text.get('role'),
             chat_user=user,
             chat_room=room,
-            create_by=user.pk,
+            created_by=user.user_id,
+            modified_by=user.user_id,
         )
 
     message.reply_channel.send({'accept': True})
@@ -62,17 +63,18 @@ def receive(message, room_id, user):
             dest_message=text.get('dest_message'),
             chat_user=user,
             chat_room=room,
-            create_by=user.pk
+            created_by=user.user_id,
+            modified_by=user.user_id,
         )
     elif method == 'PUT':
         message = Message.objects.get(pk=text['message_id'])
         message.contnt = text.get('content')
         message.dest_message = text.get('dest_message')
-        message.modified_by=user.pk
+        message.modified_by = user.user_id
         message.save()
     elif method == 'DELETE':
         message = Message.objects.get(pk=text['message_id'])
-        message.deleted_by = user.pk
+        message.deleted_by = user.user_id
         message.deleted_at = datetime.now()
         message.save()
     else:
