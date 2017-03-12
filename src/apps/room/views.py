@@ -9,8 +9,8 @@ from django.db.transaction import commit_on_success
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
-from .forms import RoomForm
-from .models import Room
+from apps.orm.forms import RoomForm
+from apps.orm.models import Room
 
 
 def room_id_generator(func):
