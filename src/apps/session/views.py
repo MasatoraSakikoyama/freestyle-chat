@@ -111,9 +111,9 @@ def user_view(request, user_id):
         if form.is_valid():
             data = form.cleaned_data
             user = get_object_or_404(user_id=user_id)
-            user.name = data.name
-            user.password = data.password
-            user.deleted_at = data.deleted_at
+            user.name = data['name']
+            user.password = data['password']
+            user.deleted_at = data['deleted_at']
             user.save()
             return HttpResponse(
                 content=dumps(user.to_dict()),

@@ -109,6 +109,9 @@ def room_view(request, room_id):
             room.is_private = data['is_private']
             room.is_anonymous = data['is_anonymous']
             room.modified_by = request.user.user_id
+            if data.['deleted_at']:
+                room.deleted_by = request.user.user_id
+                room.deleted_at = data['deleted_at']
             room.save()
             return HttpResponse(
                 content=dumps(room.to_dict()),
