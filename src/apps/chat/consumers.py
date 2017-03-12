@@ -4,6 +4,7 @@ from datetime import datetime
 from functools import wraps
 
 from channels import Group
+from channels.sessions import enforce_ordering
 from channels.auth import channel_session_user, channel_session_user_from_http
 
 from apps.orm.models import User, Room, UserRoomRelation, Message
@@ -51,6 +52,7 @@ def connect(message, room_id, user):
     Group(room_id).add(message.reply_channel)
 
 
+@enforce_ordering
 @channel_session_user
 @get_user
 def receive(message, room_id, user):
