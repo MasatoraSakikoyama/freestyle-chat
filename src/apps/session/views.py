@@ -4,7 +4,7 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db.transaction import commit_on_success
+from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
@@ -21,7 +21,7 @@ def check_view(request):
 
 
 @require_http_methods(['POST'])
-@commit_on_success
+@atomic
 def login_view(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -52,7 +52,7 @@ def login_view(request):
 
 
 @require_http_methods(['POST'])
-@commit_on_success
+@atomic
 def logout_view(request):
     logout(request)
     return HttpResponse(
@@ -64,7 +64,7 @@ def logout_view(request):
 
 @login_required(login_url='/')
 @require_http_methods(['GET', 'POST', 'PUT'])
-@commit_on_success
+@atomic
 def user_view(request, user_id):
     if request.method == 'GET':
         user = get_object_or_404(User, user_id=user_id)

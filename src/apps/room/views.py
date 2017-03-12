@@ -5,7 +5,7 @@ from functools import wraps
 import haikunator
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.db.transaction import commit_on_success
+from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
@@ -28,6 +28,7 @@ def room_id_generator(func):
 
 
 @require_http_methods(['GET'])
+@atomic
 def rooms_view(request, order_by='user_id', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
         query = Room.objects
@@ -50,7 +51,7 @@ def rooms_view(request, order_by='user_id', limit=30, offset=0, **kwargs):
 
 @login_required(login_url='/')
 @require_http_methods(['GET', 'POST', 'PUT'])
-@commit_on_success
+@atomic
 @room_id_generator
 def room_view(request, room_id):
     if request.method == 'GET':
