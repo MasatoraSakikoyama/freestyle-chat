@@ -29,8 +29,8 @@ def datetime_default(o):
 
 @channel_session_user_from_http
 @get_user
-def connect(message, label, user):
-    room = Room.objects.get(label=label)
+def connect(message, room_id, user):
+    room = Room.objects.get(room_id=room_id)
     text = message.content['text']
     try:
         UserRoomRelation.objects.get(
@@ -47,13 +47,13 @@ def connect(message, label, user):
         )
 
     message.reply_channel.send({'accept': True})
-    Group(label).add(message.reply_channel)
+    Group(room_id).add(message.reply_channel)
 
 
 @channel_session_user
 @get_user
-def receive(message, label, user):
-    room = Room.objects.get(label=label)
+def receive(message, room_id, user):
+    room = Room.objects.get(room_id=room_id)
     text = message.content['text']
     method = text.get('method')
     if method == 'POST':
@@ -78,7 +78,7 @@ def receive(message, label, user):
     else:
         return
 
-    Group(label).send({
+    Group(room_id).send({
         'text': json.dumps({
             'user': user.name,
             'time': datetime.now(),
@@ -88,12 +88,13 @@ def receive(message, label, user):
 
 
 @channel_session_user
-def disconnect(message, label):
-    Group(label).discard(message.reply_channel)
+@get_user
+def disconnect(message, room_id, user):
+    Group(room_id).discard(message.reply_channel)
 
 
-def message_send(message, label):
-    Group(label).send({
+def message_send(message, room_id):
+    Group(room_id).send({
         'text': json.dumps({
             'user': message.user.username,
             'time': datetime.now(),

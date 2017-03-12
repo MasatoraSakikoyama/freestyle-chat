@@ -37,11 +37,11 @@ class BaseModel(Model):
 
 
 class Room(BaseModel):
-    label = CharField(max_length=255, blank=False, null=False)
+    room_id = CharField(max_length=255, blank=False, null=False)
     title = CharField(max_length=255, blank=False, null=False)
-    password = CharField(max_length=255)
-    is_private = BooleanField(default=False, blank=True, null=False)
-    is_anonymous = BooleanField(default=False, blank=True, null=False)
+    password = CharField(max_length=255, blank=True, null=True)
+    is_private = BooleanField(default=False, blank=False, null=False)
+    is_anonymous = BooleanField(default=False, blank=False, null=False)
     # relation
     members = ManyToManyField(User, through='UserRoomRelation')
 

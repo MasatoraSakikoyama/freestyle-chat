@@ -4,6 +4,7 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.transaction import commit_on_success
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
@@ -20,6 +21,7 @@ def check_view(request):
 
 
 @require_http_methods(['POST'])
+@commit_on_success
 def login_view(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -50,6 +52,7 @@ def login_view(request):
 
 
 @require_http_methods(['POST'])
+@commit_on_success
 def logout_view(request):
     logout(request)
     return HttpResponse(
@@ -60,40 +63,66 @@ def logout_view(request):
 
 
 @login_required(login_url='/')
-@require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
-def user_view(request, pk):
+@require_http_methods(['GET', 'POST', 'PUT'])
+@commit_on_success
+def user_view(request, user_id):
     if request.method == 'GET':
-        user = get_object_or_404(User, pk=pk)
+        user = get_object_or_404(User, user_id=user_id)
         return HttpResponse(
             content=json.dumps(user.to_dict()),
             status=200,
             content_type='application_json',
         )
-    elif request.method in ('POST', 'PUT'):
+    elif request.method == 'POST':
         try:
             form = UserForm(json.loads(request.body.decode('utf-8')))
-            form.pk = pk
-        except Exception:
+        except UnicodeDecodeError or ValueError:
             return HttpResponse(
                 content=json.dumps({'message': 'Request body is invalid'}),
                 status=400,
                 content_type='application/json',
             )
         if form.is_valid():
-            user = User.save(form.cleaned_data)
+            user = User.objects.create(form.cleaned_data)
             return HttpResponse(
                 content=json.dumps(user.to_dict()),
                 status=200,
                 content_type='application_json',
             )
+        else:
+            return HttpResponse(
+                content=json.dumps(form.errors),
+                status=400,
+                content_type='application/json',
+            )
+    elif request.method == 'PUT':
+        try:
+            form = UserForm(json.loads(request.body.decode('utf-8')))
+        except UnicodeDecodeError or ValueError:
+            return HttpResponse(
+                content=json.dumps({'message': 'Request body is invalid'}),
+                status=400,
+                content_type='application/json',
+            )
+        if form.is_valid():
+            data = form.cleaned_data
+            user = get_object_or_404(user_id=user_id)
+            user.name = data.name
+            user.password = data.password
+            user.deleted_at = data.deleted_at
+            user.save()
+            return HttpResponse(
+                content=json.dumps(user.to_dict()),
+                status=200,
+                content_type='application_json',
+            )
+        else:
+            return HttpResponse(
+                content=json.dumps(form.errors),
+                status=400,
+                content_type='application/json',
+            )
+    else:
         return HttpResponse(
-            content=json.dumps(form.errors),
-            status=400,
-            content_type='application/json',
-        )
-    elif request.method == 'DELETE':
-        get_object_or_404(User, pk=pk).delete()
-        return HttpResponse(
-            status=204,
-            content_type='application/json',
+            status=405,
         )

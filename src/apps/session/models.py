@@ -42,14 +42,14 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
-    name = CharField(max_length=128, blank=True, )
+    name = CharField(max_length=255, blank=False, null=False)
     user_id = PositiveIntegerField(
         unique=True,
         validators=[MaxValueValidator(9999)],
         blank=True,
         null=False
     )
-    password = CharField(unique=False, max_length=128, blank=True, null=False)
+    password = CharField(unique=False, max_length=255, blank=False, null=False)
     created_at = DateTimeField(auto_now_add=True, blank=True, null=False)
     modified_at = DateTimeField(auto_now=True, blank=True, null=False)
     deleted_at = DateTimeField(blank=True, null=True)
