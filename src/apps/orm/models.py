@@ -27,13 +27,14 @@ class BaseModel(Model):
         abstract = True
 
     def to_dict(self):
+        dat = self.deleted_at
         d = {
             'created_by': self.created_by,
             'created_at': self.created_at.isoformat(),
             'modified_by': self.modified_by,
             'modified_at': self.modified_at.isoformat(),
             'deleted_by': self.deleted_by,
-            'deleted_at': self.deleted_at.isoformat() if self.deleted_at else None,
+            'deleted_at': dat.isoformat() if dat else None,
         }
         if hasattr(self, '_to_dict'):
             d.update(self._to_dict())

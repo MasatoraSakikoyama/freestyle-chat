@@ -56,10 +56,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     def to_dict(self):
+        dat = self.deleted_at
         return {
             'user_id': self.user_id,
             'name': self.name,
             'created_at': self.created_at.isoformat(),
             'modified_at': self.modified_at.isoformat(),
-            'deleted_at': self.deleted_at.isoformat() if self.deleted_at else None,
+            'deleted_at': dat.isoformat() if dat else None,
         }
