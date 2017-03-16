@@ -17,19 +17,19 @@ def room_id_generator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if args[0].method == 'POST' and kwargs.get('room_id') == 'create':
-                while True:
-                    room_id = Haikunator.haikunate(100000)
-                    if Room.objects.filter(room_id=room_id).exists():
-                        continue
-                    kwargs['room_id'] = room_id
-                    break
+            while True:
+                room_id = Haikunator.haikunate(100000)
+                if Room.objects.filter(room_id=room_id).exists():
+                    continue
+                kwargs['room_id'] = room_id
+                break
         return func(*args, **kwargs)
     return wrapper
 
 
 @require_http_methods(['GET'])
 @atomic
-def rooms_view(request, order_by='room_id', limit=30, offset=0, **kwargs):
+def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
         query = Room.objects.filter(deleted_by=None).filter(deleted_at=None)
         search_by = kwargs.get('search_by')
@@ -53,7 +53,7 @@ def rooms_view(request, order_by='room_id', limit=30, offset=0, **kwargs):
 @require_http_methods(['GET', 'POST', 'PUT'])
 @atomic
 @room_id_generator
-def room_view(request, room_id):
+def room_api(request, room_id):
     if request.method == 'GET':
         room = get_object_or_404(
             Room,

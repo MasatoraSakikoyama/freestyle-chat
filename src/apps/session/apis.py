@@ -13,7 +13,7 @@ from .models import User
 
 
 @require_http_methods(['GET'])
-def check_view(request):
+def check_api(request):
     return HttpResponse(
         content='ok',
         status=200,
@@ -22,7 +22,7 @@ def check_view(request):
 
 @require_http_methods(['POST'])
 @atomic
-def login_view(request):
+def login_api(request):
     try:
         data = loads(request.body.decode('utf-8'))
     except JSONDecodeError or ValueError:
@@ -53,7 +53,7 @@ def login_view(request):
 
 @require_http_methods(['POST'])
 @atomic
-def logout_view(request):
+def logout_api(request):
     logout(request)
     return HttpResponse(
         content=dumps({'message': 'Logout success'}),
@@ -65,7 +65,7 @@ def logout_view(request):
 @login_required(login_url='/')
 @require_http_methods(['GET', 'POST', 'PUT'])
 @atomic
-def user_view(request, user_id):
+def user_api(request, user_id):
     if request.method == 'GET':
         user = get_object_or_404(
             User,
