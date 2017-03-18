@@ -68,7 +68,6 @@ def logout_api(request):
 def user_api(request, user_id):
     if request.method == 'GET':
         user = get_object_or_404(
-            User,
             user_id=user_id,
             deleted_at=None,
         )
@@ -113,7 +112,6 @@ def user_api(request, user_id):
             user = get_object_or_404(user_id=user_id)
             user.name = data['name']
             user.password = data['password']
-            user.deleted_at = data['deleted_at']
             user.save()
             return HttpResponse(
                 content=dumps(user.to_dict()),
@@ -126,7 +124,12 @@ def user_api(request, user_id):
                 status=400,
                 content_type='application/json',
             )
-    else:
-        return HttpResponse(
-            status=405,
+    elif request.method == 'DELETE':
+        user = get_object_or_404(
+            user_id=user_id,
         )
+        user.deleted_at = datetime.now()
+        user.save()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=405)

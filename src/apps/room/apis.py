@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from json import loads, dumps, JSONDecodeError
-from functools import wraps
 
-from haikunator import Haikunator
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.db.transaction import atomic
@@ -11,20 +10,7 @@ from django.http import HttpResponse
 
 from apps.orm.forms import RoomForm
 from apps.orm.models import Room
-
-
-def room_id_generator(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        if args[0].method == 'POST' and kwargs.get('room_id') == 'create':
-            while True:
-                room_id = Haikunator.haikunate(100000)
-                if Room.objects.filter(room_id=room_id).exists():
-                    continue
-                kwargs['room_id'] = room_id
-                break
-        return func(*args, **kwargs)
-    return wrapper
+from .utils import room_id_generator
 
 
 @require_http_methods(['GET'])
@@ -109,9 +95,6 @@ def room_api(request, room_id):
             room.is_private = data['is_private']
             room.is_anonymous = data['is_anonymous']
             room.modified_by = request.user.user_id
-            if data['deleted_at']:
-                room.deleted_by = request.user.user_id
-                room.deleted_at = data['deleted_at']
             room.save()
             return HttpResponse(
                 content=dumps(room.to_dict()),
@@ -124,7 +107,14 @@ def room_api(request, room_id):
                 status=400,
                 content_type='application/json',
             )
-    else:
-        return HttpResponse(
-            status=405,
+    elif request.method == 'DELETE':
+        room = get_object_or_404(
+            Room,
+            room_id=room_id,
         )
+        room.deleted_by = request.user.user_id
+        room.deleted_at = datetime.now()
+        room.save()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=405)

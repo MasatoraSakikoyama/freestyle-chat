@@ -13,6 +13,7 @@ from django.db.models import (
 )
 
 from apps.session.models import User
+from .consts import ROLE_CHOICES
 
 
 class BaseModel(Model):
@@ -60,12 +61,6 @@ class Room(BaseModel):
 
 
 class UserRoomRelation(BaseModel):
-    # ToDo: move settings
-    ROLE_CHOICES = (
-        ('RWX', 0),
-        ('RW', 1),
-        ('R', 2),
-    )
     handle_name = CharField(max_length=255, blank=False, null=False)
     role = PositiveSmallIntegerField(choices=ROLE_CHOICES, default='RW')
     # relation
