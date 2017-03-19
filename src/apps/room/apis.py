@@ -3,11 +3,11 @@ from datetime import datetime
 from json import loads, dumps, JSONDecodeError
 
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.decorators import login_required
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
+from apps.session.utils import api_login_required
 from apps.orm.forms import RoomForm
 from apps.orm.models import Room
 from .utils import room_id_generator
@@ -17,7 +17,7 @@ from .utils import room_id_generator
 @atomic
 def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
-        query = Room.objects.filter(deleted_by=None).filter(deleted_at=None)
+        query = Room.objects.filter(deleted_by='').filter(deleted_at=None)
         search_by = kwargs.get('search_by')
         search = kwargs.get('search')
         if search_by and search:
@@ -35,8 +35,8 @@ def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
         )
 
 
-@login_required(login_url='/')
-@require_http_methods(['GET', 'POST', 'PUT'])
+@api_login_required
+@require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
 @atomic
 @room_id_generator
 def room_api(request, room_id):
@@ -70,7 +70,7 @@ def room_api(request, room_id):
             return HttpResponse(
                 content=dumps(room.to_dict()),
                 status=200,
-                content_type='application_json',
+                content_type='application/json',
             )
         else:
             return HttpResponse(

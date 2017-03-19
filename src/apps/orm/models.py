@@ -2,7 +2,6 @@
 from django.db.models import (
     Model,
     CharField,
-    PositiveIntegerField,
     PositiveSmallIntegerField,
     DateTimeField,
     BooleanField,
@@ -17,24 +16,25 @@ from .consts import ROLE_CHOICES
 
 
 class BaseModel(Model):
-    created_by = PositiveIntegerField(blank=True, null=False)
+    created_by = CharField(max_length=255, blank=True, null=False)
     created_at = DateTimeField(auto_now_add=True, blank=True, null=False)
-    modified_by = PositiveIntegerField(blank=True, null=False)
+    modified_by = CharField(max_length=255, blank=True, null=False)
     modified_at = DateTimeField(auto_now=True, blank=True, null=False)
-    deleted_by = PositiveIntegerField(blank=True, null=True)
-    deleted_at = DateTimeField(blank=True, null=True)
+    deleted_by = CharField(max_length=255, blank=True, null=True, default=None)
+    deleted_at = DateTimeField(blank=True, null=True, default=None)
 
     class Meta:
         abstract = True
 
     def to_dict(self):
+        dby = self.deleted_by
         dat = self.deleted_at
         d = {
             'created_by': self.created_by,
             'created_at': self.created_at.isoformat(),
             'modified_by': self.modified_by,
             'modified_at': self.modified_at.isoformat(),
-            'deleted_by': self.deleted_by,
+            'deleted_by': dby if dby else None,
             'deleted_at': dat.isoformat() if dat else None,
         }
         if hasattr(self, '_to_dict'):
@@ -62,7 +62,7 @@ class Room(BaseModel):
 
 class UserRoomRelation(BaseModel):
     handle_name = CharField(max_length=255, blank=False, null=False)
-    role = PositiveSmallIntegerField(choices=ROLE_CHOICES, default='RW')
+    role = PositiveSmallIntegerField(choices=ROLE_CHOICES, default=0)
     # relation
     chat_user = ForeignKey(User, on_delete=CASCADE)
     chat_room = ForeignKey(Room, on_delete=CASCADE)
@@ -77,15 +77,15 @@ class UserRoomRelation(BaseModel):
 class Message(BaseModel):
     content = CharField(max_length=1024, blank=False, null=False)
     # relation
-    dest_message = OneToOneField('self')
+    dest_message = OneToOneField('self', blank=True, null=True)
     chat_user = ForeignKey(User, on_delete=CASCADE)
     chat_room = ForeignKey(Room, on_delete=CASCADE)
 
     def _to_dict(self):
         return {
             'message_id': self.pk,
-            'content': self.body,
-            'dest_message': getattr(self.dest_message, 'pk'),
+            'content': self.content,
+            'dest_message': self.dest_message.pk if self.dest_message else None,
         }
 
 

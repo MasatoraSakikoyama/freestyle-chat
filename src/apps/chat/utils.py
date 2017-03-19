@@ -9,7 +9,12 @@ def get_user(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if args[0].user.is_anonymous:
-            user = User.objects.get(pk=0)  # dummy user
+            user = User(
+                pk=0,
+                user_id='system',
+                password='system',
+                name='system',
+            )
         else:
             user = User.objects.get(user_id=args[0].user.user_id)
         kwargs['user'] = user

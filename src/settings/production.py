@@ -3,18 +3,42 @@ import os
 
 import dj_database_url
 
-from settings.base import *
+from .base import *
 
+SECRET_KEY = ''
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['']
+
+MIDDLEWARE.insert(3, 'django.middleware.csrf.CsrfViewMiddleware')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-db_from_env = dj_database_url.config(conn_max_age=400)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-DATABASES['default'].update(db_from_env)
+TEMPLATES[0]['DIRS'] = ['src/static']
+
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=400)
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+        },
+    },
+}
 
 CHANNEL_LAYERS = {
     'default': {

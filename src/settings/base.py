@@ -3,8 +3,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'jr&r#)5y%i$_!+yob#g+vmk)^kl=p-j5!#lg6lb3@&ccq=@bf#'
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,7 +21,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -32,6 +29,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'urls'
 
 APPEND_SLASH = False
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'apps/frontend'),
+]
+
+STATIC_URL = '/static/'
 
 TEMPLATES = [
     {
@@ -50,13 +53,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -83,18 +79,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
 AUTH_USER_MODEL = 'session.User'
 
-LOGIN_URL = '/api/session/login'
-
-LOGIN_REDIRECT_URL = '/app'
-
-LOGOUT_URL = '/api/session/logout'
+LOGIN_URL = LOGIN_REDIRECT_URL = LOGOUT_URL = '/app'

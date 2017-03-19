@@ -3,11 +3,11 @@ from json import loads, dumps, JSONDecodeError
 
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
+from .utils import api_login_required
 from .forms import UserForm
 from .models import User
 
@@ -62,8 +62,8 @@ def logout_api(request):
     )
 
 
-@login_required(login_url='/')
-@require_http_methods(['GET', 'POST', 'PUT'])
+@api_login_required
+@require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
 @atomic
 def user_api(request, user_id):
     if request.method == 'GET':
