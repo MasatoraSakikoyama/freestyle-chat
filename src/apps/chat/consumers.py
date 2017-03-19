@@ -35,6 +35,7 @@ def connect(message, room_id, user):
 
 
 @channel_session_user
+# @enforce_ordering
 @get_user
 def receive(message, room_id, user):
     room = Room.objects.get(room_id=room_id)
