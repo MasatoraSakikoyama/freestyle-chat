@@ -1,20 +1,18 @@
 {
-    "name": "freestyle-chat.apps.frontend",
-    "version": "1.0.0",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "node_modules/webpack/bin/webpack.js",
-        "watch": "node_modules/webpack/bin/webpack.js -w"
-    },
-    "dependencies": {
-        "axios": "^0.15.2",
-        "cash-dom": "^1.3.5",
-        "three": "^0.82.1"
-    },
-    "devDependencies": {
-        "babel-core": "^6.17.0",
-        "babel-loader": "^6.2.5",
-        "babel-preset-es2015": "^6.16.0",
-        "webpack": "^1.13.2"
-    }
+  "name": "freestyle-chat.apps.frontend",
+  "version": "1.0.0",
+  "dependencies": {
+    "axios": "^0.15.2",
+    "vue": "^2.2.5",
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "css-loader": "^0.27.3",
+    "html-loader": "^0.4.5",
+    "webpack": "^1.13.2"
+  }
 }

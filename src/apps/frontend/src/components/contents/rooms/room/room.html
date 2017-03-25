@@ -1,0 +1,13 @@
+<div>
+    <ol>
+        <li v-for="message in messages" v-bind:key="message.id">
+            User: {{message.modified_by}}, content: {{message.content}}, date: {{message.modified_at}}
+        </li>
+    </ol>
+    <div>
+        <label for="message">Message</label>
+        <input id="message" type="text" placeholder="message" v-model="message"/>
+        <button type="button" v-on:click="sendMessage">Send</button>
+        <button type="button" v-on:click="closeRoom">Close Room</button>
+    </div>
+</div>

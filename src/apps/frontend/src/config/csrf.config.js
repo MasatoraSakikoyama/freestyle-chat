@@ -1,4 +1,4 @@
-function CSRFConfig(config) {
+export default config => {
     const getCookie = name => {
         const cookie = document.cookie;
         if (cookie && cookie != '') {
@@ -28,4 +28,3 @@ function CSRFConfig(config) {
 
     return config;
 }
-export default CSRFConfig;

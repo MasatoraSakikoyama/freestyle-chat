@@ -10,6 +10,14 @@ module.exports = {
     module: {
         loaders: [
             {
+                test: /\.html$/,
+                loader: 'html?minimize'
+            },
+            {
+                test: /\.css$/,
+                loader: 'css?minimize'
+            },
+            {
                 test: /.js?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
@@ -19,13 +27,24 @@ module.exports = {
             }
         ]
     },
+    // for develop
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
+    },
     plugins: [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
         new webpack.ProvidePlugin({
-            $: 'cash-dom',
             axios: 'axios',
-            THREE: 'three'
+            Vue: 'vue'
         })
+        // for production
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         NODE_ENV: '"production"'
+        //     }
+        // })
     ]
 }
