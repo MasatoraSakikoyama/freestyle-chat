@@ -15,7 +15,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'css?minimize'
+                loaders: ['style', 'css?minimize']
             },
             {
                 test: /.js?$/,

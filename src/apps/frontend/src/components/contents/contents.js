@@ -5,18 +5,15 @@ import rooms from './rooms/rooms.js';
 export default {
     template: template,
     props: [],
-    data: () => {
+    data() {
         return {
-            currentView: 'login'
+            currentView: 'rooms'
         }
     },
     methods: {
         onChangeView(data) {
-            let view = 'login';
-            if (data.name == 'login') {
-                view = 'rooms';
-                alert(data.data.message);
-            }
+            let view = 'rooms';
+            alert(data.data.message);
             this.currentView = view;
         }
     },
