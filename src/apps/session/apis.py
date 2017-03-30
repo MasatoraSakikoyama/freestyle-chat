@@ -25,7 +25,7 @@ def check_api(request):
 def login_api(request):
     try:
         data = loads(request.body.decode('utf-8'))
-    except JSONDecodeError or ValueError:
+    except UnicodeDecodeError or JSONDecodeError or ValueError:
         return HttpResponse(
             content=dumps({'message': 'Request body is invalid'}),
             status=400,
@@ -79,7 +79,7 @@ def user_api(request, user_id):
     elif request.method == 'POST' and user_id == 'create':
         try:
             form = UserForm(loads(request.body.decode('utf-8')))
-        except JSONDecodeError or ValueError:
+        except UnicodeDecodeError or JSONDecodeError or ValueError:
             return HttpResponse(
                 content=dumps({'message': 'Request body is invalid'}),
                 status=400,
@@ -101,7 +101,7 @@ def user_api(request, user_id):
     elif request.method == 'PUT':
         try:
             form = UserForm(loads(request.body.decode('utf-8')))
-        except UnicodeDecodeError or ValueError:
+        except UnicodeDecodeError or JSONDecodeError or ValueError:
             return HttpResponse(
                 content=dumps({'message': 'Request body is invalid'}),
                 status=400,

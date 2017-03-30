@@ -41,8 +41,7 @@ def receive(message, room_id, user):
     room = Room.objects.get(room_id=room_id)
     text = loads(message.content['text'])
     method = text['method']
-    # ToDo: GETはネットワーク負荷が高くなりそうなので廃止
-    # http GETで履歴一覧を取得するようにする
+
     if method == 'GET':
         messages = Message.objects.filter(chat_room=room).order_by('-created_at')[0:10]
         messages = [m.to_dict() for m in messages]

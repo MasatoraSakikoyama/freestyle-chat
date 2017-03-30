@@ -59,7 +59,7 @@ def room_api(request, room_id):
             data['created_by'] = request.user.user_id
             data['modified_by'] = request.user.user_id
             form = RoomForm(data)
-        except JSONDecodeError or ValueError:
+        except UnicodeDecodeError or JSONDecodeError or ValueError:
             return HttpResponse(
                 content=dumps({'message': 'Request body is invalid'}),
                 status=400,
@@ -81,7 +81,7 @@ def room_api(request, room_id):
     elif request.method == 'PUT':
         try:
             form = RoomForm(loads(request.body.decode('utf-8')))
-        except JSONDecodeError or ValueError:
+        except UnicodeDecodeError or JSONDecodeError or ValueError:
             return HttpResponse(
                 content=dumps({'message': 'Request body is invalid'}),
                 status=400,
