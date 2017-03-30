@@ -9,7 +9,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-TEMPLATES[0]['DIRS'] = ['src/apps/frontend']
+TEMPLATES[0]['DIRS'] = ['src/apps/frontend/dist']
 
 DATABASES = {
     'default': {

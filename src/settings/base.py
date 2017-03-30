@@ -30,8 +30,10 @@ ROOT_URLCONF = 'urls'
 
 APPEND_SLASH = False
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'apps/frontend'),
+    os.path.join(BASE_DIR, 'apps/frontend/dist'),
 ]
 
 STATIC_URL = '/static/'
