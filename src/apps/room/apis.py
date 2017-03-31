@@ -23,9 +23,9 @@ def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
         if search_by and search:
             query = query.filter(search_by=search)
         step = limit * offset
-        query = query.order_by(order_by)[0 + step:limit - 1 + step]
+        rooms = query.order_by(order_by)[0 + step:limit - 1 + step]
         return HttpResponse(
-            content=dumps([r.to_dict() for r in query]),
+            content=dumps([r.to_dict() for r in rooms]),
             status=200,
             content_type='application/json',
         )

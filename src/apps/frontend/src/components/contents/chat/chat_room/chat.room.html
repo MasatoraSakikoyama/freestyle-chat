@@ -1,0 +1,6 @@
+<div class="chat-room">
+    <ul v-for="(message, index) in messages" v-bind:key="message.id">
+        <chat-room-message v-bind:message="message" v-bind:index="index"></chat-room-message>
+    </ul>
+    <chat-room-form v-on:send-message="sendMessage" v-on:close-room="closeRoom"></chat-room-form>
+</div>

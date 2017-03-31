@@ -1,0 +1,6 @@
+<li>
+    <label v-bind:class="{ selected: isSelected }" v-bind:title="room.title" v-on:click.prevent="openRoom">
+        {{room.title}}
+    </label>
+    <button type="button" v-on:click.prevent="deleteRoom">Delete</button>
+</li>

@@ -1,0 +1,12 @@
+header {
+    height: 5em;
+    width: 100%;
+    background-color: #F7F7F7;
+}
+header > h3 {
+    margin-left: 1em;
+    display: inline-block;
+}
+header > nav {
+    display: inline-block;
+}

@@ -1,0 +1,7 @@
+<div class="sideMenu">
+    <h3>Chat Rooms</h3>
+    <ul v-for="room in rooms" v-bind:key="room.room_id">
+        <side-menu-room v-bind:selected-room="selectedRoom" v-bind:room="room" v-on:open-room="openRoom" v-on:delete-room="deleteRoom"></side-menu-room>
+    </ul>
+    <side-menu-form v-on:create-room="createRoom"></side-menu-form>
+</div>

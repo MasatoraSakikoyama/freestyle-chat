@@ -1,0 +1,4 @@
+<div class="chat">
+    <side-menu v-bind:selected-room="selectedRoom" v-on:select-room="selectRoom" v-on:deselect-room="deselectRoom"></side-menu>
+    <chat-room v-bind:selected-room="selectedRoom" v-on:deselect-room="deselectRoom"></chat-room>
+</div>

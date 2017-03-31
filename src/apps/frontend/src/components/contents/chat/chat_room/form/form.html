@@ -1,0 +1,6 @@
+<div>
+    <label for="message">Message</label>
+    <input id="message" type="text" placeholder="message" v-model="message"/>
+    <button type="button" v-on:click.prevent="sendMessage">Send</button>
+    <button type="button" v-on:click.prevent="closeRoom">Close Room</button>
+</div>
