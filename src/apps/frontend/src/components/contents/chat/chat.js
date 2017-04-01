@@ -6,6 +6,16 @@ import chatRoom from './chat_room/chat.room.js';
 
 export default {
     template: template,
+    props: {
+        router: {
+            type: Object,
+            required: true
+        },
+        isLogin: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             selectedRoom: ''

@@ -21,7 +21,7 @@ def api_token_required(func):
         request = args[0]
         if request.method in ['POST', 'PUT', 'DELETE']:
             try:
-                token = request.META['authorization']
+                token = request.META['HTTP_AUTHORIZATION']
                 payload = jwt.decode(
                     token,
                     settings.SECRET_KEY,

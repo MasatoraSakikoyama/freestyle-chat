@@ -1,3 +1,5 @@
+import jwt from '../../../../../util/jwt.axios.js';
+
 import template from './form.html';
 
 export default {
@@ -13,7 +15,7 @@ export default {
                 alert('Title must not be empty');
                 return;
             }
-            axios.post('/api/room/create', {
+            jwt.post('/api/room/create', {
                     title: this.title,
                     password: null,
                     is_private: false,
@@ -24,7 +26,7 @@ export default {
                     this.$emit('create-room', response.data);
                 })
                 .catch(error => {
-                    alert(error.response.data.message);
+                    alert('Fail create Room');
                 });
         }
     }

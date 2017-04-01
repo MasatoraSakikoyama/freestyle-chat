@@ -1,6 +1,6 @@
 function getCookie(name) {
     const cookie = document.cookie;
-    if (cookie && cookie != '') {
+    if (cookie) {
         return cookie.split(';')
                 .filter(ck => ck.trim().substring(0, name.length + 1) == (name + '='))
                 .map(ck => decodeURIComponent(ck.substring(name.length + 1)));
@@ -21,9 +21,9 @@ function safeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
-export default config => {
-    if (!safeMethod(config.method) && sameOrigin(config.url)) {
-        config.headers['X-CSRFToken'] =  getCookie('csrftoken');
+export default request => {
+    if (!safeMethod(request.method) && sameOrigin(request.url)) {
+        request.headers['X-CSRFToken'] =  getCookie('csrftoken');
     }
-    return config;
+    return request;
 }

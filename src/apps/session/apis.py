@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from json import loads, dumps, JSONDecodeError
 
 import jwt
@@ -23,60 +23,71 @@ def check_api(request):
     )
 
 
-@require_http_methods(['POST'])
+@require_http_methods(['GET', 'POST'])
 @atomic
 def login_api(request):
-    try:
-        data = loads(request.body.decode('utf-8'))
-    except UnicodeDecodeError or JSONDecodeError or ValueError:
+    if request.method == 'GET':
+        payload = { 'isLogin': False }
+        try:
+            if request.user.is_authenticated():
+                payload['isLogin'] = True
+        except AttributeError or SyntaxError:
+            pass
+
         return HttpResponse(
-            content=dumps({'message': 'Request body is invalid'}),
-            status=400,
-            content_type='application/json',
-        )
-    # user form class
-    user = authenticate(
-        user_id=data.get('user_id'),
-        password=data.get('password'),
-    )
-    if user:
-        login(request, user)
-        return HttpResponse(
-            content=dumps({'message': 'Login success'}),
+            content=dumps(payload),
             status=200,
             content_type='application/json',
         )
-    else:
-        return HttpResponse(
-            content=dumps({'message': 'Invalid param'}),
-            status=400,
-            content_type='application/json',
-        )
 
+    elif request.method == 'POST':
+        try:
+            data = loads(request.body.decode('utf-8'))
+        except UnicodeDecodeError or JSONDecodeError or ValueError:
+            return HttpResponse(
+                content=dumps({'message': 'Request body is invalid'}),
+                status=400,
+                content_type='application/json',
+            )
+        # user form class
+        user = authenticate(
+            user_id=data.get('user_id'),
+            password=data.get('password'),
+        )
+        if user:
+            login(request, user)
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(
+                content=dumps({'message': 'Invalid param'}),
+                status=400,
+                content_type='application/json',
+            )
+    else:
+        return HttpResponse(status=405)
 
 @require_http_methods(['POST'])
 @atomic
 def logout_api(request):
-    logout(request)
-    return HttpResponse(
-        content=dumps({'message': 'Logout success'}),
-        status=200,
-        content_type='application/json',
-    )
+    try:
+        logout(request)
+    except:
+        return HttpResponse(status=400)
+    return HttpResponse(status=200)
 
 
-@require_http_methods(['POST'])
+@require_http_methods(['GET'])
 @api_login_required
 def token_api(request):
     now = datetime.utcnow()
     payload = {
         'nbf': now,
-        'exp': now + datetime.timedelta(seconds=10),
+        'exp': now + timedelta(seconds=5),
         'user_id': request.user.user_id,
     }
-    token = jwt.encode(payload, settings.SECRET_KEY, algorithms=['HS256'])
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
     return HttpResponse(
-        content=dumps({'token': token}),
+        content=dumps({'token': token.decode('ascii')}),
         status=200,
         content_type='application/json'
     )

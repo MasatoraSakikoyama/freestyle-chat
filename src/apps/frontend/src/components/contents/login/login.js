@@ -2,6 +2,16 @@ import template from './login.html';
 
 export default {
     template: template,
+    props: {
+        router: {
+            type: Object,
+            required: true
+        },
+        isLogin: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             userId: '',
@@ -9,7 +19,7 @@ export default {
         }
     },
     methods: {
-        loginExecute(event) {
+        login(event) {
             if (!this.userId || !this.password) {
                 alert('User Id or Password must not be empty');
                 return
@@ -19,14 +29,17 @@ export default {
                     password: this.password
                 })
                 .then(response => {
-                    this.$emit('change-view', {
-                        name: 'login',
-                        data: response.data
-                    });
+                    this.$emit('login');
+                    this.router.push({name: 'home'});
                 })
                 .catch(error => {
                     alert(error.response.data.message);
             });
+        }
+    },
+    created() {
+        if (this.isLogin) {
+            this.$destroy();
         }
     }
 }

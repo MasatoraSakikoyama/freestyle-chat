@@ -4,7 +4,8 @@
     </h3>
     <nav>
         <ul>
-            <li><router-link to="/login">Login</router-link></li>
+            <li><router-link to="/login" v-if="!isLogin">Login</router-link></li>
+            <li><a href="javascript:void(0)" v-if="isLogin" v-on:click.prevent="logout">Logout</a></li>
         </ul>
     </nav>
 </header>

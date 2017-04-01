@@ -12,12 +12,31 @@ new Vue({
     el: '#app',
     router: router,
     template: template,
+    data: {
+        router: router,
+        isLogin: false
+    },
     components: {
         'app-header': header,
         'app-contents': contents,
         'app-footer': footer
     },
-    beforeCreate() {
+    methods: {
+        login() {
+            this.isLogin = true;
+        },
+        logout() {
+            this.isLogin = false;
+        }
+    },
+    created() {
         axios.interceptors.request.use(CSRFConfig);
+        axios.get('/api/session/login')
+            .then(response => {
+                this.isLogin = response.data.isLogin;
+            })
+            .catch(error => {
+                alert('Fail get Login info');
+            });
     }
 });
