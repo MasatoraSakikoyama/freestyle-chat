@@ -20,9 +20,6 @@ export default {
         }
     },
     computed: {
-        hasAuth() {
-            return Boolean(this.token);
-        },
         isSelected() {
             return (this.selectedRoom === this.room.room_id)
         }
