@@ -6,7 +6,12 @@ import form from './form/form.js';
 
 export default {
     template: template,
-    props: ['selectedRoom'],
+    props: {
+        selectedRoom: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             rooms: []

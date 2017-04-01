@@ -3,7 +3,16 @@ import style from './room.css';
 
 export default {
     template: template,
-    props: ['selectedRoom', 'room'],
+    props: {
+        selectedRoom: {
+            type: String,
+            default: ''
+        },
+        room: {
+            typr: Object,
+            default: {}
+        }
+    },
     computed: {
         isSelected() {
             return (this.selectedRoom === this.room.room_id)

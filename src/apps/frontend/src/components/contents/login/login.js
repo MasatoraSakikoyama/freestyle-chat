@@ -2,7 +2,6 @@ import template from './login.html';
 
 export default {
     template: template,
-    props: [],
     data() {
         return {
             userId: '',

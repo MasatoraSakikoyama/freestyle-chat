@@ -8,7 +8,12 @@ const MESSAGE_SIZE = 10;
 
 export default {
     template: template,
-    props: ['selectedRoom'],
+    props: {
+        selectedRoom: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             messages: [],
