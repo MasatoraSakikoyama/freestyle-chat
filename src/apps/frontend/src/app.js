@@ -17,7 +17,7 @@ new Vue({
         'app-contents': contents,
         'app-footer': footer
     },
-    created() {
+    beforeCreate() {
         axios.interceptors.request.use(CSRFConfig);
     }
 });
