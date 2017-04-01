@@ -7,7 +7,7 @@ from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
-from apps.session.utils import api_login_required
+from apps.session.utils import api_login_required, api_token_required
 from apps.orm.forms import RoomForm
 from apps.orm.models import Room
 from .utils import room_id_generator
@@ -35,10 +35,12 @@ def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
         )
 
 
-@api_login_required
+
 @require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
-@atomic
+@api_login_required
+@api_token_required
 @room_id_generator
+@atomic
 def room_api(request, room_id):
     if request.method == 'GET':
         room = get_object_or_404(

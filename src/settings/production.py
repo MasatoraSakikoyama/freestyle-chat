@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['']
 MIDDLEWARE.insert(3, 'django.middleware.csrf.CsrfViewMiddleware')
 
 # for heroku
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 TEMPLATES[0]['DIRS'] = ['src/static']
 

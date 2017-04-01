@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from json import loads, dumps, JSONDecodeError
 
+import jwt
+from django.conf import settings
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
-from .utils import api_login_required
+from .utils import api_login_required, api_token_required
 from .forms import UserForm
 from .models import User
 
@@ -62,8 +65,26 @@ def logout_api(request):
     )
 
 
+@require_http_methods(['POST'])
 @api_login_required
+def token_api(request):
+    now = datetime.utcnow()
+    payload = {
+        'nbf': now,
+        'exp': now + datetime.timedelta(seconds=10),
+        'user_id': request.user.user_id,
+    }
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithms=['HS256'])
+    return HttpResponse(
+        content=dumps({'token': token}),
+        status=200,
+        content_type='application/json'
+    )
+
+
 @require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
+@api_login_required
+@api_token_required
 @atomic
 def user_api(request, user_id):
     if request.method == 'GET':
