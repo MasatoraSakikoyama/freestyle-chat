@@ -1,6 +1,6 @@
 import template from './footer.html';
-import style from './footer.css';
+import {} from './footer.css';
 
 export default {
-    template: template
-}
+  template,
+};

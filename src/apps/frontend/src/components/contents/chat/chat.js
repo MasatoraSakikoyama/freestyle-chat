@@ -1,38 +1,38 @@
 import template from './chat.html';
-import style from './chat.css';
+import {} from './chat.css';
 
-import sideMenu from './side_menu/side.menu.js';
-import chatRoom from './chat_room/chat.room.js';
+import sideMenu from './side_menu/side.menu';
+import chatRoom from './chat_room/chat.room';
 
 export default {
-    template: template,
-    props: {
-        router: {
-            type: Object,
-            required: true
-        },
-        isLogin: {
-            type: Boolean,
-            default: false
-        }
+  template,
+  props: {
+    router: {
+      type: Object,
+      required: true,
     },
-    data() {
-        return {
-            selectedRoom: ''
-        }
+    isLogin: {
+      type: Boolean,
+      default: false,
     },
-    components: {
-        'side-menu': sideMenu,
-        'chat-room': chatRoom
+  },
+  data() {
+    return {
+      selectedRoom: '',
+    };
+  },
+  components: {
+    'side-menu': sideMenu,
+    'chat-room': chatRoom,
+  },
+  methods: {
+    selectRoom(roomId) {
+      this.selectedRoom = roomId;
     },
-    methods: {
-        selectRoom(roomId) {
-            this.selectedRoom = roomId;
-        },
-        deselectRoom(roomId) {
-            if (this.selectedRoom === roomId) {
-                this.selectedRoom = '';
-            }
-        }
-    }
-}
+    deselectRoom(roomId) {
+      if (this.selectedRoom === roomId) {
+        this.selectedRoom = '';
+      }
+    },
+  },
+};
