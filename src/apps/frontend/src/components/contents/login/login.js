@@ -1,7 +1,7 @@
-/* globals axios */
+/* globals Vue, axios */
 import template from './login.html';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     router: {
@@ -42,4 +42,4 @@ export default {
       this.$destroy();
     }
   },
-};
+});

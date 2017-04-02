@@ -1,8 +1,9 @@
-import jwt from '../../../../../util/jwt.axios';
+/* globals Vue */
+import jwt from '../../../../../utils/jwt.axios';
 
 import template from './form.html';
 
-export default {
+export default Vue.extend({
   template,
   data() {
     return {
@@ -29,4 +30,4 @@ export default {
       });
     },
   },
-};
+});

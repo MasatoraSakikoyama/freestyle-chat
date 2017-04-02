@@ -1,6 +1,7 @@
+/* globals Vue */
 import template from './message.html';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     message: {
@@ -17,4 +18,4 @@ export default {
       return (this.index + 1);
     },
   },
-};
+});

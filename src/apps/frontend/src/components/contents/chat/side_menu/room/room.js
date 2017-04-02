@@ -1,9 +1,10 @@
-import jwt from '../../../../../util/jwt.axios';
+/* globals Vue */
+import jwt from '../../../../../utils/jwt.axios';
 
 import template from './room.html';
 import {} from './room.css';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     isLogin: {
@@ -38,4 +39,4 @@ export default {
         });
     },
   },
-};
+});

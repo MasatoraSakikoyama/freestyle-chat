@@ -1,11 +1,11 @@
-/* globals axios */
+/* globals Vue, axios */
 import template from './side.menu.html';
 import {} from './side.menu.css';
 
-import sideMenuRoom from './room/room';
-import sideMenuForm from './form/form';
+import SideMenuRoom from './room/room';
+import SideMenuForm from './form/form';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     isLogin: {
@@ -23,8 +23,8 @@ export default {
     };
   },
   components: {
-    'side-menu-room': sideMenuRoom,
-    'side-menu-form': sideMenuForm,
+    'side-menu-room': SideMenuRoom,
+    'side-menu-form': SideMenuForm,
   },
   methods: {
     createRoom(room) {
@@ -57,4 +57,4 @@ export default {
   created() {
     this.getRooms();
   },
-};
+});

@@ -1,10 +1,11 @@
+/* globals Vue */
 import template from './chat.html';
 import {} from './chat.css';
 
-import sideMenu from './side_menu/side.menu';
-import chatRoom from './chat_room/chat.room';
+import SideMenu from './side_menu/side.menu';
+import ChatRoom from './chat_room/chat.room';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     router: {
@@ -22,8 +23,8 @@ export default {
     };
   },
   components: {
-    'side-menu': sideMenu,
-    'chat-room': chatRoom,
+    'side-menu': SideMenu,
+    'chat-room': ChatRoom,
   },
   methods: {
     selectRoom(roomId) {
@@ -35,4 +36,4 @@ export default {
       }
     },
   },
-};
+});

@@ -1,6 +1,7 @@
+/* globals Vue */
 import template from './form.html';
 
-export default {
+export default Vue.extend({
   template,
   data() {
     return {
@@ -21,4 +22,4 @@ export default {
       this.$emit('close-room');
     },
   },
-};
+});

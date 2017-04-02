@@ -1,13 +1,16 @@
 /* globals axios */
+const POST = 'post';
+const PUT = 'put';
+const DELETE = 'delete';
 const jwtAxios = axios.create();
 const METHODS = {
-  POST: jwtAxios.post,
-  PUT: jwtAxios.put,
-  DELETE: jwtAxios.delete,
+  [POST]: jwtAxios.post,
+  [PUT]: jwtAxios.put,
+  [DELETE]: jwtAxios.delete,
 };
 
 function getTokenSetPromise(method, url, payload) {
-  if (['POST', 'PUT', 'DELETE'].indexOf(method) === -1) {
+  if ([POST, PUT, DELETE].indexOf(method) === -1) {
     throw new Error('Invalid method');
   }
   return new Promise((resolve, reject) => {
@@ -23,15 +26,15 @@ function getTokenSetPromise(method, url, payload) {
 }
 
 function postFunc(url, payload) {
-  return getTokenSetPromise('POST', url, payload);
+  return getTokenSetPromise(POST, url, payload);
 }
 
 function putFunc(url, payload) {
-  return getTokenSetPromise('PUT', url, payload);
+  return getTokenSetPromise(PUT, url, payload);
 }
 
 function deleteFunc(url) {
-  return getTokenSetPromise('DELETE', url);
+  return getTokenSetPromise(DELETE, url);
 }
 
 export default {

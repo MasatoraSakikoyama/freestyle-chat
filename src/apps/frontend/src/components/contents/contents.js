@@ -1,6 +1,7 @@
+/* globals Vue */
 import template from './contents.html';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     router: {
@@ -17,4 +18,4 @@ export default {
       this.$emit('login');
     },
   },
-};
+});

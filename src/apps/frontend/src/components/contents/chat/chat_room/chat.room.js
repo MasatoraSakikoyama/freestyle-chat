@@ -1,13 +1,13 @@
-/* globals window, WebSocket */
+/* globals window, WebSocket, Vue */
 import template from './chat.room.html';
 import {} from './chat.room.css';
 
-import chatRoomForm from './form/form';
-import chatRoomMessage from './message/message';
+import ChatRoomForm from './form/form';
+import ChatRoomMessage from './message/message';
 
 const MESSAGE_SIZE = 10;
 
-export default {
+export default Vue.extend({
   template,
   props: {
     selectedRoom: {
@@ -22,8 +22,8 @@ export default {
     };
   },
   components: {
-    'chat-room-form': chatRoomForm,
-    'chat-room-message': chatRoomMessage,
+    'chat-room-form': ChatRoomForm,
+    'chat-room-message': ChatRoomMessage,
   },
   watch: {
     selectedRoom() {
@@ -72,4 +72,4 @@ export default {
       }
     },
   },
-};
+});

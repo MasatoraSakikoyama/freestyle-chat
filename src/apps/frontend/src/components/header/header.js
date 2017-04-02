@@ -1,8 +1,8 @@
-/* globals axios */
+/* globals Vue, axios */
 import template from './header.html';
 import {} from './header.css';
 
-export default {
+export default Vue.extend({
   template,
   props: {
     router: {
@@ -26,4 +26,4 @@ export default {
         });
     },
   },
-};
+});
