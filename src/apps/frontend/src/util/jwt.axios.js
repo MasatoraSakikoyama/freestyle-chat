@@ -1,17 +1,18 @@
+/* globals Vue, axios */
 const POST = 'post';
 const PUT = 'put';
 const DELETE = 'delete';
 const jwtAxios = axios.create();
 
-function _getTokenSetPromise(method, url, payload) {
+function getTokenSetPromise(method, url, payload) {
     if ([POST, PUT, DELETE].indexOf(method) === -1) {
         throw 'Invalid method';
     }
-    let evalTarget = `jwtAxios.${method}(url${payload ? ', payload)' : ')'}`;
+    const evalTarget = `jwtAxios.${method}(url${payload ? ', payload)' : ')'}`;
     return new Promise((resolve, reject) => {
         axios.get('/api/session/token')
             .then(response => {
-                jwtAxios.defaults.headers.common['Authorization'] = response.data.token;
+                jwtAxios.defaults.headers.common.Authorization = response.data.token;
                 resolve(eval(evalTarget));
             })
             .catch(error => {
@@ -20,20 +21,20 @@ function _getTokenSetPromise(method, url, payload) {
     });
 }
 
-function _post(url, payload) {
-    return _getTokenSetPromise(POST, url, payload);
+function postFunc(url, payload) {
+    return getTokenSetPromise(POST, url, payload);
 }
 
-function _put(url, payload) {
-    return _getTokenSetPromise(PUT, url, payload);
+function putFunc(url, payload) {
+    return getTokenSetPromise(PUT, url, payload);
 }
 
-function _delete(url) {
-    return _getTokenSetPromise(DELETE, url);
+function deleteFunc(url) {
+    return getTokenSetPromise(DELETE, url);
 }
 
 export default {
-    post: _post,
-    put: _put,
-    delete: _delete
+    post: postFunc,
+    put: putFunc,
+    delete: deleteFunc,
 }
