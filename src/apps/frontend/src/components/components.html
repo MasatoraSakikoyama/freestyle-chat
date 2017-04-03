@@ -1,0 +1,15 @@
+<div>
+  <app-header
+    v-bind:is-login="isLogin"
+    v-on:logout="logout"
+    v-on:error="error"></app-header>
+  <app-contents
+    v-bind:is-login="isLogin"
+    v-on:login="login"
+    v-on:error="error"></app-contents>
+  <app-footer></app-footer>
+  <error-modal
+    v-bind:show-modal="showModal"
+    v-bind:modal-message="modalMessage"
+    v-on:ok="ok"></error-modal>
+</div>

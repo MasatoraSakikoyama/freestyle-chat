@@ -1,5 +1,5 @@
 <div>
   <label for="room-title">Room Create</label>
   <input id="room-title" type="text" placeholder="title" v-model="title"/>
-  <button type="button" v-on:click.prevent="createRoom">Create</button>
+  <button type="button" v-on:click.stop="createRoom">Create</button>
 </div>

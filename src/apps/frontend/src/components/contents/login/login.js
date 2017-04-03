@@ -4,10 +4,6 @@ import template from './login.html';
 export default Vue.extend({
   template,
   props: {
-    router: {
-      type: Object,
-      required: true,
-    },
     isLogin: {
       type: Boolean,
       default: false,
@@ -30,10 +26,9 @@ export default Vue.extend({
       })
       .then(() => {
         this.$emit('login');
-        this.router.push({ name: 'home' });
       })
       .catch((error) => {
-        throw new Error(error.response.data.message);
+        this.$emit('error', new Error(error.response.data.message));
       });
     },
   },

@@ -8,10 +8,6 @@ import ChatRoom from './chat_room/chat.room';
 export default Vue.extend({
   template,
   props: {
-    router: {
-      type: Object,
-      required: true,
-    },
     isLogin: {
       type: Boolean,
       default: false,
@@ -34,6 +30,9 @@ export default Vue.extend({
       if (this.selectedRoom === roomId) {
         this.selectedRoom = '';
       }
+    },
+    error(event) {
+      this.$emit('error', event);
     },
   },
 });

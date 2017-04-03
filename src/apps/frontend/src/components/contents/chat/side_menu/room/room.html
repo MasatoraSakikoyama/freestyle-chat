@@ -2,9 +2,9 @@
   <label
     v-bind:class="{ selected: isSelected }"
     v-bind:title="room.title"
-    v-on:click.prevent="openRoom">{{room.title}}</label>
+    v-on:click.stop="openRoom">{{room.title}}</label>
   <button
     type="button"
     v-if="isLogin"
-    v-on:click.prevent="deleteRoom">Delete</button>
+    v-on:click.stop="deleteRoom">Delete</button>
 </li>

@@ -1,11 +1,15 @@
-<header>
-  <h3>
+<header class="app-header">
+  <h3 class="app-header__title">
     <router-link to="/">Freestyle Chat</router-link>
   </h3>
-  <nav>
+  <nav class="app-header__nav">
     <ul>
-      <li><router-link to="/login" v-if="!isLogin">Login</router-link></li>
-      <li><a href="javascript:void(0)" v-if="isLogin" v-on:click.prevent="logout">Logout</a></li>
+      <li class="app-header__nav__li">
+        <router-link to="/login" v-if="!isLogin">Login</router-link>
+      </li>
+      <li class="app-header__nav__li">
+        <a href="javascript:void(0)" v-if="isLogin" v-on:click.prevent="logout">Logout</a>
+      </li>
     </ul>
   </nav>
 </header>

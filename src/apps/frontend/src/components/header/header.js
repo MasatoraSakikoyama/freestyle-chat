@@ -5,10 +5,6 @@ import {} from './header.css';
 export default Vue.extend({
   template,
   props: {
-    router: {
-      type: Object,
-      required: true,
-    },
     isLogin: {
       type: Boolean,
       default: false,
@@ -19,10 +15,9 @@ export default Vue.extend({
       axios.post('/api/session/logout')
         .then(() => {
           this.$emit('logout');
-          this.router.push({ name: 'login' });
         })
         .catch(() => {
-          throw new Error('Logout fail');
+          this.$emit('error', new Error('Logout fail'));
         });
     },
   },

@@ -1,11 +1,3 @@
 <div>
-  <app-header
-    v-bind:router="router"
-    v-bind:is-login="isLogin"
-    v-on:logout="logout"></app-header>
-  <app-contents
-    v-bind:router="router"
-    v-bind:is-login="isLogin"
-    v-on:login="login"></app-contents>
-  <app-footer></app-footer>
+  <app-components v-bind:router="router"></app-components>
 </div>

@@ -6,9 +6,11 @@
       v-bind:is-login="isLogin"
       v-bind:selected-room="selectedRoom"
       v-on:open-room="openRoom"
-      v-on:delete-room="deleteRoom"></side-menu-room>
+      v-on:delete-room="deleteRoom"
+      v-on:error="error"></side-menu-room>
   </ul>
   <side-menu-form
     v-if="isLogin"
-    v-on:create-room="createRoom"></side-menu-form>
+    v-on:create-room="createRoom"
+    v-on:error="error"></side-menu-form>
 </div>

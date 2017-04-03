@@ -35,7 +35,7 @@ export default Vue.extend({
           this.$emit('delete-room', this.room.room_id);
         })
         .catch(() => {
-          throw new Error('Fail delete');
+          this.$emit('error', new Error('Fail delete'));
         });
     },
   },

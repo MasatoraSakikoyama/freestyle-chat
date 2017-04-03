@@ -1,15 +1,18 @@
-header {
+.app-header {
   height: 5em;
   width: 100%;
   background-color: #F7F7F7;
 }
-header > h3 {
+.app-header__title {
   margin-left: 1em;
   display: inline-block;
+  float: left;
 }
-header > nav {
+.app-header__nav {
+  margin-right: 1em;
   display: inline-block;
+  float: right;
 }
-header > nav > ul > li {
+.app-header__nav__li {
   display: inline-block;
 }

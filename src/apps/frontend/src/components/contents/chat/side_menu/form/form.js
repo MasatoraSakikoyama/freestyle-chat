@@ -15,6 +15,7 @@ export default Vue.extend({
       if (!this.title) {
         throw new Error('Title must not be empty');
       }
+
       jwt.post('/api/room/create', {
         title: this.title,
         password: null,
@@ -26,7 +27,7 @@ export default Vue.extend({
         this.$emit('create-room', response.data);
       })
       .catch(() => {
-        throw new Error('Fail create Room');
+        this.$emit('error', new Error('Fail create Room'));
       });
     },
   },

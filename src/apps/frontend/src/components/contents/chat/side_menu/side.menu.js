@@ -50,8 +50,11 @@ export default Vue.extend({
           this.rooms = response.data;
         })
         .catch((error) => {
-          throw new Error(error.response.data);
+          this.$emit('error', new Error(error.response.data));
         });
+    },
+    error(event) {
+      this.$emit('error', event);
     },
   },
   created() {
