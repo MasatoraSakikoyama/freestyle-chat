@@ -17,6 +17,6 @@ export default Vue.extend({
   methods: {
     ok() {
       this.$emit('ok');
-    }
+    },
   },
 });
