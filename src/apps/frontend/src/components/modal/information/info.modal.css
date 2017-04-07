@@ -1,4 +1,4 @@
-.error-modal {
+.info-modal {
   width: 300px;
   margin: 0px auto;
   padding: 20px 30px;
@@ -10,14 +10,14 @@
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
-.error-modal__header {
+.info-modal__header {
   margin-top: 0;
   color: #42b983;
 }
-.error-modal__body {
+.info-modal__body {
   margin: 20px 0;
 }
-.error-modal__ok-button {
+.info-modal__ok-button {
   float: right;
 }
 /*

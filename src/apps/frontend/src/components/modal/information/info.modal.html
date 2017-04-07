@@ -1,19 +1,19 @@
 <div v-if="showModal">
   <transition name="modal">
-    <div class="error-modal">
-      <div class="error-modal__header">
+    <div class="info-modal">
+      <div class="info-modal__header">
         <slot name="header">
           {{ modal.title }}
         </slot>
       </div>
-      <div class="error-modal__body">
+      <div class="info-modal__body">
         <slot name="body">
           {{ modal.message }}
         </slot>
       </div>
-      <div class="error-modal__footer">
+      <div class="info-modal__footer">
         <slot name="footer">
-          <button class="error-modal__ok-button" v-on:click="ok">
+          <button class="info-modal__ok-button" v-on:click="ok">
             OK
           </button>
         </slot>

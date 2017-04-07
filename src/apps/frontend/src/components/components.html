@@ -8,8 +8,12 @@
     v-on:login="login"
     v-on:error="error"></app-contents>
   <app-footer></app-footer>
+  <info-modal
+    v-bind:show-modal="showInfoModal"
+    v-bind:modal="modal"
+    v-on:ok="ok"></info-modal>
   <error-modal
-    v-bind:show-modal="showModal"
-    v-bind:modal-message="modalMessage"
+    v-bind:show-modal="showErrorModal"
+    v-bind:modal="modal"
     v-on:ok="ok"></error-modal>
 </div>

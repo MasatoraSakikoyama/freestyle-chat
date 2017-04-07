@@ -27,7 +27,10 @@ export default Vue.extend({
         this.$emit('create-room', response.data);
       })
       .catch(() => {
-        this.$emit('error', new Error('Fail create Room'));
+        this.$emit('error', {
+          title: 'Room',
+          message: 'Fail create',
+        });
       });
     },
   },

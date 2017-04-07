@@ -17,7 +17,10 @@ export default Vue.extend({
           this.$emit('logout');
         })
         .catch(() => {
-          this.$emit('error', new Error('Logout fail'));
+          this.$emit('error', {
+            title: 'Logout',
+            message: 'Fail logout',
+          });
         });
     },
   },

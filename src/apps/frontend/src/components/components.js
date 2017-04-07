@@ -4,6 +4,7 @@ import template from './components.html';
 import AppHeader from './header/header';
 import AppContents from './contents/contents';
 import AppFooter from './footer/footer';
+import InfoModal from './modal/information/info.modal';
 import ErrorModal from './modal/error/error.modal';
 
 export default Vue.extend({
@@ -17,14 +18,16 @@ export default Vue.extend({
   data() {
     return {
       isLogin: false,
-      showModal: false,
-      modalMessage: '',
+      showInfoModal: false,
+      showErrorModal: false,
+      modal: {},
     };
   },
   components: {
     'app-header': AppHeader,
     'app-contents': AppContents,
     'app-footer': AppFooter,
+    'info-modal': InfoModal,
     'error-modal': ErrorModal,
   },
   methods: {
@@ -39,9 +42,13 @@ export default Vue.extend({
     ok() {
       this.showModal = false;
     },
+    info(event) {
+      this.modal = event;
+      this.showInfoModal = true;
+    },
     error(event) {
-      this.modalMessage = event.message;
-      this.showModal = true;
+      this.modal = event;
+      this.showErrorModal = true;
     },
   },
   created() {
@@ -51,7 +58,10 @@ export default Vue.extend({
         this.isLogin = response.data.isLogin;
       })
       .catch(() => {
-        this.$emit('error', new Error('Fail get Login info'));
+        this.$emit('error', {
+          title: 'Login',
+          message: 'Fail get Login info',
+        });
       });
   },
 });

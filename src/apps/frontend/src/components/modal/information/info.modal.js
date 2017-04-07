@@ -1,6 +1,6 @@
 /* globals Vue */
-import template from './error.modal.html';
-import {} from './error.modal.css';
+import template from './info.modal.html';
+import {} from './info.modal.css';
 
 export default Vue.extend({
   template,

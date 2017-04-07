@@ -28,7 +28,10 @@ export default Vue.extend({
         this.$emit('login');
       })
       .catch((error) => {
-        this.$emit('error', new Error(error.response.data.message));
+        this.$emit('error', {
+          title: 'Login',
+          message: error.response.data.message,
+        });
       });
     },
   },
