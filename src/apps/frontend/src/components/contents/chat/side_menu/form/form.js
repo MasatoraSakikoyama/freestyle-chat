@@ -15,8 +15,8 @@ export default Vue.extend({
         value: null,
         isValid: false,
         rules: [
-          { name: 'NotEmpty', },
-          { name: 'MaxLength', param: 255, },
+          { name: 'NotEmpty' },
+          { name: 'MaxLength', param: 255 },
         ],
       },
     };

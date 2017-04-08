@@ -18,8 +18,8 @@ export default Vue.extend({
         value: '',
         isValid: false,
         rules: [
-          { name: 'NotEmpty', },
-          { name: 'MaxLength', param: 255, },
+          { name: 'NotEmpty' },
+          { name: 'MaxLength', param: 255 },
         ],
       },
       password: {
@@ -27,7 +27,7 @@ export default Vue.extend({
         value: '',
         isValid: false,
         rules: [
-          { name: 'NotEmpty', },
+          { name: 'NotEmpty' },
         ],
       },
     };

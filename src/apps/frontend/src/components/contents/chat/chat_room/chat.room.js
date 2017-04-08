@@ -5,8 +5,6 @@ import {} from './chat.room.css';
 import Form from './form/form';
 import Message from './message/message';
 
-const MESSAGE_SIZE = 10;
-
 export default Vue.extend({
   template,
   props: {
@@ -67,7 +65,7 @@ export default Vue.extend({
       };
       this.ws.onmessage = (event) => {
         JSON.parse(event.data).forEach((data) => {
-          // if (this.messages.length >= MESSAGE_SIZE) {
+          // if (this.messages.length >= 10) {
           //   this.messages.shift();
           // }
           this.messages.push(data);

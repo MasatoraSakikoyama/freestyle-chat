@@ -4,15 +4,12 @@ import password from './templates/password.html';
 import textarea from './templates/textarea.html';
 import {} from './input.css';
 
-const templates = {
-  text: text,
-  password: password,
-  textarea: textarea,
-};
+const templates = { text, password, textarea };
 
 export default (inputType) => {
+  const template = templates[inputType];
   return Vue.extend({
-    template: templates[inputType],
+    template,
     props: {
       model: {
         type: Object,
@@ -53,7 +50,8 @@ export default (inputType) => {
       target: {
         handler() {
           this.model.rules.some((rule) => {
-            return !this.validation[rule.name](rule.param);
+            const isValid = this.validation[rule.name](rule.param);
+            return !isValid;
           });
         },
       },
