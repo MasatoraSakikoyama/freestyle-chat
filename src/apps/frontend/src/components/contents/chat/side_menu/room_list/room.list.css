@@ -1,0 +1,15 @@
+.selected {
+  background-color: lime;
+}
+.room-list {
+  height: auto;
+}
+.room-list__label {
+  float: left;
+  margin-left: 0.5em;
+}
+.room-list__button {
+  float: right;
+  margin-right: 1em;
+  margin-top: 0.4em;
+}

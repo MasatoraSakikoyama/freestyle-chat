@@ -1,8 +1,8 @@
 /* globals Vue */
 import jwt from '../../../../../utils/jwt.axios';
 
-import template from './room.html';
-import {} from './room.css';
+import template from './room.list.html';
+import {} from './room.list.css';
 
 export default Vue.extend({
   template,

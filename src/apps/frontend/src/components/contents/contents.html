@@ -1,6 +1,6 @@
-<div>
+<div class="contents">
   <router-view
-    v-bind:is-login="isLogin"
-    v-on:login="login"
-    v-on:error="error"></router-view>
+    :is-login="isLogin"
+    @login="login"
+    @error="error"></router-view>
 </div>

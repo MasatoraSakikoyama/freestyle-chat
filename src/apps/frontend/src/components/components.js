@@ -1,11 +1,12 @@
 /* globals window, Vue, axios */
 import template from './components.html';
+import {} from './components.css';
 
 import AppHeader from './header/header';
 import AppContents from './contents/contents';
 import AppFooter from './footer/footer';
-import InfoModal from './modal/information/info.modal';
-import ErrorModal from './modal/error/error.modal';
+import InfoModal from './common/modal/information/info.modal';
+import ErrorModal from './common/modal/error/error.modal';
 
 export default Vue.extend({
   template,
@@ -20,7 +21,8 @@ export default Vue.extend({
       isLogin: false,
       showInfoModal: false,
       showErrorModal: false,
-      modal: {},
+      infoModal: {},
+      errorModal: {},
     };
   },
   components: {
@@ -40,14 +42,14 @@ export default Vue.extend({
       this.router.push({ name: 'login' });
     },
     ok() {
-      this.showModal = false;
+      this.showErrorModal = false;
     },
     info(event) {
-      this.modal = event;
+      this.infoModal = event;
       this.showInfoModal = true;
     },
     error(event) {
-      this.modal = event;
+      this.errorModal = event;
       this.showErrorModal = true;
     },
   },

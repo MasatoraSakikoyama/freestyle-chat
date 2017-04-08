@@ -1,5 +1,5 @@
 <div v-if="!isLogin">
-  <input type="text" placeholder="user id" v-model="userId"/>
-  <input type="password" placeholder="password" v-model="password"/>
-  <button type="button" v-on:click.stop="login">Login</button>
+  <text-input :model="userId" />
+  <password-input :model="password" />
+  <button type="button" @click.stop="login">Login</button>
 </div>

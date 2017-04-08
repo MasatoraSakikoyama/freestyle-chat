@@ -1,1 +1,16 @@
-<li>{{number}}_[User: {{message.modified_by}}, content: {{message.content}}, date: {{message.modified_at}}]</li>
+<li class="message">
+  <div class="message__index" v-text="number"></div>
+  <div class="message__body">
+    <div
+      class="message__body__content"
+      v-text="message.content"></div>
+    <div class="message__body__auth">
+      <div
+        class="message__body__auth__name"
+        v-text="message.modified_by"></div>
+      <div
+        class="message__body__auth__date"
+        v-text="message.modified_at"></div>
+    </div>
+  </div>
+</li>

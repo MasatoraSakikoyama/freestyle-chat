@@ -1,11 +1,12 @@
 <div class="chat">
   <side-menu
-    v-bind:is-login="isLogin"
-    v-bind:selected-room="selectedRoom"
-    v-on:select-room="selectRoom"
-    v-on:deselect-room="deselectRoom"
-    v-on:error="error"></side-menu>
+    :is-login="isLogin"
+    :selected-room="selectedRoom"
+    @select-room="selectRoom"
+    @deselect-room="deselectRoom"
+    @error="error"></side-menu>
   <chat-room
-    v-bind:selected-room="selectedRoom"
-    v-on:deselect-room="deselectRoom"></chat-room>
+    :selected-room="selectedRoom"
+    @deselect-room="deselectRoom"
+    @error="error"></chat-room>
 </div>

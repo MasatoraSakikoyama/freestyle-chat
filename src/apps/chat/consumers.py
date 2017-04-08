@@ -43,7 +43,8 @@ def receive(message, room_id, user):
     method = text['method']
 
     if method == 'GET':
-        messages = Message.objects.filter(chat_room=room).order_by('-created_at')[0:10]
+        # messages = Message.objects.filter(chat_room=room).order_by('-created_at')[0:10]
+        messages = Message.objects.filter(chat_room=room).order_by('-created_at')
         messages = [m.to_dict() for m in messages]
         messages.reverse()
     elif method == 'POST':

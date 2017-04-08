@@ -1,19 +1,19 @@
-<div>
+<div class="components">
   <app-header
-    v-bind:is-login="isLogin"
-    v-on:logout="logout"
-    v-on:error="error"></app-header>
+    :is-login="isLogin"
+    @logout="logout"
+    @error="error"></app-header>
   <app-contents
-    v-bind:is-login="isLogin"
-    v-on:login="login"
-    v-on:error="error"></app-contents>
+    :is-login="isLogin"
+    @login="login"
+    @error="error"></app-contents>
   <app-footer></app-footer>
   <info-modal
-    v-bind:show-modal="showInfoModal"
-    v-bind:modal="modal"
-    v-on:ok="ok"></info-modal>
+    :show-modal="showInfoModal"
+    :modal="infoModal"
+    @ok="ok"></info-modal>
   <error-modal
-    v-bind:show-modal="showErrorModal"
-    v-bind:modal="modal"
-    v-on:ok="ok"></error-modal>
+    :show-modal="showErrorModal"
+    :modal="errorModal"
+    @ok="ok"></error-modal>
 </div>

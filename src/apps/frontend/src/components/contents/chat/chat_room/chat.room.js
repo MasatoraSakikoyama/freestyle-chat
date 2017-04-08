@@ -2,8 +2,8 @@
 import template from './chat.room.html';
 import {} from './chat.room.css';
 
-import ChatRoomForm from './form/form';
-import ChatRoomMessage from './message/message';
+import Form from './form/form';
+import Message from './message/message';
 
 const MESSAGE_SIZE = 10;
 
@@ -19,11 +19,12 @@ export default Vue.extend({
     return {
       messages: [],
       ws: {},
+      sendSuccess: false,
     };
   },
   components: {
-    'chat-room-form': ChatRoomForm,
-    'chat-room-message': ChatRoomMessage,
+    'chat-room-form': Form,
+    'chat-room-message': Message,
   },
   watch: {
     selectedRoom() {
@@ -37,12 +38,17 @@ export default Vue.extend({
   methods: {
     sendMessage(message) {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-        throw new Error('Chat channel is not open');
+        this.$emit('error', {
+          title: 'Message',
+          message: 'Chat Room is not open',
+        });
+      } else {
+        this.ws.send(JSON.stringify({
+          method: 'POST',
+          content: message,
+        }));
+        this.sendSuccess = true;
       }
-      this.ws.send(JSON.stringify({
-        method: 'POST',
-        content: message,
-      }));
     },
     closeRoom() {
       this.messages = [];
@@ -61,15 +67,18 @@ export default Vue.extend({
       };
       this.ws.onmessage = (event) => {
         JSON.parse(event.data).forEach((data) => {
-          if (this.messages.length >= MESSAGE_SIZE) {
-            this.messages.shift();
-          }
+          // if (this.messages.length >= MESSAGE_SIZE) {
+          //   this.messages.shift();
+          // }
           this.messages.push(data);
         });
       };
       if (this.ws.readyState === WebSocket.OPEN) {
         this.ws.onopen();
       }
+    },
+    resetFlag() {
+      this.sendSuccess = false;
     },
   },
 });

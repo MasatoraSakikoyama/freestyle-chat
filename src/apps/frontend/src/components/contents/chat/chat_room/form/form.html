@@ -1,6 +1,6 @@
 <div>
   <label for="message">Message</label>
-  <input id="message" type="text" placeholder="message" v-model="message"/>
-  <button type="button" v-on:click.stop="sendMessage">Send</button>
-  <button type="button" v-on:click.stop="closeRoom">Close Room</button>
+  <textarea-input id="message" :model="model"/>
+  <button type="button" @click.stop="sendMessage">Send</button>
+  <button type="button" @click.stop="closeRoom">Close Room</button>
 </div>

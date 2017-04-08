@@ -1,0 +1,10 @@
+.input {
+}
+.input__value {
+  display: inline-block;
+}
+.input__error {
+  display: inline-block;
+  color: red;
+  font-size: 12px;
+}

@@ -2,8 +2,8 @@
 import template from './side.menu.html';
 import {} from './side.menu.css';
 
-import SideMenuRoom from './room/room';
-import SideMenuForm from './form/form';
+import RoomList from './room_list/room.list';
+import Form from './form/form';
 
 export default Vue.extend({
   template,
@@ -23,8 +23,8 @@ export default Vue.extend({
     };
   },
   components: {
-    'side-menu-room': SideMenuRoom,
-    'side-menu-form': SideMenuForm,
+    'room-list': RoomList,
+    'side-menu-form': Form,
   },
   methods: {
     createRoom(room) {

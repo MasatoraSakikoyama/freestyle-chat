@@ -15,7 +15,7 @@ from .utils import room_id_generator
 
 @require_http_methods(['GET'])
 @atomic
-def rooms_api(request, order_by='room_id', limit=30, offset=0, **kwargs):
+def rooms_api(request, order_by='pk', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
         query = Room.objects.filter(deleted_by='').filter(deleted_at=None)
         search_by = kwargs.get('search_by')

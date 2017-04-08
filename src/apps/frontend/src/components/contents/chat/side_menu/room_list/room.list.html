@@ -1,0 +1,13 @@
+<li class="room-list"
+  :class="{ selected: isSelected }">
+  <label
+    class="room-list__label"
+    :title="room.title"
+    v-text="room.title"
+    @click.stop="openRoom"></label>
+  <button
+    class="room-list__button"
+    type="button"
+    v-if="isLogin"
+    @click.stop="deleteRoom">Delete</button>
+</li>

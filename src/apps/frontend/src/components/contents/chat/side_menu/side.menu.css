@@ -1,12 +1,23 @@
-div.sideMenu {
-  width: 200px;
-  background: #F7F7F7;
-  padding: 10px;
+.side-menu {
+  width: 10em;
+  max-height: 45em;
+  background-color: black;
+  color: white;
+  padding: 1em;
   position: fixed;
-  top: 100px;
-  z-index: 20;
 }
-* html div.sideMenu {
+* html .sideMenu {
   position: absolute;
   top: expression(eval(document.documetElement.scrollTop+100));
+}
+.side-menu__title {
+  margin: 0.5em;
+}
+.side-menu__list {
+  height: 35em;
+  overflow: scroll;
+  background-color: gray;
+}
+.side-menu__form {
+  margin: 0.5em;
 }

@@ -1,0 +1,28 @@
+.message {
+  display: table-cell;
+  width: 100%;
+  padding: 0.5em;
+  border-bottom: solid 0.1em;
+}
+.message__index {
+  display: inline-block;
+  width: 3em;
+  vertical-align: top;
+}
+.message__body {
+  display: inline-block;
+  width: 45em;
+}
+.message__body__content {
+  word-break: break-all;
+}
+.message__body__auth {
+}
+.message__body__auth__name {
+  display: inline-block;
+
+}
+.message__body__auth__date {
+  display: inline-block;
+
+}

@@ -1,4 +1,6 @@
-div.chat-room {
-  width: 50%;
-  margin: 0 auto;
+.chat-room {
+  margin-left: 15em;
+}
+.chat-room > ul {
+  display: table;
 }

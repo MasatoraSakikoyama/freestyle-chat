@@ -1,16 +1,19 @@
-<div class="sideMenu">
-  <h3>Chat Rooms</h3>
-  <ul v-for="room in rooms" v-bind:key="room.room_id">
-    <side-menu-room
-      v-bind:room="room"
-      v-bind:is-login="isLogin"
-      v-bind:selected-room="selectedRoom"
-      v-on:open-room="openRoom"
-      v-on:delete-room="deleteRoom"
-      v-on:error="error"></side-menu-room>
+<div class="side-menu">
+  <h3 class="side-menu__title">Chat Rooms</h3>
+  <ul class="side-menu__list">
+    <room-list
+      v-for="room in rooms"
+      :key="room.room_id"
+      :room="room"
+      :is-login="isLogin"
+      :selected-room="selectedRoom"
+      @open-room="openRoom"
+      @delete-room="deleteRoom"
+      @error="error"></room-list>
   </ul>
   <side-menu-form
+    class="side-menu__form"
     v-if="isLogin"
-    v-on:create-room="createRoom"
-    v-on:error="error"></side-menu-form>
+    @create-room="createRoom"
+    @error="error"></side-menu-form>
 </div>

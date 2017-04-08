@@ -1,6 +1,8 @@
 /* globals Vue, axios */
 import template from './login.html';
 
+import factory from '../../common/input/component.factory';
+
 export default Vue.extend({
   template,
   props: {
@@ -11,18 +13,42 @@ export default Vue.extend({
   },
   data() {
     return {
-      userId: '',
-      password: '',
+      userId: {
+        key: 'UserId',
+        value: '',
+        isValid: false,
+        rules: [
+          { name: 'NotEmpty', },
+          { name: 'MaxLength', param: 255, },
+        ],
+      },
+      password: {
+        key: 'Password',
+        value: '',
+        isValid: false,
+        rules: [
+          { name: 'NotEmpty', },
+        ],
+      },
     };
+  },
+  computed: {
+    isValid() {
+      return (this.userId.isValid && this.password.isValid);
+    },
+  },
+  components: {
+    'text-input': factory('text'),
+    'password-input': factory('password'),
   },
   methods: {
     login() {
-      if (!this.userId || !this.password) {
-        throw new Error('User Id or Password must not be empty');
+      if (!this.isValid) {
+        return;
       }
       axios.post('/api/session/login', {
-        user_id: this.userId,
-        password: this.password,
+        user_id: this.userId.value,
+        password: this.password.value,
       })
       .then(() => {
         this.$emit('login');

@@ -1,0 +1,11 @@
+<div class="input">
+  <textarea
+    class="input__value"
+    cols=64 rows=4
+    :placeholder="model.key"
+    v-model="model.value" />
+  <div
+    class="input__error"
+    v-show="!model.isValid"
+    v-text="message"></div>
+</div>
