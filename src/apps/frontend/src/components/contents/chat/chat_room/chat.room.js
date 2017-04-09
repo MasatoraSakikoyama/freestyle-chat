@@ -37,9 +37,11 @@ export default Vue.extend({
         axios.get(`/api/room/${roomId}`)
           .then((response) => {
             this.room = response.data;
-            this.room.messages.forEach((m) => {
+            this.room.messages = this.room.messages.map((message) => {
+              const m = message;
               const date = new Date(m.modified_at);
               m.modified_at = date.toLocaleString();
+              return m;
             });
             this.connectWS();
           })
@@ -78,13 +80,14 @@ export default Vue.extend({
     connectWS() {
       this.ws = new WebSocket(`ws://${window.location.host}/api/chat/${this.selectedRoom}`);
       this.ws.onmessage = (event) => {
-        JSON.parse(event.data).forEach((data) => {
+        JSON.parse(event.data).forEach((message) => {
           // if (this.messages.length >= 10) {
           //   this.messages.shift();
           // }
-          const date = new Date(data.modified_at);
-          data.modified_at = date.toLocaleString();
-          this.room.messages.push(data);
+          const m = message;
+          const date = new Date(m.modified_at);
+          m.modified_at = date.toLocaleString();
+          this.room.messages.push(m);
         });
       };
       if (this.ws.readyState === WebSocket.OPEN) {

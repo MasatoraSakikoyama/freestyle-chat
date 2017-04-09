@@ -7,7 +7,7 @@ const templates = { info, error };
 
 export default (modalType) => {
   const template = templates[modalType];
-  return  Vue.extend({
+  return Vue.extend({
     template,
     props: {
       showModal: {
