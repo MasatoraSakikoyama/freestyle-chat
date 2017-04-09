@@ -1,4 +1,4 @@
-/* globals window, WebSocket, Vue */
+/* globals window, WebSocket, Vue, axios */
 import template from './chat.room.html';
 import {} from './chat.room.css';
 
@@ -28,24 +28,28 @@ export default Vue.extend({
     selectedRoom() {
       this.room = {};
       this.wsFlush();
-      if (this.selectedRoom) {
-        this.openRoom();
-      }
+      this.openRoom(this.selectedRoom);
     },
   },
   methods: {
     openRoom(roomId) {
-      axios.get(`/api/room/${this.selectedRoom}`)
-        .then((response) => {
-          this.room = response.data;
-          this.connectWS();
-        })
-        .catch(() => {
-          this.$emit('error', {
-            title: 'Room',
-            message: 'Fail get Room',
+      if (roomId) {
+        axios.get(`/api/room/${roomId}`)
+          .then((response) => {
+            this.room = response.data;
+            this.room.messages.forEach((m) => {
+              const date = new Date(m.modified_at);
+              m.modified_at = date.toLocaleString();
+            });
+            this.connectWS();
+          })
+          .catch(() => {
+            this.$emit('error', {
+              title: 'Room',
+              message: 'Fail get Room',
+            });
           });
-        });
+      }
     },
     closeRoom() {
       this.room = {};
@@ -78,6 +82,8 @@ export default Vue.extend({
           // if (this.messages.length >= 10) {
           //   this.messages.shift();
           // }
+          const date = new Date(data.modified_at);
+          data.modified_at = date.toLocaleString();
           this.room.messages.push(data);
         });
       };

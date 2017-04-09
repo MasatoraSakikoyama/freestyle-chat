@@ -15,7 +15,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      selectedRoom: '',
+      selectedRoom: null,
     };
   },
   components: {
@@ -28,7 +28,7 @@ export default Vue.extend({
     },
     deselectRoom(roomId) {
       if (this.selectedRoom === roomId) {
-        this.selectedRoom = '';
+        this.selectedRoom = null;
       }
     },
     error(event) {
