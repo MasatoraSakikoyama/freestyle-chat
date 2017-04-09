@@ -1,7 +1,7 @@
 /* globals Vue, axios */
 import template from './login.html';
 
-import factory from '../../common/input/component.factory';
+import inputFactory from '../../common/input/component.factory';
 
 export default Vue.extend({
   template,
@@ -38,8 +38,8 @@ export default Vue.extend({
     },
   },
   components: {
-    'text-input': factory('text'),
-    'password-input': factory('password'),
+    'text-input': inputFactory('text'),
+    'password-input': inputFactory('password'),
   },
   methods: {
     login() {

@@ -5,8 +5,7 @@ import {} from './components.css';
 import AppHeader from './header/header';
 import AppContents from './contents/contents';
 import AppFooter from './footer/footer';
-import InfoModal from './common/modal/information/info.modal';
-import ErrorModal from './common/modal/error/error.modal';
+import modalFactory from './common/modal/modal.factory';
 
 export default Vue.extend({
   template,
@@ -29,8 +28,8 @@ export default Vue.extend({
     'app-header': AppHeader,
     'app-contents': AppContents,
     'app-footer': AppFooter,
-    'info-modal': InfoModal,
-    'error-modal': ErrorModal,
+    'info-modal': modalFactory('info'),
+    'error-modal': modalFactory('error'),
   },
   methods: {
     login() {
