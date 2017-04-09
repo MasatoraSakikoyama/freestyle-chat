@@ -1,5 +1,5 @@
 <div class="chat-room">
-  <ul v-for="(message, index) in messages" :key="message.id">
+  <ul v-for="(message, index) in room.messages" :key="message.id">
     <chat-room-message
       :message="message"
       :index="index"></chat-room-message>

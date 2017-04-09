@@ -15,7 +15,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      messages: [],
+      room: {},
       ws: {},
       sendSuccess: false,
     };
@@ -26,14 +26,32 @@ export default Vue.extend({
   },
   watch: {
     selectedRoom() {
-      this.messages = [];
+      this.room = {};
       this.wsFlush();
       if (this.selectedRoom) {
-        this.connectWS();
+        this.openRoom();
       }
     },
   },
   methods: {
+    openRoom(roomId) {
+      axios.get(`/api/room/${this.selectedRoom}`)
+        .then((response) => {
+          this.room = response.data;
+          this.connectWS();
+        })
+        .catch(() => {
+          this.$emit('error', {
+            title: 'Room',
+            message: 'Fail get Room',
+          });
+        });
+    },
+    closeRoom() {
+      this.room = {};
+      this.wsFlush();
+      this.$emit('deselect-room', this.selectedRoom);
+    },
     sendMessage(message) {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
         this.$emit('error', {
@@ -48,11 +66,6 @@ export default Vue.extend({
         this.sendSuccess = true;
       }
     },
-    closeRoom() {
-      this.messages = [];
-      this.wsFlush();
-      this.$emit('deselect-room', this.selectedRoom);
-    },
     wsFlush() {
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         this.ws.close();
@@ -60,15 +73,12 @@ export default Vue.extend({
     },
     connectWS() {
       this.ws = new WebSocket(`ws://${window.location.host}/api/chat/${this.selectedRoom}`);
-      this.ws.onopen = () => {
-        this.ws.send(JSON.stringify({ method: 'GET' }));
-      };
       this.ws.onmessage = (event) => {
         JSON.parse(event.data).forEach((data) => {
           // if (this.messages.length >= 10) {
           //   this.messages.shift();
           // }
-          this.messages.push(data);
+          this.room.messages.push(data);
         });
       };
       if (this.ws.readyState === WebSocket.OPEN) {

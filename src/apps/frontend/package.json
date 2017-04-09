@@ -2,8 +2,9 @@
   "name": "freestyle-chat.apps.frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack -w",
-    "test": "eslint src"
+    "start": "webpack -w --progress -p -d",
+    "test": "eslint src",
+    "build": "webpack --progress -p"
   },
   "dependencies": {
     "axios": "^0.15.2",

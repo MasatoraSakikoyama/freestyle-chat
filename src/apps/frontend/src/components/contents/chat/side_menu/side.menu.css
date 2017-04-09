@@ -14,7 +14,7 @@
   margin: 0.5em;
 }
 .side-menu__list {
-  height: 35em;
+  max-height: 35em;
   overflow: scroll;
   background-color: gray;
 }

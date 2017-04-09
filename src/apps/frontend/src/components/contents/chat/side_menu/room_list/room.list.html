@@ -1,10 +1,10 @@
 <li class="room-list"
-  :class="{ selected: isSelected }">
+  :class="{ selected: isSelected }"
+  @click.stop="openRoom">
   <label
     class="room-list__label"
     :title="room.title"
-    v-text="room.title"
-    @click.stop="openRoom"></label>
+    v-text="room.title"></label>
   <button
     class="room-list__button"
     type="button"

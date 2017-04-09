@@ -77,7 +77,7 @@ def logout_api(request):
 
 
 @require_http_methods(['GET'])
-@api_login_required
+@api_login_required(['GET'])
 def token_api(request):
     now = datetime.utcnow()
     payload = {
@@ -94,8 +94,8 @@ def token_api(request):
 
 
 @require_http_methods(['GET', 'POST', 'PUT', 'DELETE'])
-@api_login_required
-@api_token_required
+@api_login_required(['GET', 'POST', 'PUT', 'DELETE'])
+@api_token_required(['POST', 'PUT', 'DELETE'])
 @atomic
 def user_api(request, user_id):
     if request.method == 'GET':
