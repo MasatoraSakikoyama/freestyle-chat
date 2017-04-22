@@ -1,7 +1,6 @@
 /* globals window, WebSocket, Vue, axios */
 import template from './chat.room.html';
 import {} from './chat.room.css';
-
 import Form from './form/form';
 import Message from './message/message';
 
@@ -46,10 +45,10 @@ export default Vue.extend({
             this.connectWS();
           })
           .catch(() => {
-            this.$emit('error', {
-              title: 'Room',
-              message: 'Fail get Room',
-            });
+            // this.$emit('error', {
+            //   title: 'Room',
+            //   message: 'Fail get Room',
+            // });
           });
       }
     },
@@ -60,10 +59,10 @@ export default Vue.extend({
     },
     sendMessage(message) {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-        this.$emit('error', {
-          title: 'Message',
-          message: 'Chat Room is not open',
-        });
+        // this.$emit('error', {
+        //   title: 'Message',
+        //   message: 'Chat Room is not open',
+        // });
       } else {
         this.ws.send(JSON.stringify({
           method: 'POST',

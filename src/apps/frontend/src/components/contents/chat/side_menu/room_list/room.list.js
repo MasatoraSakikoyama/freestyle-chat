@@ -1,16 +1,12 @@
-/* globals Vue */
+/* globals Vue, Vuex */
 import jwt from '../../../../../utils/jwt.axios';
-
 import template from './room.list.html';
 import {} from './room.list.css';
+import { SESSION, IS_LOGIN } from '../../../../../store/modules/session/types';
 
 export default Vue.extend({
   template,
   props: {
-    isLogin: {
-      type: Boolean,
-      default: false,
-    },
     selectedRoom: {
       type: String,
       default: '',
@@ -21,6 +17,9 @@ export default Vue.extend({
     },
   },
   computed: {
+    ...Vuex.mapState(SESSION, {
+      isLogin: IS_LOGIN,
+    }),
     isSelected() {
       return (this.selectedRoom === this.room.room_id);
     },
@@ -35,10 +34,10 @@ export default Vue.extend({
           this.$emit('delete-room', this.room.room_id);
         })
         .catch(() => {
-          this.$emit('error', {
-            title: 'Room',
-            message: 'Fail delete',
-          });
+          // this.$emit('error', {
+          //   title: 'Room',
+          //   message: 'Fail delete',
+          // });
         });
     },
   },

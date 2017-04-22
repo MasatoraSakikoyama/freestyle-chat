@@ -1,17 +1,13 @@
-/* globals Vue, axios */
+/* globals Vue, Vuex, axios */
 import template from './side.menu.html';
 import {} from './side.menu.css';
-
 import RoomList from './room_list/room.list';
 import Form from './form/form';
+import { SESSION, IS_LOGIN } from '../../../../store/modules/session/types';
 
 export default Vue.extend({
   template,
   props: {
-    isLogin: {
-      type: Boolean,
-      default: false,
-    },
     selectedRoom: {
       type: String,
       default: '',
@@ -21,6 +17,11 @@ export default Vue.extend({
     return {
       rooms: [],
     };
+  },
+  computed: {
+    ...Vuex.mapState(SESSION, {
+      isLogin: IS_LOGIN,
+    }),
   },
   components: {
     'room-list': RoomList,
@@ -50,14 +51,11 @@ export default Vue.extend({
           this.rooms = response.data;
         })
         .catch((error) => {
-          this.$emit('error', {
-            title: 'Room',
-            message: error.response.data,
-          });
+          // this.$emit('error', {
+          //   title: 'Room',
+          //   message: error.response.data,
+          // });
         });
-    },
-    error(event) {
-      this.$emit('error', event);
     },
   },
   created() {

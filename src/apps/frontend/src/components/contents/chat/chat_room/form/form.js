@@ -1,6 +1,5 @@
 /* globals Vue */
 import template from './form.html';
-
 import factory from '../../../../common/input/component.factory';
 
 export default Vue.extend({

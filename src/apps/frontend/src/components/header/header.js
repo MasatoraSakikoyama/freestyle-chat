@@ -1,26 +1,23 @@
-/* globals Vue, axios */
+/* globals Vue, Vuex */
 import template from './header.html';
 import {} from './header.css';
+import { SESSION, IS_LOGIN, LOGOUT } from '../../store/modules/session/types';
 
 export default Vue.extend({
   template,
-  props: {
-    isLogin: {
-      type: Boolean,
-      default: false,
-    },
+  computed: {
+    ...Vuex.mapState(SESSION, {
+      isLogin: IS_LOGIN,
+    }),
   },
   methods: {
-    logout() {
-      axios.post('/api/session/logout')
+    ...Vuex.mapActions(SESSION, {
+      logout: LOGOUT,
+    }),
+    onLogout() {
+      this.logout()
         .then(() => {
-          this.$emit('logout');
-        })
-        .catch(() => {
-          this.$emit('error', {
-            title: 'Logout',
-            message: 'Fail logout',
-          });
+          this.$router.push({ name: 'login' });
         });
     },
   },

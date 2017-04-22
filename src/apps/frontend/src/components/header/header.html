@@ -8,7 +8,7 @@
         <router-link to="/login" v-if="!isLogin">Login</router-link>
       </li>
       <li>
-        <a href="javascript:void(0)" v-if="isLogin" v-on:click.prevent="logout">Logout</a>
+        <a href="javascript:void(0)" v-if="isLogin" @click.stop="onLogout">Logout</a>
       </li>
     </ul>
   </nav>

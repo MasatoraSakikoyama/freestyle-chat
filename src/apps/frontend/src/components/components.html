@@ -1,19 +1,6 @@
 <div class="components">
-  <app-header
-    :is-login="isLogin"
-    @logout="logout"
-    @error="error"></app-header>
-  <app-contents
-    :is-login="isLogin"
-    @login="login"
-    @error="error"></app-contents>
+  <app-header></app-header>
+  <app-contents></app-contents>
   <app-footer></app-footer>
-  <info-modal
-    :show-modal="showInfoModal"
-    :modal="infoModal"
-    @ok="ok"></info-modal>
-  <error-modal
-    :show-modal="showErrorModal"
-    :modal="errorModal"
-    @ok="ok"></error-modal>
+  <error-modal></error-modal>
 </div>

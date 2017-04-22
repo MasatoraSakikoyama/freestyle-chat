@@ -1,31 +1,24 @@
-/* globals Vue */
+/* globals Vue, Vuex */
 import info from './templates/info.html';
 import error from './templates/error.html';
 import {} from './modal.css';
 
 const templates = { info, error };
 
-export default (modalType) => {
+export default (modalType, props) => {
   const template = templates[modalType];
   return Vue.extend({
     template,
-    props: {
-      showModal: {
-        type: Boolean,
-        default: false,
-      },
-      modal: {
-        type: Object,
-        default: {
-          title: 'title',
-          message: 'message',
-        },
-      },
+    computed: {
+      ...Vuex.mapState(modalType, {
+        showModal: props.SHOW_MODAL,
+        modal: props.MODAL,
+      }),
     },
     methods: {
-      ok() {
-        this.$emit('ok');
-      },
+      ...Vuex.mapActions(modalType, {
+        ok: props.OK,
+      }),
     },
   });
 };

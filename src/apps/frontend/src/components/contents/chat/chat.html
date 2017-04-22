@@ -1,12 +1,9 @@
 <div class="chat">
   <side-menu
-    :is-login="isLogin"
     :selected-room="selectedRoom"
     @select-room="selectRoom"
-    @deselect-room="deselectRoom"
-    @error="error"></side-menu>
+    @deselect-room="deselectRoom"></side-menu>
   <chat-room
     :selected-room="selectedRoom"
-    @deselect-room="deselectRoom"
-    @error="error"></chat-room>
+    @deselect-room="deselectRoom"></chat-room>
 </div>

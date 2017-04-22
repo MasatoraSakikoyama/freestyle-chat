@@ -1,9 +1,7 @@
 /* globals Vue */
 import jwt from '../../../../../utils/jwt.axios';
-
 import template from './form.html';
 import {} from './form.css';
-
 import factory from '../../../../common/input/component.factory';
 
 export default Vue.extend({
@@ -40,10 +38,10 @@ export default Vue.extend({
         this.$emit('create-room', response.data);
       })
       .catch(() => {
-        this.$emit('error', {
-          title: 'Room',
-          message: 'Fail create',
-        });
+        // this.$emit('error', {
+        //   title: 'Room',
+        //   message: 'Fail create',
+        // });
       });
     },
   },

@@ -5,15 +5,12 @@
       v-for="room in rooms"
       :key="room.room_id"
       :room="room"
-      :is-login="isLogin"
       :selected-room="selectedRoom"
       @open-room="openRoom"
-      @delete-room="deleteRoom"
-      @error="error"></room-list>
+      @delete-room="deleteRoom"></room-list>
   </ul>
   <side-menu-form
     class="side-menu__form"
     v-if="isLogin"
-    @create-room="createRoom"
-    @error="error"></side-menu-form>
+    @create-room="createRoom"></side-menu-form>
 </div>

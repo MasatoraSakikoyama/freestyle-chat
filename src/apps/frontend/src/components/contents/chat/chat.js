@@ -1,18 +1,11 @@
 /* globals Vue */
 import template from './chat.html';
 import {} from './chat.css';
-
 import SideMenu from './side_menu/side.menu';
 import ChatRoom from './chat_room/chat.room';
 
 export default Vue.extend({
   template,
-  props: {
-    isLogin: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       selectedRoom: null,
@@ -30,9 +23,6 @@ export default Vue.extend({
       if (this.selectedRoom === roomId) {
         this.selectedRoom = null;
       }
-    },
-    error(event) {
-      this.$emit('error', event);
     },
   },
 });

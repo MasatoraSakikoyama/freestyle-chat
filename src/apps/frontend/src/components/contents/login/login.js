@@ -1,16 +1,10 @@
-/* globals Vue, axios */
+/* globals Vue, Vuex */
 import template from './login.html';
-
 import inputFactory from '../../common/input/component.factory';
+import { SESSION, IS_LOGIN, LOGIN } from '../../../store/modules/session/types';
 
 export default Vue.extend({
   template,
-  props: {
-    isLogin: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       userId: {
@@ -33,37 +27,29 @@ export default Vue.extend({
     };
   },
   computed: {
-    isValid() {
-      return (this.userId.isValid && this.password.isValid);
-    },
+    ...Vuex.mapState(SESSION, {
+      isLogin: IS_LOGIN,
+    }),
   },
   components: {
     'text-input': inputFactory('text'),
     'password-input': inputFactory('password'),
   },
   methods: {
-    login() {
-      if (!this.isValid) {
+    ...Vuex.mapActions(SESSION, {
+      login: LOGIN,
+    }),
+    onLogin() {
+      if (!(this.userId.isValid && this.password.isValid)) {
         return;
       }
-      axios.post('/api/session/login', {
-        user_id: this.userId.value,
+      this.login({
+        userId: this.userId.value,
         password: this.password.value,
       })
       .then(() => {
-        this.$emit('login');
-      })
-      .catch((error) => {
-        this.$emit('error', {
-          title: 'Login',
-          message: error.response.data.message,
-        });
+        this.$router.push({ name: 'home' });
       });
     },
-  },
-  created() {
-    if (this.isLogin) {
-      this.$destroy();
-    }
   },
 });
