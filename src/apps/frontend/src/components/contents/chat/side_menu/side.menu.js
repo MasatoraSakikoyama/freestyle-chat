@@ -3,16 +3,11 @@ import template from './side.menu.html';
 import {} from './side.menu.css';
 import RoomList from './room_list/room.list';
 import Form from './form/form';
+import { ERROR, OPEN_MODAL } from '../../../../store/modules/error/types';
 import { SESSION, IS_LOGIN } from '../../../../store/modules/session/types';
 
 export default Vue.extend({
   template,
-  props: {
-    selectedRoom: {
-      type: String,
-      default: '',
-    },
-  },
   data() {
     return {
       rooms: [],
@@ -28,9 +23,11 @@ export default Vue.extend({
     'side-menu-form': Form,
   },
   methods: {
+    ...Vuex.mapActions(ERROR, {
+      openModal: OPEN_MODAL,
+    }),
     createRoom(room) {
       this.rooms.push(room);
-      this.$emit('select-room', room.room_id);
     },
     deleteRoom(roomId) {
       this.rooms.some((v, i) => {
@@ -40,10 +37,6 @@ export default Vue.extend({
         }
         return false;
       });
-      this.$emit('deselect-room', roomId);
-    },
-    openRoom(roomId) {
-      this.$emit('select-room', roomId);
     },
     getRooms() {
       axios.get('/api/rooms')
@@ -51,10 +44,10 @@ export default Vue.extend({
           this.rooms = response.data;
         })
         .catch((error) => {
-          // this.$emit('error', {
-          //   title: 'Room',
-          //   message: error.response.data,
-          // });
+          this.openModal({
+            title: 'Room',
+            message: error.response.data,
+          });
         });
     },
   },

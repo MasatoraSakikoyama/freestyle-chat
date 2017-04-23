@@ -3,15 +3,11 @@ import template from './chat.room.html';
 import {} from './chat.room.css';
 import Form from './form/form';
 import Message from './message/message';
+import { ERROR, OPEN_MODAL } from '../../../../store/modules/error/types';
+import { ROOM, ROOM_ID } from '../../../../store/modules/room/types';
 
 export default Vue.extend({
   template,
-  props: {
-    selectedRoom: {
-      type: String,
-      default: '',
-    },
-  },
   data() {
     return {
       room: {},
@@ -19,19 +15,27 @@ export default Vue.extend({
       sendSuccess: false,
     };
   },
+  computed: {
+    ...Vuex.mapState(ROOM, {
+      roomId: ROOM_ID,
+    }),
+  },
+  watch: {
+    roomId() {
+      this.room = {};
+      this.wsFlush();
+      this.connectRoom(this.roomId);
+    },
+  },
   components: {
     'chat-room-form': Form,
     'chat-room-message': Message,
   },
-  watch: {
-    selectedRoom() {
-      this.room = {};
-      this.wsFlush();
-      this.openRoom(this.selectedRoom);
-    },
-  },
   methods: {
-    openRoom(roomId) {
+    ...Vuex.mapActions(ERROR, {
+      openModal: OPEN_MODAL,
+    }),
+    connectRoom(roomId) {
       if (roomId) {
         axios.get(`/api/room/${roomId}`)
           .then((response) => {
@@ -45,24 +49,23 @@ export default Vue.extend({
             this.connectWS();
           })
           .catch(() => {
-            // this.$emit('error', {
-            //   title: 'Room',
-            //   message: 'Fail get Room',
-            // });
+            this.openModal({
+              title: 'Room',
+              message: 'Fail connect',
+            });
           });
       }
     },
-    closeRoom() {
+    disconnectRoom() {
       this.room = {};
       this.wsFlush();
-      this.$emit('deselect-room', this.selectedRoom);
     },
     sendMessage(message) {
       if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-        // this.$emit('error', {
-        //   title: 'Message',
-        //   message: 'Chat Room is not open',
-        // });
+        this.openModal({
+          title: 'Message',
+          message: 'Chat room is not open',
+        });
       } else {
         this.ws.send(JSON.stringify({
           method: 'POST',
@@ -77,7 +80,7 @@ export default Vue.extend({
       }
     },
     connectWS() {
-      this.ws = new WebSocket(`ws://${window.location.host}/api/chat/${this.selectedRoom}`);
+      this.ws = new WebSocket(`ws://${window.location.host}/api/chat/${this.roomId}`);
       this.ws.onmessage = (event) => {
         JSON.parse(event.data).forEach((message) => {
           // if (this.messages.length >= 10) {

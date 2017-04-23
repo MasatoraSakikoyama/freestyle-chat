@@ -13,12 +13,12 @@ export default {
     },
   },
   actions: {
-    [LOGIN_CHECK]({ commit }) {
+    [LOGIN_CHECK]({ dispatch, commit }) {
       axios.get('/api/session/login')
         .then((response) => {
           commit(CHANGE_LOGIN_STATE, { isLogin: response.data.isLogin });
         })
-        .catch((error) => {
+        .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {
             title: 'Login Check',
             message: 'Fail get login info',
@@ -45,7 +45,7 @@ export default {
         .then(() => {
           commit(CHANGE_LOGIN_STATE, { isLogin: false });
         })
-        .catch((error) => {
+        .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {
             title: 'Logout',
             message: 'Fail logout',

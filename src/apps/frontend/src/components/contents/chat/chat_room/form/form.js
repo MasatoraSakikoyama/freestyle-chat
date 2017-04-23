@@ -1,6 +1,8 @@
 /* globals Vue */
 import template from './form.html';
 import factory from '../../../../common/input/component.factory';
+import { ROOM, ROOM_ID, DESELECT_ROOM } from '../../../../../store/modules/room/types';
+
 
 export default Vue.extend({
   template,
@@ -23,10 +25,18 @@ export default Vue.extend({
       },
     };
   },
+  computed: {
+    ...Vuex.mapState(ROOM, {
+      roomId: ROOM_ID,
+    }),
+  },
   components: {
     'textarea-input': factory('textarea'),
   },
   methods: {
+    ...Vuex.mapActions(ROOM, {
+      deselectRoom: DESELECT_ROOM,
+    }),
     sendMessage() {
       if (!this.model.isValid) {
         return;
@@ -41,6 +51,7 @@ export default Vue.extend({
     },
     closeRoom() {
       this.$emit('close-room');
+      this.deselectRoom(this.roomId);
     },
   },
 });
