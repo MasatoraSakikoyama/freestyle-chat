@@ -1,4 +1,4 @@
-/* globals window, WebSocket, Vue, axios */
+/* globals window, WebSocket, Vue, Vuex, axios */
 import template from './chat.room.html';
 import {} from './chat.room.css';
 import Form from './form/form';

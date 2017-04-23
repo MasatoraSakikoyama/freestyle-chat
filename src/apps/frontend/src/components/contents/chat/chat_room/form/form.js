@@ -1,4 +1,4 @@
-/* globals Vue */
+/* globals Vue, Vuex */
 import template from './form.html';
 import factory from '../../../../common/input/component.factory';
 import { ROOM, ROOM_ID, DESELECT_ROOM } from '../../../../../store/modules/room/types';

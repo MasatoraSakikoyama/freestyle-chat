@@ -1,5 +1,5 @@
 /* globals axios */
-import { ROOM, ROOM_ID, CHANGE_ROOM_ID, SELECT_ROOM, DESELECT_ROOM } from './types';
+import { ROOM_ID, CHANGE_ROOM_ID, SELECT_ROOM, DESELECT_ROOM } from './types';
 
 export default {
   namespaced: true,
@@ -12,8 +12,10 @@ export default {
     },
   },
   actions: {
-    [SELECT_ROOM]({ commit }, roomId) {
-      commit(CHANGE_ROOM_ID, { roomId: roomId });
+    [SELECT_ROOM]({ commit, state }, roomId) {
+      if (state[ROOM_ID] !== roomId) {
+        commit(CHANGE_ROOM_ID, { roomId });
+      }
     },
     [DESELECT_ROOM]({ commit, state }, roomId) {
       if (state[ROOM_ID] === roomId) {
@@ -21,4 +23,4 @@ export default {
       }
     },
   },
-}
+};

@@ -1,10 +1,10 @@
-/* globals Vue */
+/* globals Vue, Vuex */
 import jwt from '../../../../../utils/jwt.axios';
 import template from './form.html';
 import {} from './form.css';
 import factory from '../../../../common/input/component.factory';
 import { ERROR, OPEN_MODAL } from '../../../../../store/modules/error/types';
-import { ROOM, ROOM_ID, SELECT_ROOM, DESELECT_ROOM } from '../../../../../store/modules/room/types';
+import { ROOM, SELECT_ROOM } from '../../../../../store/modules/room/types';
 
 export default Vue.extend({
   template,
