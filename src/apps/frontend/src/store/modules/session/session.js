@@ -8,15 +8,15 @@ export default {
     [IS_LOGIN]: false,
   },
   mutations: {
-    [CHANGE_LOGIN_STATE](state, payload) {
-      state[IS_LOGIN] = payload.isLogin;
+    [CHANGE_LOGIN_STATE](state, isLogin) {
+      state[IS_LOGIN] = isLogin;
     },
   },
   actions: {
     [LOGIN_CHECK]({ dispatch, commit }) {
       axios.get('/api/session/login')
         .then((response) => {
-          commit(CHANGE_LOGIN_STATE, { isLogin: response.data.isLogin });
+          commit(CHANGE_LOGIN_STATE, response.data.isLogin);
         })
         .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {
@@ -31,7 +31,7 @@ export default {
         password: user.password,
       })
       .then(() => {
-        commit(CHANGE_LOGIN_STATE, { isLogin: true });
+        commit(CHANGE_LOGIN_STATE, true);
       })
       .catch((error) => {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
@@ -43,7 +43,7 @@ export default {
     [LOGOUT]({ dispatch, commit }) {
       axios.post('/api/session/logout')
         .then(() => {
-          commit(CHANGE_LOGIN_STATE, { isLogin: false });
+          commit(CHANGE_LOGIN_STATE, false);
         })
         .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {

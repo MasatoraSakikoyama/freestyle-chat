@@ -1,17 +1,12 @@
 /* globals Vue, Vuex */
 import template from './form.html';
 import factory from '../../../../common/input/component.factory';
-import { ROOM, ROOM_ID, DESELECT_ROOM } from '../../../../../store/modules/room/types';
+import { ROOM, DESELECT_ROOM_ID, CLEAR_ROOM } from '../../../../../store/modules/room/types';
+import { WS, DISCONNECT_WS, SEND} from '../../../../../store/modules/websocket/types';
 
 
 export default Vue.extend({
   template,
-  props: {
-    sendSuccess: {
-      type: Boolean,
-      required: true,
-    },
-  },
   data() {
     return {
       model: {
@@ -25,33 +20,28 @@ export default Vue.extend({
       },
     };
   },
-  computed: {
-    ...Vuex.mapState(ROOM, {
-      roomId: ROOM_ID,
-    }),
-  },
   components: {
     'textarea-input': factory('textarea'),
   },
   methods: {
     ...Vuex.mapActions(ROOM, {
-      deselectRoom: DESELECT_ROOM,
+      deselectRoomId: DESELECT_ROOM_ID,
+    }),
+    ...Vuex.mapActions(WS, {
+      send: SEND,
     }),
     sendMessage() {
       if (!this.model.isValid) {
         return;
       }
-      this.$emit('send-message', this.model.value);
-      this.$nextTick(() => {
-        if (this.sendSuccess) {
+      this.send(this.model.value)
+        .then(() => {
           this.model.value = null;
-          this.$emit('reset-flag');
-        }
-      });
+        });
     },
     closeRoom() {
-      this.$emit('close-room');
-      this.deselectRoom(this.roomId);
+      // chat.room.jsでwatchしているのでroomもWSも自動的に初期化される
+      this.deselectRoomId();
     },
   },
 });

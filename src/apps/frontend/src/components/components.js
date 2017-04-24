@@ -1,6 +1,6 @@
 /* globals Vue, Vuex */
 import template from './components.html';
-import {} from './components.css';
+import './components.css';
 import AppHeader from './header/header';
 import AppContents from './contents/contents';
 import AppFooter from './footer/footer';

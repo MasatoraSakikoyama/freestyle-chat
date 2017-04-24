@@ -11,21 +11,20 @@ export default {
     },
   },
   mutations: {
-    [CHANGE_SHOW_MODAL](state, payload) {
-      state[SHOW_MODAL] = payload.showModal;
+    [CHANGE_SHOW_MODAL](state, showModal) {
+      state[SHOW_MODAL] = showModal;
     },
-    [CHANGE_MODAL](state, payload) {
-      state[MODAL].title = payload.title;
-      state[MODAL].message = payload.message;
+    [CHANGE_MODAL](state, modal) {
+      state[MODAL] = modal;
     },
   },
   actions: {
     [OPEN_MODAL]({ commit }, modal) {
       commit(CHANGE_MODAL, modal);
-      commit(CHANGE_SHOW_MODAL, { showModal: true });
+      commit(CHANGE_SHOW_MODAL, true);
     },
     [OK]({ commit }) {
-      commit(CHANGE_SHOW_MODAL, { showModal: false });
+      commit(CHANGE_SHOW_MODAL, false);
     },
   },
 };

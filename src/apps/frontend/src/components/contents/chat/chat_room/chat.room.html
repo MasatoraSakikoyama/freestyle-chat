@@ -1,12 +1,6 @@
-<div class="chat-room">
+<div class="chat-room" v-if="room">
   <ul v-for="(message, index) in room.messages" :key="message.id">
-    <chat-room-message
-      :message="message"
-      :index="index"></chat-room-message>
+    <chat-room-message :message="message" :index="index"></chat-room-message>
   </ul>
-  <chat-room-form
-    :send-success="sendSuccess"
-    @send-message="sendMessage"
-    @reset-flag="resetFlag"
-    @close-room="disconnectRoom"></chat-room-form>
+  <chat-room-form></chat-room-form>
 </div>

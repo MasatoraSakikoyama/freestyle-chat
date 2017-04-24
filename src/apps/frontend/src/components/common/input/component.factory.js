@@ -2,7 +2,7 @@
 import text from './templates/text.html';
 import password from './templates/password.html';
 import textarea from './templates/textarea.html';
-import {} from './input.css';
+import './input.css';
 
 const templates = { text, password, textarea };
 

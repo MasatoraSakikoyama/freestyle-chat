@@ -1,11 +1,17 @@
+.error {
+  background-color: #FFF0F5;
+  border-color: #DC143C;
+}
+.info {
+  background-color: #61ed92;
+  border-color: #2d9b53;
+}
 .modal {
   width: 300px;
   margin: 0px auto;
   padding: 20px 30px;
-  background-color: #FFF0F5;
   border: solid;
   border-radius: 5px;
-  border-color: #DC143C;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;

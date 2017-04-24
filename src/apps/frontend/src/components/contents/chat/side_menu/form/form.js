@@ -1,10 +1,10 @@
 /* globals Vue, Vuex */
 import jwt from '../../../../../utils/jwt.axios';
 import template from './form.html';
-import {} from './form.css';
+import './form.css';
 import factory from '../../../../common/input/component.factory';
 import { ERROR, OPEN_MODAL } from '../../../../../store/modules/error/types';
-import { ROOM, SELECT_ROOM } from '../../../../../store/modules/room/types';
+import { ROOM, SELECT_ROOM_ID } from '../../../../../store/modules/room/types';
 
 export default Vue.extend({
   template,
@@ -29,7 +29,7 @@ export default Vue.extend({
       openModal: OPEN_MODAL,
     }),
     ...Vuex.mapActions(ROOM, {
-      selectRoom: SELECT_ROOM,
+      selectRoomId: SELECT_ROOM_ID,
     }),
     createRoom() {
       if (!this.model.isValid) {
@@ -44,7 +44,7 @@ export default Vue.extend({
       .then((response) => {
         this.model.value = null;
         this.$emit('create-room', response.data);
-        this.selectRoom(response.data.room_id);
+        this.selectRoomId(response.data.room_id);
       })
       .catch(() => {
         this.openModal({

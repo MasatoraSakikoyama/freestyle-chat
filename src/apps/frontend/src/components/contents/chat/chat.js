@@ -1,6 +1,6 @@
 /* globals Vue */
 import template from './chat.html';
-import {} from './chat.css';
+import './chat.css';
 import SideMenu from './side_menu/side.menu';
 import ChatRoom from './chat_room/chat.room';
 

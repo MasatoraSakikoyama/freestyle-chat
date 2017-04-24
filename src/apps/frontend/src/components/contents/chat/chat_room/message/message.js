@@ -1,6 +1,6 @@
 /* globals Vue */
 import template from './message.html';
-import {} from './message.css';
+import './message.css';
 
 export default Vue.extend({
   template,

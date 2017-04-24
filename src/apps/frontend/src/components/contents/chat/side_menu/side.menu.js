@@ -1,6 +1,6 @@
 /* globals Vue, Vuex, axios */
 import template from './side.menu.html';
-import {} from './side.menu.css';
+import './side.menu.css';
 import RoomList from './room_list/room.list';
 import Form from './form/form';
 import { ERROR, OPEN_MODAL } from '../../../../store/modules/error/types';
