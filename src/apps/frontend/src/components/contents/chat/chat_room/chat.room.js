@@ -1,10 +1,10 @@
 /* globals window, WebSocket, Vue, Vuex, axios */
-import template from './chat.room.html';
-import './chat.room.css';
-import Form from './form/form';
-import Message from './message/message';
-import { ROOM, ROOM_ID, GET_ROOM, CLEAR_ROOM } from '../../../../store/modules/room/types';
-import { WS, CONNECT_WS, DISCONNECT_WS } from '../../../../store/modules/websocket/types';
+import template from 'components/contents/chat/chat_room/chat.room.html';
+import 'components/contents/chat/chat_room/chat.room.css';
+import Form from 'components/contents/chat/chat_room/form/form';
+import Message from 'components/contents/chat/chat_room/message/message';
+import { ROOM, ROOM_ID, GET_ROOM, CLEAR_ROOM } from 'store/modules/room/types';
+import { WS, CONNECT_WS, DISCONNECT_WS } from 'store/modules/websocket/types';
 
 export default Vue.extend({
   template,

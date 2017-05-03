@@ -1,10 +1,10 @@
 /* globals Vue, Vuex, axios */
-import template from './side.menu.html';
-import './side.menu.css';
-import RoomList from './room_list/room.list';
-import Form from './form/form';
-import { ERROR, OPEN_MODAL } from '../../../../store/modules/error/types';
-import { SESSION, IS_LOGIN } from '../../../../store/modules/session/types';
+import template from 'components/contents/chat/side_menu/side.menu.html';
+import 'components/contents/chat/side_menu/side.menu.css';
+import RoomList from 'components/contents/chat/side_menu/room_list/room.list';
+import Form from 'components/contents/chat/side_menu/form/form';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
+import { SESSION, IS_LOGIN } from 'store/modules/session/types';
 
 export default Vue.extend({
   template,

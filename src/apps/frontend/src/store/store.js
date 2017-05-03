@@ -1,10 +1,10 @@
 /* globals Vue, Vuex */
 import createLogger from 'vuex/dist/logger';
-import info from './modules/info/info';
-import error from './modules/error/error';
-import session from './modules/session/session';
-import room from './modules/room/room';
-import websocket from './modules/websocket/websocket';
+import info from 'store/modules/info/info';
+import error from 'store/modules/error/error';
+import session from 'store/modules/session/session';
+import room from 'store/modules/room/room';
+import websocket from 'store/modules/websocket/websocket';
 
 export default class AppStore extends Vuex.Store {
   constructor(debug) {

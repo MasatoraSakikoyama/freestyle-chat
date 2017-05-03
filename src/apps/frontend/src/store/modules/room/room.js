@@ -10,8 +10,8 @@ import {
   GET_ROOM,
   CLEAR_ROOM,
   UPDATE_MESSAGES,
-} from './types';
-import { ERROR, OPEN_MODAL } from '../error/types';
+} from 'store/modules/room/types';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 
 export default {
   namespaced: true,

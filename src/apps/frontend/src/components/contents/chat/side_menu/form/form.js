@@ -1,10 +1,10 @@
 /* globals Vue, Vuex */
-import jwt from '../../../../../utils/jwt.axios';
-import template from './form.html';
-import './form.css';
-import factory from '../../../../common/input/component.factory';
-import { ERROR, OPEN_MODAL } from '../../../../../store/modules/error/types';
-import { ROOM, SELECT_ROOM_ID } from '../../../../../store/modules/room/types';
+import jwt from 'utils/jwt.axios';
+import template from 'components/contents/chat/side_menu/form/form.html';
+import 'components/contents/chat/side_menu/form/form.css';
+import factory from 'components/common/input/component.factory';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
+import { ROOM, SELECT_ROOM_ID } from 'store/modules/room/types';
 
 export default Vue.extend({
   template,

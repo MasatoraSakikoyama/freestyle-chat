@@ -1,6 +1,6 @@
 /* globals Vue */
-import template from './footer.html';
-import './footer.css';
+import template from 'components/footer/footer.html';
+import 'components/footer/footer.css';
 
 export default Vue.extend({
   template,

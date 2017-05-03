@@ -1,7 +1,7 @@
 /* globals Vue, Vuex */
-import template from './login.html';
-import inputFactory from '../../common/input/component.factory';
-import { SESSION, IS_LOGIN, LOGIN } from '../../../store/modules/session/types';
+import template from 'components/contents/login/login.html';
+import inputFactory from 'components/common/input/component.factory';
+import { SESSION, IS_LOGIN, LOGIN } from 'store/modules/session/types';
 
 export default Vue.extend({
   template,

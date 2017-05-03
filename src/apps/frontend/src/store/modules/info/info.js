@@ -1,5 +1,12 @@
 /* globals axios */
-import { SHOW_MODAL, MODAL, CHANGE_SHOW_MODAL, CHANGE_MODAL, OPEN_MODAL, OK } from './types';
+import {
+  SHOW_MODAL,
+  MODAL,
+  CHANGE_SHOW_MODAL,
+  CHANGE_MODAL,
+  OPEN_MODAL,
+  OK,
+} from 'store/modules/info/types';
 
 export default {
   namespaced: true,

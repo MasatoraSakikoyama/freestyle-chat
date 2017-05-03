@@ -1,10 +1,10 @@
 /* globals Vue, Vuex */
-import jwt from '../../../../../utils/jwt.axios';
-import template from './room.list.html';
-import './room.list.css';
-import { ERROR, OPEN_MODAL } from '../../../../../store/modules/error/types';
-import { SESSION, IS_LOGIN } from '../../../../../store/modules/session/types';
-import { ROOM, ROOM_ID, SELECT_ROOM_ID, DESELECT_ROOM_ID } from '../../../../../store/modules/room/types';
+import jwt from 'utils/jwt.axios';
+import template from 'components/contents/chat/side_menu/room_list/room.list.html';
+import 'components/contents/chat/side_menu/room_list/room.list.css';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
+import { SESSION, IS_LOGIN } from 'store/modules/session/types';
+import { ROOM, ROOM_ID, SELECT_ROOM_ID, DESELECT_ROOM_ID } from 'store/modules/room/types';
 
 export default Vue.extend({
   template,

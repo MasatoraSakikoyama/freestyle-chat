@@ -1,6 +1,6 @@
 /* globals axios */
-import { IS_LOGIN, CHANGE_LOGIN_STATE, LOGIN_CHECK, LOGIN, LOGOUT } from './types';
-import { ERROR, OPEN_MODAL } from '../error/types';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
+import { IS_LOGIN, CHANGE_LOGIN_STATE, LOGIN_CHECK, LOGIN, LOGOUT } from 'store/modules/session/types';
 
 export default {
   namespaced: true,

@@ -1,8 +1,8 @@
 /* globals Vue, axios */
-import text from './templates/text.html';
-import password from './templates/password.html';
-import textarea from './templates/textarea.html';
-import './input.css';
+import text from 'components/common/input/templates/text.html';
+import password from 'components/common/input/templates/password.html';
+import textarea from 'components/common/input/templates/textarea.html';
+import 'components/common/input/input.css';
 
 const templates = { text, password, textarea };
 

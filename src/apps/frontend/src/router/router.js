@@ -1,18 +1,18 @@
 /* globals Vue */
 import VueRouter from 'vue-router';
-import chat from '../components/contents/chat/chat';
-import login from '../components/contents/login/login';
+import chat from 'components/contents/chat/chat';
+import login from 'components/contents/login/login';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: chat
+    component: chat,
   },
   {
     path: '/login',
     name: 'login',
-    component: login
+    component: login,
   },
 ];
 

@@ -1,13 +1,13 @@
 /* globals Vue, Vuex */
-import template from './components.html';
-import './components.css';
-import AppHeader from './header/header';
-import AppContents from './contents/contents';
-import AppFooter from './footer/footer';
-import modalFactory from './common/modal/modal.factory';
-import { SESSION, IS_LOGIN } from '../store/modules/session/types';
-import * as info from '../store/modules/info/types';
-import * as error from '../store/modules/error/types';
+import template from 'components/components.html';
+import 'components/components.css';
+import AppHeader from 'components/header/header';
+import AppContents from 'components/contents/contents';
+import AppFooter from 'components/footer/footer';
+import modalFactory from 'components/common/modal/modal.factory';
+import { SESSION, IS_LOGIN } from 'store/modules/session/types';
+import * as info from 'store/modules/info/types';
+import * as error from 'store/modules/error/types';
 
 export default Vue.extend({
   template,

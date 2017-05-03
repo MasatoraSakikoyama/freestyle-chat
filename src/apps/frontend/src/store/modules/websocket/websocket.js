@@ -1,8 +1,8 @@
 /* globals window, WebSocket */
-import { ROOM, ROOM_ID, UPDATE_MESSAGES } from '../room/types';
-import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from './types';
-import { ERROR, OPEN_MODAL } from '../error/types';
-import { INFO } from '../info/types';
+import { INFO } from 'store/modules/info/types';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
+import { ROOM, ROOM_ID, UPDATE_MESSAGES } from 'store/modules/room/types';
+import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from 'store/modules/websocket/types';
 
 export default {
   namespaced: true,

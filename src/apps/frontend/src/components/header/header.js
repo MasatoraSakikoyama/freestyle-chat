@@ -1,7 +1,7 @@
 /* globals Vue, Vuex */
-import template from './header.html';
-import './header.css';
-import { SESSION, IS_LOGIN, LOGOUT } from '../../store/modules/session/types';
+import template from 'components/header/header.html';
+import 'components/header/header.css';
+import { SESSION, IS_LOGIN, LOGOUT } from 'store/modules/session/types';
 
 export default Vue.extend({
   template,
