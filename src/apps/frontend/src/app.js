@@ -7,8 +7,9 @@ import './app.css';
 import AppComponents from './components/components';
 import { SESSION, LOGIN_CHECK } from './store/modules/session/types';
 
+const debug = process.env.NODE_ENV !== 'production';
 const router = new AppRouter();
-const store = new AppStore();
+const store = new AppStore(debug);
 window.application = new Vue({
   el: '#app',
   router,

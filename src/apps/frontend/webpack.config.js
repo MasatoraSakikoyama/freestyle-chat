@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const debug = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: './src/app.js',
@@ -9,14 +10,21 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.html$/,
-        loader: 'html?minimize',
+        loader: 'html-loader',
+        options: { minimize: true },
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css?minimize'],
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: { minimize: true },
+          },
+        ],
       },
       {
         test: /.js?$/,
@@ -30,21 +38,34 @@ module.exports = {
       path.resolve(__dirname, 'src'),
       'node_modules',
     ],
-    alias: {
-      vue: 'vue/dist/vue.js'
-    },
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: debug,
+      beautify: debug,
+      mangle: {
+        screw_ie8: !debug,
+        keep_fnames: !debug,
+      },
+      compress: {
+        screw_ie8: !debug,
+        warnings: debug,
+      },
+      comments: debug,
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: !debug,
+      debug: debug,
+      options: { context: __dirname },
+    }),
     new webpack.ProvidePlugin({
-      Vue: 'vue',
-      Vuex: 'vuex',
+      Vue: ['vue/dist/vue.esm.js', 'default'],
+      Vuex: ['vuex/dist/vuex.esm.js', 'default'],
       axios: 'axios',
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        // NODE_ENV: '"production"'
+        NODE_ENV: debug ? '"develop"' : '"production"',
       },
     }),
   ],
