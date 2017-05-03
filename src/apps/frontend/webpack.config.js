@@ -22,13 +22,14 @@ module.exports = {
         test: /.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'stage-2'],
-        },
       },
     ],
   },
   resolve: {
+    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules',
+    ],
     alias: {
       vue: 'vue/dist/vue.js'
     },
@@ -37,9 +38,9 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.ProvidePlugin({
-      axios: 'axios',
       Vue: 'vue',
       Vuex: 'vuex',
+      axios: 'axios',
     }),
     new webpack.DefinePlugin({
       'process.env': {

@@ -3,7 +3,7 @@ import AppRouter from './router/router';
 import AppStore from './store/store';
 import CSRFConfig from './config/csrf.config';
 import template from './app.html';
-import {} from './app.css';
+import './app.css';
 import AppComponents from './components/components';
 import { SESSION, LOGIN_CHECK } from './store/modules/session/types';
 

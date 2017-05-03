@@ -4,7 +4,6 @@ import factory from '../../../../common/input/component.factory';
 import { ROOM, DESELECT_ROOM_ID, CLEAR_ROOM } from '../../../../../store/modules/room/types';
 import { WS, DISCONNECT_WS, SEND} from '../../../../../store/modules/websocket/types';
 
-
 export default Vue.extend({
   template,
   data() {
