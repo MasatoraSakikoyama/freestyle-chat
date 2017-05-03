@@ -1,8 +1,6 @@
 {
     "extends": "airbnb-base",
-    "plugins": [
-        "import"
-    ],
+    "plugins": ["import"],
     "settings": {
         "import/resolver": "webpack"
     },
