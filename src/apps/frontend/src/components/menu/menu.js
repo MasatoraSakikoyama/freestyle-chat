@@ -33,7 +33,7 @@ export default Vue.extend({
     ...Vuex.mapActions(MENU, {
       menuClose: MENU_CLOSE,
     }),
-    onClose() {
+    onCloseMenu() {
       this.menuClose();
     },
     onCreateRoom(room) {

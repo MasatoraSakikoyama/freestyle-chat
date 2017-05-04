@@ -4,7 +4,7 @@ import template from 'components/menu/room_list/room.list.html';
 import 'components/menu/room_list/room.list.css';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 import { SESSION, IS_LOGIN } from 'store/modules/session/types';
-import { ROOM, ROOM_ID, SELECT_ROOM_ID, DESELECT_ROOM_ID } from 'store/modules/room/types';
+import { ROOM, CLEAR_ROOM } from 'store/modules/room/types';
 
 export default Vue.extend({
   template,
@@ -19,10 +19,10 @@ export default Vue.extend({
       isLogin: IS_LOGIN,
     }),
     ...Vuex.mapState(ROOM, {
-      roomId: ROOM_ID,
+      selectedRoom: ROOM,
     }),
     isSelected() {
-      return (this.roomId === this.room.room_id);
+      return (this.selectedRoom.room_id === this.room.room_id);
     },
   },
   methods: {
@@ -30,17 +30,16 @@ export default Vue.extend({
       openModal: OPEN_MODAL,
     }),
     ...Vuex.mapActions(ROOM, {
-      selectRoomId: SELECT_ROOM_ID,
-      deselectRoomId: DESELECT_ROOM_ID,
+      clearRoom: CLEAR_ROOM,
     }),
-    onOpenRoom() {
-      this.selectRoomId(this.room.room_id);
-    },
     onDeleteRoom() {
       jwt.delete(`/api/room/${this.room.room_id}`)
         .then(() => {
           this.$emit('delete-room', this.room.room_id);
-          this.deselectRoomId();
+          if (this.isSelected) {
+            this.clearRoom({ roomId: this.room.room_id });
+            this.$router.push({ name: 'home' });
+          }
         })
         .catch(() => {
           this.openModal({

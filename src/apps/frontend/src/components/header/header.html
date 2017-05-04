@@ -1,22 +1,22 @@
-<header class="app-header">
-  <h3 class="app-header__title">
-    <router-link to="/">Websocket Test</router-link>
+<header class="header">
+  <h3 class="header__title">
+    <router-link :to="{ name: 'home' }">Websocket Test</router-link>
   </h3>
-  <nav class="app-header__nav">
+  <nav class="header__nav">
     <ul>
       <li>
-        <a href="javascript:void(0)"@click.stop="onToggleMenu">
-          <i class="fa fa-bars" aria-hidden="true"></i>
+        <a href="javascript:void(0)" @click.stop="onToggleMenu">
+          <i class="fa fa-bars header__nav__icon" aria-hidden="true"></i>
         </a>
       </li>
-      <li>
-        <router-link to="/login" v-if="!isLogin">
-          <i class="fa fa-sign-in" aria-hidden="true"></i>
+      <li v-if="!isLogin">
+        <router-link :to="{ name: 'login' }">
+          <i class="fa fa-sign-in header__nav__icon" aria-hidden="true"></i>
         </router-link>
       </li>
-      <li>
-        <a href="javascript:void(0)" v-if="isLogin" @click.stop="onLogout">
-          <i class="fa fa-sign-out" aria-hidden="true"></i>
+      <li v-if="isLogin">
+        <a href="javascript:void(0)" @click.stop="onLogout">
+          <i class="fa fa-sign-out header__nav__icon" aria-hidden="true"></i>
         </a>
       </li>
     </ul>

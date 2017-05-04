@@ -16,11 +16,11 @@ const routes = [
     component: Login,
   },
   {
-    path: '/chat',
+    path: '/chat/:roomId',
     name: 'chat',
     component: Chat,
+    props: true,
   },
-
 ];
 
 export default class AppRouter extends VueRouter {

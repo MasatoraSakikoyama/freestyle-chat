@@ -1,13 +1,13 @@
 /* globals window, WebSocket */
 import { INFO } from 'store/modules/info/types';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
-import { ROOM, ROOM_ID, UPDATE_MESSAGES } from 'store/modules/room/types';
+import { ROOM, UPDATE_MESSAGES } from 'store/modules/room/types';
 import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from 'store/modules/websocket/types';
 
 export default {
   namespaced: true,
   state: {
-    [WS]: null,
+    [WS]: {},
   },
   mutations: {
     [CHANGE_WS](state, ws) {
@@ -15,16 +15,12 @@ export default {
     },
   },
   actions: {
-    [CONNECT_WS]({ dispatch, commit, rootState }) {
-      const roomId = rootState[ROOM][ROOM_ID];
-      if (!roomId) {
-        return;
-      }
-      const ws = new WebSocket(`ws://${window.location.host}/api/chat/${roomId}`);
+    [CONNECT_WS]({ dispatch, commit }, payload) {
+      const ws = new WebSocket(`ws://${window.location.host}/api/chat/${payload.roomId}`);
       ws.onopen = () => {
         dispatch(`${INFO}/${OPEN_MODAL}`, {
-          title: 'Message',
-          message: `Chat room ${roomId} is open`,
+          title: 'Room',
+          message: `Chat room ${payload.roomId} is open`,
         }, { root: true });
       };
       ws.onmessage = (event) => {
@@ -44,14 +40,14 @@ export default {
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.close();
       }
-      commit(CHANGE_WS, null);
+      commit(CHANGE_WS, {});
     },
     [SEND]({ dispatch, state }, message) {
       const ws = state[WS];
       if (!ws || ws.readyState !== WebSocket.OPEN) {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
           title: 'Message',
-          message: 'Chat room is not open',
+          message: 'Fail send message',
         }, { root: true });
       } else {
         ws.send(JSON.stringify({

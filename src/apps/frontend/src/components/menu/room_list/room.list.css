@@ -3,13 +3,18 @@
 }
 .room-list {
   height: auto;
+  padding: 0 0.5em 0;
+}
+.room-list:hover {
+  filter: brightness(50%);
 }
 .room-list__label {
+  min-width: 6em;
+  max-width: 10em;
+  overflow: auto;
   float: left;
-  margin-left: 0.5em;
 }
 .room-list__button {
   float: right;
-  margin-right: 1em;
   margin-top: 0.4em;
 }

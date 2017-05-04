@@ -1,9 +1,12 @@
+.messages {
+  display:table;
+  list-style: none;
+}
 .message-wrapper {
-  padding: 0.5em;
+  margin: 1em;
 }
 .message {
   display: table-cell;
-  width: 100%;
   padding: 0.5em;
   box-shadow: 0 0 0.1em 0.1em #00786C;
   -moz-box-shadow: 0 0 0.1em 0.1em #00786C;

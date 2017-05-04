@@ -1,4 +1,4 @@
-.app-header {
+.header {
   height: 2em;
   width: 100%;
   position: fixed;
@@ -9,16 +9,21 @@
   background-color: #98D98E;
   color: #00786C;
 }
-.app-header__title {
-  margin-left: 1em;
+.header__title {
+  margin: 0 1em 0;
   display: inline-block;
   float: left;
 }
-.app-header__nav {
-  margin-right: 1em;
-  display: inline-block;
-  float: right;
+.header__title:hover {
+  filter: brightness(50%);
 }
-.app-header__nav > ul > li {
+.header__nav {
   display: inline-block;
+}
+.header__nav__icon:hover {
+  filter: brightness(50%);
+}
+.header__nav > ul > li {
+  display: inline-block;
+  margin: 0 0.1em 0;
 }

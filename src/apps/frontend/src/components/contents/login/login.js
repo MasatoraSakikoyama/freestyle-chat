@@ -1,5 +1,6 @@
 /* globals Vue, Vuex */
 import template from 'components/contents/login/login.html';
+import 'components/contents/login/login.css';
 import inputFactory from 'components/common/input/component.factory';
 import { SESSION, IS_LOGIN, LOGIN } from 'store/modules/session/types';
 

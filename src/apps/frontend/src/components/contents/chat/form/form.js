@@ -1,7 +1,6 @@
 /* globals Vue, Vuex */
 import template from 'components/contents/chat/form/form.html';
 import factory from 'components/common/input/component.factory';
-import { ROOM, DESELECT_ROOM_ID } from 'store/modules/room/types';
 import { WS, SEND } from 'store/modules/websocket/types';
 
 export default Vue.extend({
@@ -23,9 +22,6 @@ export default Vue.extend({
     'textarea-input': factory('textarea'),
   },
   methods: {
-    ...Vuex.mapActions(ROOM, {
-      deselectRoomId: DESELECT_ROOM_ID,
-    }),
     ...Vuex.mapActions(WS, {
       send: SEND,
     }),
@@ -37,10 +33,6 @@ export default Vue.extend({
         .then(() => {
           this.model.value = null;
         });
-    },
-    closeRoom() {
-      // chat.room.jsでwatchしているのでroomもWSも自動的に初期化される
-      this.deselectRoomId();
     },
   },
 });

@@ -1,12 +1,8 @@
 /* globals axios */
 import {
   ROOM,
-  ROOM_ID,
   CHANGE_ROOM,
-  CHANGE_ROOM_ID,
   PUSH_MESSAGE,
-  SELECT_ROOM_ID,
-  DESELECT_ROOM_ID,
   GET_ROOM,
   CLEAR_ROOM,
   UPDATE_MESSAGES,
@@ -16,39 +12,19 @@ import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 export default {
   namespaced: true,
   state: {
-    [ROOM]: null,
-    [ROOM_ID]: null,
+    [ROOM]: {},
   },
   mutations: {
     [CHANGE_ROOM](state, room) {
       state[ROOM] = room;
     },
-    [CHANGE_ROOM_ID](state, roomId) {
-      state[ROOM_ID] = roomId;
-    },
     [PUSH_MESSAGE](state, message) {
-      // const messages = root[ROOM].messages;
-      // if (messages.length >= 10) {
-      //   messages.shift();
-      // }
       state[ROOM].messages.push(message);
     },
   },
   actions: {
-    [SELECT_ROOM_ID]({ commit, state }, roomId) {
-      if (state[ROOM_ID] !== roomId) {
-        commit(CHANGE_ROOM_ID, roomId);
-      }
-    },
-    [DESELECT_ROOM_ID]({ commit }) {
-      commit(CHANGE_ROOM_ID, null);
-    },
-    [GET_ROOM]({ dispatch, commit, state }) {
-      const roomId = state[ROOM_ID];
-      if (!roomId) {
-        return;
-      }
-      axios.get(`/api/room/${roomId}`)
+    [GET_ROOM]({ dispatch, commit, state }, payload) {
+      axios.get(`/api/room/${payload.roomId}`)
         .then((response) => {
           const room = response.data;
           room.messages = room.messages.map((message) => {
@@ -61,12 +37,14 @@ export default {
         .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {
             title: 'Room',
-            message: 'Fail connect',
+            message: 'Fail get data',
           }, { root: true });
         });
     },
-    [CLEAR_ROOM]({ commit }) {
-      commit(CHANGE_ROOM, null);
+    [CLEAR_ROOM]({ commit, state }, payload) {
+      if (state[ROOM].room_id === payload.roomId) {
+        commit(CHANGE_ROOM, {});
+      }
     },
     [UPDATE_MESSAGES]({ commit, state }, message) {
       commit(PUSH_MESSAGE, message);

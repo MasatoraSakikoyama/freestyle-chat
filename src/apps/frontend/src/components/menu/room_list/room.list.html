@@ -1,10 +1,9 @@
-<li class="room-list"
-  :class="{ selected: isSelected }"
-  @click.stop="onOpenRoom">
-  <label
+<li class="room-list" :class="{ selected: isSelected }">
+  <router-link
     class="room-list__label"
-    :title="room.title"
-    v-text="room.title"></label>
+    :to="{ name: 'chat', params: { roomId: room.room_id }}"
+    v-text="room.title">
+  </router-link>
   <button
     class="room-list__button"
     type="button"
