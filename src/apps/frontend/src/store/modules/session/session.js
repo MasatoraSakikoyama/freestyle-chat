@@ -25,13 +25,14 @@ export default {
           }, { root: true });
         });
     },
-    [LOGIN]({ dispatch, commit }, user) {
+    [LOGIN]({ dispatch, commit }, payload) {
       axios.post('/api/session/login', {
-        user_id: user.userId,
-        password: user.password,
+        user_id: payload.userId,
+        password: payload.password,
       })
       .then(() => {
         commit(CHANGE_LOGIN_STATE, true);
+        payload.router.push({ name: payload.path });
       })
       .catch((error) => {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
@@ -40,10 +41,11 @@ export default {
         }, { root: true });
       });
     },
-    [LOGOUT]({ dispatch, commit }) {
+    [LOGOUT]({ dispatch, commit }, payload) {
       axios.post('/api/session/logout')
         .then(() => {
           commit(CHANGE_LOGIN_STATE, false);
+          payload.router.push({ name: payload.path });
         })
         .catch(() => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {

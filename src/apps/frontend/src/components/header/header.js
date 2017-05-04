@@ -15,10 +15,10 @@ export default Vue.extend({
       logout: LOGOUT,
     }),
     onLogout() {
-      this.logout()
-        .then(() => {
-          this.$router.push({ name: 'login' });
-        });
+      this.logout({
+        router: this.$router,
+        path: 'login',
+      });
     },
   },
 });

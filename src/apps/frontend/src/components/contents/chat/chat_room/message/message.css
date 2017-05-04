@@ -1,8 +1,16 @@
+.message-wrapper {
+  padding: 0.5em;
+}
 .message {
   display: table-cell;
   width: 100%;
   padding: 0.5em;
-  border-bottom: solid 0.1em;
+  box-shadow: 0 0 0.5em 0.1em #99AB4E;
+  -moz-box-shadow: 0 0 0.5em 0.1em #99AB4E;
+  -webkit-box-shadow: 0 0 0.5em 0.1em #99AB4E;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
 }
 .message__index {
   display: inline-block;

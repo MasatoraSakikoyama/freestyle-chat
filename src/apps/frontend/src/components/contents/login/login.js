@@ -46,9 +46,8 @@ export default Vue.extend({
       this.login({
         userId: this.userId.value,
         password: this.password.value,
-      })
-      .then(() => {
-        this.$router.push({ name: 'home' });
+        router: this.$router,
+        path: 'home'
       });
     },
   },
