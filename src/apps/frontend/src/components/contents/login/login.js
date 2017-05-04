@@ -47,7 +47,7 @@ export default Vue.extend({
         userId: this.userId.value,
         password: this.password.value,
         router: this.$router,
-        path: 'home'
+        path: 'home',
       });
     },
   },
