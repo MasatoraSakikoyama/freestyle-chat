@@ -1,5 +1,5 @@
 /* globals */
-import { MENU, IS_OPEN, CHANGE_IS_OPEN, MENU_OPEN, MENU_CLOSE } from 'store/modules/menu/types';
+import { IS_OPEN, CHANGE_IS_OPEN, MENU_OPEN, MENU_CLOSE } from 'store/modules/menu/types';
 
 export default {
   namespaced: true,
@@ -19,4 +19,4 @@ export default {
       commit(CHANGE_IS_OPEN, false);
     },
   },
-}
+};

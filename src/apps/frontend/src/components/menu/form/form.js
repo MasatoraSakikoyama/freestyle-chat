@@ -4,7 +4,6 @@ import template from 'components/menu/form/form.html';
 import 'components/menu/form/form.css';
 import factory from 'components/common/input/component.factory';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
-import { ROOM } from 'store/modules/room/types';
 
 export default Vue.extend({
   template,
@@ -43,7 +42,7 @@ export default Vue.extend({
         this.$emit('create-room', response.data);
         this.$router.push({
           name: 'chat',
-          params: { roomId: response.data.room_id }
+          params: { roomId: response.data.room_id },
         });
       })
       .catch(() => {
