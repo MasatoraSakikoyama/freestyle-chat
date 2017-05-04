@@ -1,12 +1,13 @@
 .app-header {
-  height: 5em;
+  height: 2em;
   width: 100%;
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
   right: 0;
-  background-color: black;
-  color: white;
+  background-color: #98D98E;
+  color: #00786C;
 }
 .app-header__title {
   margin-left: 1em;

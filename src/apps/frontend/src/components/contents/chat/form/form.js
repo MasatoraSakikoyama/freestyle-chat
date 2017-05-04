@@ -1,5 +1,5 @@
 /* globals Vue, Vuex */
-import template from 'components/contents/chat/chat_room/form/form.html';
+import template from 'components/contents/chat/form/form.html';
 import factory from 'components/common/input/component.factory';
 import { ROOM, DESELECT_ROOM_ID } from 'store/modules/room/types';
 import { WS, SEND } from 'store/modules/websocket/types';

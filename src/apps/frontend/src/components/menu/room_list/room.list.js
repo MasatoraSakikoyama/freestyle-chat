@@ -1,7 +1,7 @@
 /* globals Vue, Vuex */
 import jwt from 'utils/jwt.axios';
-import template from 'components/contents/chat/side_menu/room_list/room.list.html';
-import 'components/contents/chat/side_menu/room_list/room.list.css';
+import template from 'components/menu/room_list/room.list.html';
+import 'components/menu/room_list/room.list.css';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 import { SESSION, IS_LOGIN } from 'store/modules/session/types';
 import { ROOM, ROOM_ID, SELECT_ROOM_ID, DESELECT_ROOM_ID } from 'store/modules/room/types';
@@ -33,10 +33,10 @@ export default Vue.extend({
       selectRoomId: SELECT_ROOM_ID,
       deselectRoomId: DESELECT_ROOM_ID,
     }),
-    openRoom() {
+    onOpenRoom() {
       this.selectRoomId(this.room.room_id);
     },
-    deleteRoom() {
+    onDeleteRoom() {
       jwt.delete(`/api/room/${this.room.room_id}`)
         .then(() => {
           this.$emit('delete-room', this.room.room_id);

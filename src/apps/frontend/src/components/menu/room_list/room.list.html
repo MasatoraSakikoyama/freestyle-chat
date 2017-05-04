@@ -1,6 +1,6 @@
 <li class="room-list"
   :class="{ selected: isSelected }"
-  @click.stop="openRoom">
+  @click.stop="onOpenRoom">
   <label
     class="room-list__label"
     :title="room.title"
@@ -9,5 +9,5 @@
     class="room-list__button"
     type="button"
     v-if="isLogin"
-    @click.stop="deleteRoom">Delete</button>
+    @click.stop="onDeleteRoom">Delete</button>
 </li>

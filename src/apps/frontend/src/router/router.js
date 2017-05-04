@@ -1,19 +1,26 @@
 /* globals Vue */
 import VueRouter from 'vue-router';
-import chat from 'components/contents/chat/chat';
-import login from 'components/contents/login/login';
+import Home from 'components/contents/home/home';
+import Chat from 'components/contents/chat/chat';
+import Login from 'components/contents/login/login';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: chat,
+    component: Home,
   },
   {
     path: '/login',
     name: 'login',
-    component: login,
+    component: Login,
   },
+  {
+    path: '/chat',
+    name: 'chat',
+    component: Chat,
+  },
+
 ];
 
 export default class AppRouter extends VueRouter {

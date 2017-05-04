@@ -1,0 +1,20 @@
+<div class="menu" v-if="isOpen">
+  <p class="menu__close">
+    <i
+      class="fa fa-times menu__close__icon"
+      aria-hidden="true"
+      @click.stop="onClose"></i>
+  </p>
+  <h3 class="menu__title">Chat Rooms</h3>
+  <ul class="menu__list">
+    <room-list
+      v-for="room in rooms"
+      :key="room.room_id"
+      :room="room"
+      @delete-room="onDeleteRoom"></room-list>
+  </ul>
+  <menu-form
+    class="menu__form"
+    v-if="isLogin"
+    @create-room="onCreateRoom"></menu-form>
+</div>

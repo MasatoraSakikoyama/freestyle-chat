@@ -1,4 +1,6 @@
-<div class="chat">
-  <side-menu></side-menu>
-  <chat-room></chat-room>
+<div class="chat" v-if="room">
+  <ul class="chat__list" v-for="(message, index) in room.messages" :key="message.id">
+    <chat-message :message="message" :index="index"></chat-message>
+  </ul>
+  <chat-form></chat-form>
 </div>

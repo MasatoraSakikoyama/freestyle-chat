@@ -1,0 +1,31 @@
+.menu {
+  width: 10em;
+  max-height: 45em;
+  background-color: #98D98E;
+  color: #00786C;
+  padding: 0.5em 1em 1em 1em;
+  position: fixed;
+  top: 3em;
+  z-index: 50;
+}
+.menu__close {
+  width: 100%;
+}
+.menu__close__icon {
+  float: right;
+}
+.menu__close__icon:hover {
+  filter: brightness(50%);
+  cursor: pointer;
+}
+.menu__title {
+  margin: 0.5em;
+}
+.menu__list {
+  max-height: 35em;
+  overflow: scroll;
+  background-color: #E4DC8A;
+}
+.menu__form {
+  margin: 0.5em;
+}

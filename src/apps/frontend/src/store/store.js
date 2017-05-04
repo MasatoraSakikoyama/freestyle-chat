@@ -3,6 +3,7 @@ import createLogger from 'vuex/dist/logger';
 import info from 'store/modules/info/info';
 import error from 'store/modules/error/error';
 import session from 'store/modules/session/session';
+import menu from 'store/modules/menu/menu';
 import room from 'store/modules/room/room';
 import websocket from 'store/modules/websocket/websocket';
 
@@ -18,6 +19,7 @@ export default class AppStore extends Vuex.Store {
         info,
         error,
         session,
+        menu,
         room,
         websocket,
       },

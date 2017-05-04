@@ -1,0 +1,10 @@
+<li class="message-wrapper">
+  <div class="message">
+    <div>
+      <div class="message__index" v-text="number"></div>
+      <div class="message__auth" v-text="message.modified_by"></div>
+      <div class="message__date" v-text="message.modified_at"></div>
+    </div>
+    <div class="message__body" v-text="message.content"></div>
+  </div>
+</li>

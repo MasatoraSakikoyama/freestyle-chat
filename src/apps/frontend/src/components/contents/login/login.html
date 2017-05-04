@@ -1,4 +1,4 @@
-<div v-if="!isLogin">
+<div class='login' v-if="!isLogin">
   <text-input :model="userId" />
   <password-input :model="password" />
   <button type="button" @click.stop="onLogin">Login</button>

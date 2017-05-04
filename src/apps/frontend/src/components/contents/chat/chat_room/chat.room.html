@@ -1,6 +1,0 @@
-<div class="chat-room" v-if="room">
-  <ul class="chat-room__list" v-for="(message, index) in room.messages" :key="message.id">
-    <chat-room-message :message="message" :index="index"></chat-room-message>
-  </ul>
-  <chat-room-form></chat-room-form>
-</div>

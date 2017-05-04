@@ -1,6 +1,6 @@
 /* globals Vue */
-import template from 'components/contents/chat/chat_room/message/message.html';
-import 'components/contents/chat/chat_room/message/message.css';
+import template from 'components/contents/chat/message/message.html';
+import 'components/contents/chat/message/message.css';
 
 export default Vue.extend({
   template,

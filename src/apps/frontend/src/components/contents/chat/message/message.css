@@ -1,0 +1,28 @@
+.message-wrapper {
+  padding: 0.5em;
+}
+.message {
+  display: table-cell;
+  width: 100%;
+  padding: 0.5em;
+  box-shadow: 0 0 0.1em 0.1em #00786C;
+  -moz-box-shadow: 0 0 0.1em 0.1em #00786C;
+  -webkit-box-shadow: 0 0 0.1em 0.1em #00786C;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
+.message__index {
+  display: inline-block;
+}
+.message__auth {
+  display: inline-block;
+}
+.message__date {
+  display: inline-block;
+}
+.message__body {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
