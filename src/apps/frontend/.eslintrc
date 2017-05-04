@@ -1,12 +1,12 @@
 {
-    "extends": "airbnb-base",
-    "plugins": [
-        "import"
-    ],
-    "settings": {
-        "import/resolver": "webpack"
-    },
-    "rules": {
-        "no-param-reassign": 0
-    }
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "rules": {
+    "no-param-reassign": 0
+  }
 }
