@@ -9,8 +9,7 @@
   filter: brightness(50%);
 }
 .room-list__label {
-  min-width: 6em;
-  max-width: 10em;
+  min-width: 8em;
   overflow: auto;
   float: left;
 }

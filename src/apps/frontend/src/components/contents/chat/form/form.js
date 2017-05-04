@@ -1,5 +1,6 @@
 /* globals Vue, Vuex */
 import template from 'components/contents/chat/form/form.html';
+import 'components/contents/chat/form/form.css';
 import factory from 'components/common/input/component.factory';
 import { WS, SEND } from 'store/modules/websocket/types';
 

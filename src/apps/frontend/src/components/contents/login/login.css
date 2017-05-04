@@ -2,3 +2,9 @@
   width: 10em;
   margin: 0 auto;
 }
+.login__password {
+  display: inline-block;
+}
+.login__button {
+  display: inline-block;
+}
