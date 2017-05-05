@@ -9,11 +9,10 @@
   filter: brightness(50%);
 }
 .room-list__label {
-  min-width: 8em;
+  min-width: 11em;
   overflow: auto;
   float: left;
 }
-.room-list__button {
+.room-list__link {
   float: right;
-  margin-top: 0.4em;
 }

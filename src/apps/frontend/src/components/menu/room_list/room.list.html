@@ -1,14 +1,12 @@
 <li class="room-list" :class="{ selected: isSelected }">
-  <router-link
-    class="room-list__label"
+  <router-link class="room-list__label"
     :to="{ name: 'chat', params: { roomId: room.room_id }}"
     v-text="room.title">
   </router-link>
-  <button
-    class="room-list__button"
-    type="button"
+  <a class="room-list__link"
+    href="javascript:void(0)"
     v-if="isLogin"
     @click.stop="onDeleteRoom">
     <i class="fa fa-trash-o" aria-hidden="true"></i>
-  </button>
+  </a>
 </li>

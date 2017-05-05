@@ -1,7 +1,5 @@
 <div class='login' v-if="!isLogin">
   <text-input :model="userId" />
   <password-input class="login__password" :model="password" />
-  <button class="login__button" type="button" @click.stop="onLogin">
-    <i class="fa fa-check" aria-hidden="true"></i>
-  </button>
+  <button class="login__button" type="button" @click.stop="onLogin">OK</button>
 </div>
