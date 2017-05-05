@@ -1,29 +1,33 @@
 .header {
-  height: 2em;
-  width: 100%;
   position: fixed;
-  z-index: 100;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #98D98E;
-  color: #00786C;
+  z-index: 100;
+  min-height: 2em;
+  width: 100%;
+  background-color: #00786C;
+  color: #98D98E;
 }
-.header__title {
-  margin: 0 1em 0;
-  display: inline-block;
+.header__menu {
   float: left;
+  margin-left: 1em;
+  display: table-cell;
+  height: 2em;
 }
-.header__title:hover {
-  filter: brightness(50%);
+.header__menu__link {
+  vertical-align: middle;
 }
 .header__nav {
-  display: inline-block;
+  float: right;
+  letter-spacing: -0.5em;
 }
-.header__nav__icon:hover {
+.header__nav__list {
+  display: inline-block;
+  letter-spacing: normal;
+  margin-right: 1em;
+}
+.header__menu__icon,
+.header__nav__list__icon:hover {
   filter: brightness(50%);
-}
-.header__nav > ul > li {
-  display: inline-block;
-  margin: 0 0.1em 0;
 }

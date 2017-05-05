@@ -1,12 +1,22 @@
+.menu-wrapper {
+  -webkit-order: 0;
+  order: 0;
+  -webkit-flex-grow: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  -webkit-flex-basis: 15em;
+  flex-basis: 15em;
+}
 .menu {
-  width: 10em;
-  max-height: 45em;
+  position: fixed;
+  z-index: 50;
+  box-sizing: border-box;
+  width: 15em;
+  height: 100%;
+  padding: 0.5em 1em 1em 1em;
   background-color: #98D98E;
   color: #00786C;
-  padding: 0.5em 1em 1em 1em;
-  position: fixed;
-  top: 3em;
-  z-index: 50;
 }
 .menu__close {
   width: 100%;

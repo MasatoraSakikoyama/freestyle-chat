@@ -27,6 +27,11 @@ module.exports = {
         ],
       },
       {
+        test: /index\.html|404\.html|500\.html$/,
+        loader: 'file-loader',
+        options: { name: '[name].[ext]' },
+      },
+      {
         test: /.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,

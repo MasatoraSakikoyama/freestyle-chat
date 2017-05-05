@@ -1,11 +1,11 @@
 /* globals Vue, Vuex */
 import template from 'components/components.html';
 import 'components/components.css';
-import AppHeader from 'components/header/header';
-import AppContents from 'components/contents/contents';
-import AppFooter from 'components/footer/footer';
+import Header from 'components/header/header';
 import Menu from 'components/menu/menu';
-import modalFactory from 'components/common/modal/modal.factory';
+import Contents from 'components/contents/contents';
+import Footer from 'components/footer/footer';
+import modalFactory from 'components/modal/modal.factory';
 import { SESSION, IS_LOGIN } from 'store/modules/session/types';
 import * as info from 'store/modules/info/types';
 import * as error from 'store/modules/error/types';
@@ -18,10 +18,10 @@ export default Vue.extend({
     }),
   },
   components: {
-    'app-header': AppHeader,
-    'app-contents': AppContents,
-    'app-footer': AppFooter,
+    'app-header': Header,
     'app-menu': Menu,
+    'app-contents': Contents,
+    'app-footer': Footer,
     'info-modal': modalFactory(info.INFO, info),
     'error-modal': modalFactory(error.ERROR, error),
   },

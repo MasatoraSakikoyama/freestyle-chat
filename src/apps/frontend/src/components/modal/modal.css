@@ -6,15 +6,20 @@
   background-color: #61ed92;
   border-color: #2d9b53;
 }
+.modal-wrapper {
+
+}
 .modal {
+  position: fixed;
+  right: 0;
+  z-index: 75;
+  box-sizing: border-box;
   width: 300px;
-  margin: 0px auto;
+  margin: 0 auto;
   padding: 20px 30px;
-  border: solid;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
-  font-family: Helvetica, Arial, sans-serif;
 }
 .modal__header {
   margin-top: 0;
@@ -23,7 +28,7 @@
 .modal__body {
   margin: 20px 0;
 }
-.modal__ok-button {
+.modal__button {
   float: right;
 }
 /*

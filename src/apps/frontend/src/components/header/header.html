@@ -1,24 +1,24 @@
 <header class="header">
-  <h3 class="header__title">
-    <router-link :to="{ name: 'home' }">Websocket Test</router-link>
-  </h3>
-  <nav class="header__nav">
-    <ul>
-      <li>
-        <a href="javascript:void(0)" @click.stop="onToggleMenu">
-          <i class="fa fa-bars header__nav__icon" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li v-if="!isLogin">
-        <router-link :to="{ name: 'login' }">
-          <i class="fa fa-sign-in header__nav__icon" aria-hidden="true"></i>
-        </router-link>
-      </li>
-      <li v-if="isLogin">
-        <a href="javascript:void(0)" @click.stop="onLogout">
-          <i class="fa fa-sign-out header__nav__icon" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <div class="header__menu">
+    <a class="header__menu__link" href="javascript:void(0)" @click.stop="onToggleMenu">
+      <i class="fa fa-bars header__menu__icon" aria-hidden="true"></i>
+    </a>
+  </div>
+  <ul class="header__nav">
+    <li class="header__nav__list">
+      <router-link :to="{ name: 'home' }">
+        <i class="fa fa-home header__nav__list__icon" aria-hidden="true"></i>
+      </router-link>
+    </li>
+    <li class="header__nav__list" v-if="!isLogin">
+      <router-link :to="{ name: 'login' }">
+        <i class="fa fa-sign-in header__nav__list__icon" aria-hidden="true"></i>
+      </router-link>
+    </li>
+    <li class="header__nav__list" v-if="isLogin">
+      <a href="javascript:void(0)" @click.stop="onLogout">
+        <i class="fa fa-sign-out header__nav__list__icon" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
 </header>

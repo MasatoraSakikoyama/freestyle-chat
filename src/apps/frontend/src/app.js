@@ -1,4 +1,7 @@
 /* globals window, Vue, Vuex, axios */
+import 'index.html';
+import '404.html';
+import '500.html';
 import AppRouter from 'router/router';
 import AppStore from 'store/store';
 import CSRFConfig from 'config/csrf.config';

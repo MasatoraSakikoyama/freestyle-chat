@@ -1,7 +1,17 @@
+.contents-wrapper {
+  -webkit-order: 1;
+  order: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 1;
+  flex-shrink: 1;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
 .contents {
-  width: 95%;
+  z-index: 50;
+  box-sizing: border-box;
+  width: 100%;
   height: 100%;
-  margin: 0 auto;
-  position: relative;
-  z-index: 0;
+  padding: 1em;
 }

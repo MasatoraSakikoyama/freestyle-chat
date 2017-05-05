@@ -1,6 +1,6 @@
-<div v-if="showModal">
+<div class="modal-wrapper" v-if="showModal">
   <transition name="modal">
-    <div class="modal info">
+    <div class="modal error">
       <div class="modal__header">
         <slot name="header">
           {{ modal.title }}
@@ -13,7 +13,7 @@
       </div>
       <div class="modal__footer">
         <slot name="footer">
-          <button class="modal__ok-button" v-on:click="ok">
+          <button class="modal__button" v-on:click="ok">
             OK
           </button>
         </slot>

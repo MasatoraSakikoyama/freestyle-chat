@@ -1,7 +1,7 @@
 /* globals Vue, Vuex */
-import info from 'components/common/modal/templates/info.html';
-import error from 'components/common/modal/templates/error.html';
-import 'components/common/modal/modal.css';
+import info from 'components/modal/templates/info.html';
+import error from 'components/modal/templates/error.html';
+import 'components/modal/modal.css';
 
 const templates = { info, error };
 
