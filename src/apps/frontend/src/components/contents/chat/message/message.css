@@ -1,4 +1,15 @@
+.messgaes-wrapper {
+  -webkit-order: 0;
+  order: 0;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 1;
+  flex-shrink: 1;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
 .messages {
+  z-index: 40;
   display:table;
   list-style: none;
 }

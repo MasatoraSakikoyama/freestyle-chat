@@ -1,5 +1,9 @@
-<div class="chat-form">
-  <label for="message">Message</label>
-  <textarea-input id="message" :model="model"/>
-  <button type="button" @click.stop="sendMessage">OK</button>
+<div class="chat-form-wrapper">
+  <div class="chat-form">
+    <div class="chat-form__content">
+      <label for="message">Message</label>
+      <textarea-input id="message" :model="model"/>
+      <button type="button" @click.stop="sendMessage">OK</button>
+    </div>
+  </div>
 </div>
