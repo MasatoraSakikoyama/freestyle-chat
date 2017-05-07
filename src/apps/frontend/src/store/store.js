@@ -5,6 +5,7 @@ import error from 'store/modules/error/error';
 import session from 'store/modules/session/session';
 import menu from 'store/modules/menu/menu';
 import room from 'store/modules/room/room';
+import messages from 'store/modules/messages/messages';
 import websocket from 'store/modules/websocket/websocket';
 
 export default class AppStore extends Vuex.Store {
@@ -21,6 +22,7 @@ export default class AppStore extends Vuex.Store {
         session,
         menu,
         room,
+        messages,
         websocket,
       },
       strict: debug,

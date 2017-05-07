@@ -4,6 +4,7 @@ import 'components/contents/chat/chat.css';
 import Form from 'components/contents/chat/form/form';
 import Message from 'components/contents/chat/message/message';
 import { ROOM, GET_ROOM, CLEAR_ROOM } from 'store/modules/room/types';
+import { MESSAGES, GET_MESSAGES, CLEAR_MESSAGES } from 'store/modules/messages/types';
 import { WS, CONNECT_WS, DISCONNECT_WS } from 'store/modules/websocket/types';
 
 export default Vue.extend({
@@ -18,6 +19,7 @@ export default Vue.extend({
     roomId() {
       this.disconnectWS();
       this.getRoom({ roomId: this.roomId });
+      this.getMessages({ roomId: this.roomId });
       this.connectWS({ roomId: this.roomId });
     },
   },
@@ -30,6 +32,10 @@ export default Vue.extend({
       getRoom: GET_ROOM,
       clearRoom: CLEAR_ROOM,
     }),
+    ...Vuex.mapActions(MESSAGES, {
+      getMessages: GET_MESSAGES,
+      clearMessages: CLEAR_MESSAGES,
+    }),
     ...Vuex.mapActions(WS, {
       connectWS: CONNECT_WS,
       disconnectWS: DISCONNECT_WS,
@@ -37,10 +43,12 @@ export default Vue.extend({
   },
   created() {
     this.getRoom({ roomId: this.roomId });
+    this.getMessages({ roomId: this.roomId });
     this.connectWS({ roomId: this.roomId });
   },
   destroyed() {
-    this.clearRoom({ roomId: this.roomId });
+    this.clearRoom();
+    this.clearMessages();
     this.disconnectWS();
   },
 });

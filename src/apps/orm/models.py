@@ -6,7 +6,7 @@ from django.db.models import (
     DateTimeField,
     BooleanField,
     ForeignKey,
-    OneToOneField,
+    # OneToOneField,
     ManyToManyField,
     CASCADE,
 )
@@ -73,22 +73,17 @@ class UserRoomRelation(BaseModel):
             'role': self.role,
         }
 
-
-class Message(BaseModel):
-    content = CharField(max_length=1024, blank=False, null=False)
-    # relation
-    dest_message = OneToOneField('self', blank=True, null=True)
-    chat_user = ForeignKey(User, on_delete=CASCADE)
-    chat_room = ForeignKey(Room, on_delete=CASCADE)
-
-    def _to_dict(self):
-        return {
-            'message_id': self.pk,
-            'content': self.content,
-            'dest_message': self.dest_message.pk if self.dest_message else None,
-        }
-
-
-class Information(BaseModel):
-    # ToDo: informationとmessageを分ける必要があるか要検討
-    pass
+# messageはredisで管理する
+# class Message(BaseModel):
+#     content = CharField(max_length=1024, blank=False, null=False)
+#     # relation
+#     dest_message = OneToOneField('self', blank=True, null=True)
+#     chat_user = ForeignKey(User, on_delete=CASCADE)
+#     chat_room = ForeignKey(Room, on_delete=CASCADE)
+#
+#     def _to_dict(self):
+#         return {
+#             'message_id': self.pk,
+#             'content': self.content,
+#             'dest_message': self.dest_message.pk if self.dest_message else None,
+#         }

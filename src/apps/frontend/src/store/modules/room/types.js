@@ -1,9 +1,7 @@
-// sub module path
+// sub module path & state
 export const ROOM = 'room';
-// mutations
+// mutation
 export const CHANGE_ROOM = 'changeRoom';
-export const PUSH_MESSAGE = 'pushMessage';
-// actions
+// action
 export const GET_ROOM = 'getRoom';
 export const CLEAR_ROOM = 'clearRoom';
-export const UPDATE_MESSAGES = 'updateMessages';

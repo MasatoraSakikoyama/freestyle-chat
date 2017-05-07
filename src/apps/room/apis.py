@@ -10,7 +10,6 @@ from django.http import HttpResponse
 from apps.session.utils import api_login_required, api_token_required
 from apps.orm.forms import RoomForm
 from apps.orm.models import Room
-from apps.orm.models import Message
 from .utils import room_id_generator
 
 
@@ -49,11 +48,8 @@ def room_api(request, room_id):
             deleted_by='',
             deleted_at=None,
         )
-        messages = Message.objects.filter(chat_room=room)
-        d = room.to_dict()
-        d['messages'] = [m.to_dict() for m in messages]
         return HttpResponse(
-            content=dumps(d),
+            content=dumps(room.to_dict()),
             status=200,
             content_type='application/json',
         )

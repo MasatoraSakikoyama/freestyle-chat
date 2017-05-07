@@ -2,22 +2,12 @@
 from datetime import datetime
 from functools import wraps
 
-from apps.orm.models import User
 
-
-def get_user(func):
+def get_user_id(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if args[0].user.is_anonymous:
-            user = User(
-                pk=0,
-                user_id='system',
-                password='system',
-                name='system',
-            )
-        else:
-            user = User.objects.get(user_id=args[0].user.user_id)
-        kwargs['user'] = user
+        user = args[0].user
+        kwargs['user_id'] = 'system' if user.is_anonymous else user.user_id
         return func(*args, **kwargs)
     return wrapper
 

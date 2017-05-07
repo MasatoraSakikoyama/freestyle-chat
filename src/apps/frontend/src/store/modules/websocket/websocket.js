@@ -1,7 +1,7 @@
 /* globals window, WebSocket */
 import { INFO } from 'store/modules/info/types';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
-import { ROOM, UPDATE_MESSAGES } from 'store/modules/room/types';
+import { MESSAGES, UPDATE_MESSAGES } from 'store/modules/messages/types';
 import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from 'store/modules/websocket/types';
 
 export default {
@@ -27,7 +27,7 @@ export default {
         JSON.parse(event.data).forEach((message) => {
           const date = new Date(message.modified_at);
           message.modified_at = date.toLocaleString();
-          dispatch(`${ROOM}/${UPDATE_MESSAGES}`, message, { root: true });
+          dispatch(`${MESSAGES}/${UPDATE_MESSAGES}`, message, { root: true });
         });
       };
       if (ws.readyState === WebSocket.OPEN) {
