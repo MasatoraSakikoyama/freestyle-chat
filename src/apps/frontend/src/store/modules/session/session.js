@@ -37,7 +37,7 @@ export default {
       .catch((error) => {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
           title: 'Login',
-          message: error.response.data.message,
+          message: error.response ? error.response.data.message : 'Fail login',
         }, { root: true });
       });
     },

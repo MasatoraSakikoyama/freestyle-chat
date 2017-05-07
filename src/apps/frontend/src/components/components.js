@@ -7,8 +7,8 @@ import Contents from 'components/contents/contents';
 import Footer from 'components/footer/footer';
 import modalFactory from 'components/modal/modal.factory';
 import { SESSION, IS_LOGIN } from 'store/modules/session/types';
-import * as info from 'store/modules/info/types';
-import * as error from 'store/modules/error/types';
+import { INFO } from 'store/modules/info/types';
+import { ERROR } from 'store/modules/error/types';
 
 export default Vue.extend({
   template,
@@ -22,7 +22,7 @@ export default Vue.extend({
     'app-menu': Menu,
     'app-contents': Contents,
     'app-footer': Footer,
-    'info-modal': modalFactory(info.INFO, info),
-    'error-modal': modalFactory(error.ERROR, error),
+    'info-modal': modalFactory(INFO),
+    'error-modal': modalFactory(ERROR),
   },
 });

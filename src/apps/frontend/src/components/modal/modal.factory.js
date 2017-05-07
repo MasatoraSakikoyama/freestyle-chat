@@ -1,23 +1,34 @@
 /* globals Vue, Vuex */
-import info from 'components/modal/templates/info.html';
-import error from 'components/modal/templates/error.html';
+import infoTemplate from 'components/modal/templates/info.html';
+import errorTemplate from 'components/modal/templates/error.html';
 import 'components/modal/modal.css';
+import * as infoTypes from 'store/modules/info/types';
+import * as errorTypes from 'store/modules/error/types';
 
-const templates = { info, error };
+const params = {
+  info: {
+    template: infoTemplate,
+    ...infoTypes,
+  },
+  error: {
+    template: errorTemplate,
+    ...errorTypes,
+  },
+};
 
-export default (modalType, props) => {
-  const template = templates[modalType];
+export default (modalType) => {
+  const param = params[modalType];
   return Vue.extend({
-    template,
+    template: param.template,
     computed: {
       ...Vuex.mapState(modalType, {
-        showModal: props.SHOW_MODAL,
-        modal: props.MODAL,
+        showModal: param.SHOW_MODAL,
+        modal: param.MODAL,
       }),
     },
     methods: {
       ...Vuex.mapActions(modalType, {
-        ok: props.OK,
+        ok: param.OK,
       }),
     },
   });
