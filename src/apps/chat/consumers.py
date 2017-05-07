@@ -41,13 +41,16 @@ def receive(message, room_id, user_id):
     if method == 'GET':
         messages = []
     elif method == 'POST':
+        now = datetime.now()
         message = {
             'content': text['content'],
             'dest_message': text.get('dest_message'),
             'chat_user': user_id,
             'chat_room': room_id,
             'created_by': user_id,
-            'created_at': datetime.now()
+            'created_at': now,
+            'modified_by': user_id,
+            'modified_at': now,
         }
         messages = []
         messages.append(message)
