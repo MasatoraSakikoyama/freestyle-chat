@@ -16,8 +16,6 @@ MIDDLEWARE.insert(3, 'django.middleware.csrf.CsrfViewMiddleware')
 # for heroku
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-TEMPLATES[0]['DIRS'] = ['src/static']
-
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=400)
 }
