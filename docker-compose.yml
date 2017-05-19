@@ -1,0 +1,21 @@
+version: '2'
+services:
+    proxy:
+        build: ./.docker/proxy
+        ports:
+            - "80:80"
+        volumes_from:
+            - container:dotfiles
+        links:
+            - web:web
+        command: ["nginx", "-g", "daemon off;"]
+    web:
+        build: ./.docker/web
+        volumes_from:
+            - container:dotfiles
+            - container:app-src
+        links:
+            - cache:cache
+        command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--settings=settings.develop"]
+    cache:
+        build: ./.docker/cache
