@@ -1,4 +1,4 @@
-# freestyle-chat
+# websocket-test
 
 ## production
 1. npm run build
