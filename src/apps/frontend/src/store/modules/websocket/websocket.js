@@ -1,7 +1,6 @@
 /* globals window, WebSocket */
 import { INFO } from 'store/modules/info/types';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
-import { MESSAGES, UPDATE_MESSAGES } from 'store/modules/messages/types';
 import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from 'store/modules/websocket/types';
 
 export default {
@@ -23,13 +22,15 @@ export default {
           message: `Chat room ${payload.roomId} is open`,
         }, { root: true });
       };
-      ws.onmessage = (event) => {
-        JSON.parse(event.data).forEach((message) => {
-          const date = new Date(message.modified_at);
-          message.modified_at = date.toLocaleString();
-          dispatch(`${MESSAGES}/${UPDATE_MESSAGES}`, message, { root: true });
-        });
-      };
+      //ws.onmessage = (event) => {
+      //  console.log('##########');
+      //  return JSON.parse(event.data).map((message) => {
+      //    const date = new Date(message.modified_at);
+      //    message.modified_at = date.toLocaleString();
+//    //      dispatch(`${MESSAGES}/${UPDATE_MESSAGES}`, message, { root: true });
+      //    return message
+      //  });
+      //};
       if (ws.readyState === WebSocket.OPEN) {
         ws.onopen();
       }
@@ -42,7 +43,7 @@ export default {
       }
       commit(CHANGE_WS, {});
     },
-    [SEND]({ dispatch, state }, message) {
+    [SEND]({ dispatch, state }, payload) {
       const ws = state[WS];
       if (!ws || ws.readyState !== WebSocket.OPEN) {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
@@ -50,10 +51,24 @@ export default {
           message: 'Fail send message',
         }, { root: true });
       } else {
-        ws.send(JSON.stringify({
-          method: 'POST',
-          content: message,
-        }));
+        return ws.send(JSON.stringify({
+          method: payload.method,
+          content: payload.message,
+        }))
+          .then((event) => {
+            console.log('$$$$$$$$$$');
+            return JSON.parse(event.data).map((message) => {
+              const date = new Date(message.modified_at);
+              message.modified_at = date.toLocaleString();
+              return message
+            });
+          })
+          .catch(() => {
+            dispatch(`${ERROR}/${OPEN_MODAL}`, {
+              title: 'Message',
+              message: 'Fail get message',
+            }, { root: true });
+          });
       }
     },
   },

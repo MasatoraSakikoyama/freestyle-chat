@@ -35,21 +35,30 @@ LOGGING = {
         },
     },
 }
+DJANGO_REDIS_LOGGER = 'console'
 
 CACHE_HOST = socket.gethostbyname('cache')
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://{}:6379/1'.format(CACHE_HOST),
+        'KEY_PREFIX': 'cache_',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
+            'CONNECTION_POOL_KWARGS': {'max_connections': 100},
         }
     },
     'messages': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://{}:6379/2'.format(CACHE_HOST),
+        'KEY_PREFIX': 'message_',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'SOCKET_CONNECT_TIMEOUT': 5,
+            'SOCKET_TIMEOUT': 5,
+            'CONNECTION_POOL_KWARGS': {'max_connections': 100},
         }
     },
 }

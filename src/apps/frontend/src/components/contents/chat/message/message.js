@@ -1,7 +1,11 @@
 /* globals Vue, Vuex */
 import template from 'components/contents/chat/message/message.html';
 import 'components/contents/chat/message/message.css';
-import { MESSAGES } from 'store/modules/messages/types';
+import {
+  MESSAGES,
+  GET_MESSAGES,
+  CLEAR_MESSAGES,
+} from 'store/modules/messages/types';
 
 export default Vue.extend({
   template,
@@ -9,5 +13,17 @@ export default Vue.extend({
     ...Vuex.mapState(MESSAGES, {
       messages: MESSAGES,
     }),
+  },
+  methods: {
+    ...Vuex.mapActions(MESSAGES, {
+      get: GET_MESSAGES,
+      clear: CLEAR_MESSAGES,
+    }),
+  },
+  created() {
+    this.get();
+  },
+  destroyed() {
+    this.clear();
   },
 });

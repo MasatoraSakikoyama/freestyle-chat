@@ -5,6 +5,7 @@ from datetime import datetime
 from channels import Group
 # from channels.sessions import enforce_ordering
 from channels.auth import channel_session_user, channel_session_user_from_http
+from django.core.cache import caches
 
 from .utils import get_user_id, datetime_default
 
@@ -34,15 +35,20 @@ def connect(message, room_id):
 # @enforce_ordering
 @get_user_id
 def receive(message, room_id, user_id):
-    # ToDo: messageはredisで管理
     text = loads(message.content['text'])
     method = text['method']
+    cache = caches['messages']
+    messages = []
 
     if method == 'GET':
-        messages = []
+        keys = cache.keys('message_{}_*'.format(user_id))
+        messages.extend(cache.get_many(keys).values())
+
     elif method == 'POST':
         now = datetime.now()
+        key = '{}_{}_{}'.format(room_id, user_id, now)
         message = {
+            'message_id': key,
             'content': text['content'],
             'dest_message': text.get('dest_message'),
             'chat_user': user_id,
@@ -52,12 +58,31 @@ def receive(message, room_id, user_id):
             'modified_by': user_id,
             'modified_at': now,
         }
-        messages = []
-        messages.append(message)
+        if cache.add(key, message):
+            messages.append(message)
+        else:
+            messages.append({
+                'message': 'fail post message'
+            })
+
     elif method == 'PUT':
-        pass
+        after = text['message']
+        after.modified_by = user_id
+        after.modified_at = datetime.now()
+        with cache.lock(after.message_id):
+            before = cache.get(after.message_id)
+            before.update(after)
+            cache.set(before.message_id, before)
+        messages.append(before)
+
     elif method == 'DELETE':
-        pass
+        message = text['message']
+        with cache.lock(message.message_id):
+            cache.delete(message.message_id)
+        messages.append({
+            'message': 'success delete message'
+        })
+
     else:
         return
 
