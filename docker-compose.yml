@@ -7,7 +7,7 @@ services:
         volumes_from:
             - container:dotfiles
         links:
-            - web:web
+            - web
         command: ["nginx", "-g", "daemon off;"]
     web:
         build: ./.docker/web
@@ -15,7 +15,10 @@ services:
             - container:dotfiles
             - container:app-src
         links:
-            - cache:cache
+            - cache
+            - channel
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--settings=settings.develop"]
     cache:
-        build: ./.docker/cache
+        build: ./.docker/redis
+    channel:
+        build: ./.docker/redis

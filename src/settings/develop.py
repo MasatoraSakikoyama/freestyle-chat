@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import socket
 
 from .base import *
 
@@ -35,9 +36,33 @@ LOGGING = {
     },
 }
 
+CACHE_HOST = socket.gethostbyname('cache')
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://{}:6379/1'.format(CACHE_HOST),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+    'messages': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://{}:6379/2'.format(CACHE_HOST),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(socket.gethostbyname('channel'), 6379)],
+        },
         'ROUTING': 'apps.chat.routing.channel_routing',
     },
 }
