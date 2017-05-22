@@ -2,12 +2,7 @@
 import template from 'components/contents/chat/form/form.html';
 import 'components/contents/chat/form/form.css';
 import factory from 'components/common/input/component.factory';
-import {
-  MESSAGES,
-  POST_MESSAGES,
-  PUT_MESSAGES,
-  DELETE_MESSAGES,
-} from 'store/modules/messages/types';
+import { WS, SEND } from 'store/modules/websocket/types';
 
 export default Vue.extend({
   template,
@@ -28,16 +23,19 @@ export default Vue.extend({
     'textarea-input': factory('textarea'),
   },
   methods: {
-    ...Vuex.mapActions(MESSAGES, {
-      post: POST_MESSAGES,
-      put: PUT_MESSAGES,
-      delete: DELETE_MESSAGES,
+    ...Vuex.mapActions(WS, {
+      send: SEND,
     }),
     sendMessage() {
       if (!this.model.isValid) {
         return;
       }
-      this.post(this.model.value)
+
+      const payload = {
+        method: 'POST',
+        content: this.model.value,
+      };
+      this.send(payload)
         .then(() => {
           this.model.value = null;
         });

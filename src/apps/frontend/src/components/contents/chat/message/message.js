@@ -16,14 +16,14 @@ export default Vue.extend({
   },
   methods: {
     ...Vuex.mapActions(MESSAGES, {
-      get: GET_MESSAGES,
-      clear: CLEAR_MESSAGES,
+      getMessages: GET_MESSAGES,
+      clearMessages: CLEAR_MESSAGES,
     }),
   },
   created() {
-    this.get();
+    this.getMessages();
   },
   destroyed() {
-    this.clear();
+    this.clearMessages();
   },
 });

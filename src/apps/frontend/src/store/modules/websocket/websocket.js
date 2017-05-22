@@ -2,6 +2,7 @@
 import { INFO } from 'store/modules/info/types';
 import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 import { WS, CHANGE_WS, CONNECT_WS, DISCONNECT_WS, SEND } from 'store/modules/websocket/types';
+import { MESSAGES, ADD_MESSAGE } from 'store/modules/messages/types';
 
 export default {
   namespaced: true,
@@ -16,21 +17,37 @@ export default {
   actions: {
     [CONNECT_WS]({ dispatch, commit }, payload) {
       const ws = new WebSocket(`ws://${window.location.host}/api/chat/${payload.roomId}`);
+
       ws.onopen = () => {
         dispatch(`${INFO}/${OPEN_MODAL}`, {
           title: 'Room',
           message: `Chat room ${payload.roomId} is open`,
         }, { root: true });
       };
-      //ws.onmessage = (event) => {
-      //  console.log('##########');
-      //  return JSON.parse(event.data).map((message) => {
-      //    const date = new Date(message.modified_at);
-      //    message.modified_at = date.toLocaleString();
-//    //      dispatch(`${MESSAGES}/${UPDATE_MESSAGES}`, message, { root: true });
-      //    return message
-      //  });
-      //};
+
+      ws.onmessage = (event) => {
+        const messages = JSON.parse(event.data).map((message) => {
+          const date = new Date(message.modified_at);
+          message.modified_at = date.toLocaleString();
+          return message;
+        });
+        dispatch(`${MESSAGES}/${ADD_MESSAGE}`, messages[0], { root: true });
+      };
+
+      ws.onerror = (event) => {
+        dispatch(`${ERROR}/${OPEN_MODAL}`, {
+          title: 'Room',
+          message: `Chat room ${payload.roomId} is error`,
+        }, { root: true });
+      };
+
+      ws.oncloase = (event) => {
+        dispatch(`${INFO}/${OPEN_MODAL}`, {
+          title: 'Room',
+          message: `Chat room ${payload.roomId} is cloase`,
+        }, { root: true });
+      };
+
       if (ws.readyState === WebSocket.OPEN) {
         ws.onopen();
       }
@@ -48,27 +65,10 @@ export default {
       if (!ws || ws.readyState !== WebSocket.OPEN) {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
           title: 'Message',
-          message: 'Fail send message',
+          message: 'Websocket is not ready',
         }, { root: true });
       } else {
-        return ws.send(JSON.stringify({
-          method: payload.method,
-          content: payload.message,
-        }))
-          .then((event) => {
-            console.log('$$$$$$$$$$');
-            return JSON.parse(event.data).map((message) => {
-              const date = new Date(message.modified_at);
-              message.modified_at = date.toLocaleString();
-              return message
-            });
-          })
-          .catch(() => {
-            dispatch(`${ERROR}/${OPEN_MODAL}`, {
-              title: 'Message',
-              message: 'Fail get message',
-            }, { root: true });
-          });
+        ws.send(JSON.stringify(payload));
       }
     },
   },
