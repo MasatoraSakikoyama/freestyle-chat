@@ -42,7 +42,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://localhost:6379/1',  # ToDo: change prd resis
-        'KEY_PREFIX': 'cache_',
+        'KEY_PREFIX': 'cache',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'SOCKET_CONNECT_TIMEOUT': 5,
@@ -54,7 +54,7 @@ CACHES = {
     'messages': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://localhost:6379/2',  # ToDo: change prd resis
-        'KEY_PREFIX': 'message_',
+        'KEY_PREFIX': 'message',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'SOCKET_CONNECT_TIMEOUT': 5,

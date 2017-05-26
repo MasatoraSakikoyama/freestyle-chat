@@ -7,6 +7,7 @@ from apps.room.urls import (
     rooms_urlpatterns as rooms_urls,
     room_urlpatterns as room_urls,
 )
+from apps.chat.urls import urlpatterns as messages_urls
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url=r'app/')),
@@ -16,4 +17,5 @@ urlpatterns = [
     url(r'^api/session', include(session_urls)),
     url(r'^api/rooms', include(rooms_urls)),
     url(r'^api/room', include(room_urls)),
+    url(r'^api/messages', include(messages_urls)),
 ]

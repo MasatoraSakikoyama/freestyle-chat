@@ -9,6 +9,12 @@ import {
 
 export default Vue.extend({
   template,
+  props: {
+    roomId: {
+      type: String,
+      require: true,
+    },
+  },
   computed: {
     ...Vuex.mapState(MESSAGES, {
       messages: MESSAGES,
@@ -21,7 +27,7 @@ export default Vue.extend({
     }),
   },
   created() {
-    this.getMessages();
+    this.getMessages({ roomId: this.roomId });
   },
   destroyed() {
     this.clearMessages();

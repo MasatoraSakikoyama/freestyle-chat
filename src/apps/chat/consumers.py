@@ -38,17 +38,12 @@ def receive(message, room_id, user_id):
     text = loads(message.content['text'])
     method = text['method']
     cache = caches['messages']
-    messages = []
 
-    if method == 'GET':
-        keys = cache.keys('message_{}_*'.format(user_id))
-        messages.extend(cache.get_many(keys).values())
-
-    elif method == 'POST':
+    if method == 'POST':
         now = datetime.now()
-        key = '{}_{}_{}'.format(room_id, user_id, now)
-        message = {
-            'message_id': key,
+        message_id = '{}_{}_{}'.format(room_id, user_id, now)
+        target = {
+            'id': message_id,
             'content': text['content'],
             'dest_message': text.get('dest_message'),
             'chat_user': user_id,
@@ -58,35 +53,31 @@ def receive(message, room_id, user_id):
             'modified_by': user_id,
             'modified_at': now,
         }
-        if cache.add(key, message):
-            messages.append(message)
+        if cache.add(message_id, target, timeout=None):
+            message = target
         else:
-            messages.append({
-                'message': 'fail post message'
-            })
+            message = 'fail post message'
 
     elif method == 'PUT':
         after = text['message']
         after.modified_by = user_id
         after.modified_at = datetime.now()
-        with cache.lock(after.message_id):
-            before = cache.get(after.message_id)
+        with cache.lock(after.id):
+            before = cache.get(after.id)
             before.update(after)
-            cache.set(before.message_id, before)
-        messages.append(before)
+            cache.set(before.id, before)
+        message = before
 
     elif method == 'DELETE':
         message = text['message']
-        with cache.lock(message.message_id):
-            cache.delete(message.message_id)
-        messages.append({
-            'message': 'success delete message'
-        })
+        with cache.lock(message.id):
+            cache.delete(message.id)
+        message = 'success delete message'
 
     else:
         return
 
-    Group(room_id).send({'text': dumps(messages, default=datetime_default)})
+    Group(room_id).send({'text': dumps(message, default=datetime_default)})
 
 
 @channel_session_user

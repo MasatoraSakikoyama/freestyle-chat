@@ -26,12 +26,9 @@ export default {
       };
 
       ws.onmessage = (event) => {
-        const messages = JSON.parse(event.data).map((message) => {
-          const date = new Date(message.modified_at);
-          message.modified_at = date.toLocaleString();
-          return message;
-        });
-        dispatch(`${MESSAGES}/${ADD_MESSAGE}`, messages[0], { root: true });
+        const message = JSON.parse(event.data);
+        message.modified_at = new Date(message.modified_at).toLocaleString();
+        dispatch(`${MESSAGES}/${ADD_MESSAGE}`, message, { root: true });
       };
 
       ws.onerror = (event) => {

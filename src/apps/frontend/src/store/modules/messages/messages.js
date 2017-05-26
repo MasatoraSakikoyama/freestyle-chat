@@ -7,7 +7,7 @@ import {
   GET_MESSAGES,
   CLEAR_MESSAGES,
 } from 'store/modules/messages/types';
-import { WS, SEND } from 'store/modules/websocket/types';
+import { ERROR, OPEN_MODAL } from 'store/modules/error/types';
 
 export default {
   namespaced: true,
@@ -19,21 +19,23 @@ export default {
       state[MESSAGES] = messages;
     },
     [PUSH_MESSAGE](state, message) {
-      state[MESSAGES].push(message);
+      state[MESSAGES].push(message);;
     },
   },
   actions: {
     [ADD_MESSAGE]({ commit }, message) {
       commit(PUSH_MESSAGE, message);
     },
-    [GET_MESSAGES]({ dispatch, commit }) {
-      const payload = {
-        method: 'GET',
-        content: null,
-      }
-      dispatch(`${WS}/${SEND}`, payload, { root: true })
-        .then((messages) => {
-          commit(CHANGE_MESSAGES, messages);
+    [GET_MESSAGES]({ dispatch, commit }, payload) {
+      axios.get(`/api/messages/${payload.roomId}`)
+        .then((response) => {
+          commit(CHANGE_MESSAGES, response.data);
+        })
+        .catch(() => {
+          dispatch(`${ERROR}/${OPEN_MODAL}`, {
+            title: 'Messages',
+            message: 'Fail get data',
+          }, { root: true });
         });
     },
     [CLEAR_MESSAGES]({ commit }) {
