@@ -19,7 +19,7 @@ export default {
       state[MESSAGES] = messages;
     },
     [PUSH_MESSAGE](state, message) {
-      state[MESSAGES].push(message);;
+      state[MESSAGES].push(message);
     },
   },
   actions: {

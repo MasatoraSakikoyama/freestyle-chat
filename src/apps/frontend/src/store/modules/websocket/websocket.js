@@ -31,14 +31,14 @@ export default {
         dispatch(`${MESSAGES}/${ADD_MESSAGE}`, message, { root: true });
       };
 
-      ws.onerror = (event) => {
+      ws.onerror = () => {
         dispatch(`${ERROR}/${OPEN_MODAL}`, {
           title: 'Room',
           message: `Chat room ${payload.roomId} is error`,
         }, { root: true });
       };
 
-      ws.oncloase = (event) => {
+      ws.oncloase = () => {
         dispatch(`${INFO}/${OPEN_MODAL}`, {
           title: 'Room',
           message: `Chat room ${payload.roomId} is cloase`,
