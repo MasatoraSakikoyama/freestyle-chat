@@ -27,6 +27,7 @@ export default {
 
       ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
+        message.created_at = new Date(message.created_at).toLocaleString();
         message.modified_at = new Date(message.modified_at).toLocaleString();
         dispatch(`${MESSAGES}/${ADD_MESSAGE}`, message, { root: true });
       };

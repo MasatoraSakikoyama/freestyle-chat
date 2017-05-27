@@ -29,9 +29,14 @@ export default {
     [GET_MESSAGES]({ dispatch, commit }, payload) {
       axios.get(`/api/messages/${payload.roomId}`)
         .then((response) => {
-          commit(CHANGE_MESSAGES, response.data);
+          const messages = response.data.map((message) => {
+            message.created_at = new Date(message.created_at).toLocaleString();
+            message.modified_at = new Date(message.modified_at).toLocaleString();
+            return message;
+          });
+          commit(CHANGE_MESSAGES, messages);
         })
-        .catch(() => {
+        .catch((event) => {
           dispatch(`${ERROR}/${OPEN_MODAL}`, {
             title: 'Messages',
             message: 'Fail get data',
