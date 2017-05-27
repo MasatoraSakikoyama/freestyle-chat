@@ -20,6 +20,11 @@ export default Vue.extend({
       messages: MESSAGES,
     }),
   },
+  watch: {
+    roomId() {
+      this.getMessages({ roomId: this.roomId });
+    },
+  },
   methods: {
     ...Vuex.mapActions(MESSAGES, {
       getMessages: GET_MESSAGES,
