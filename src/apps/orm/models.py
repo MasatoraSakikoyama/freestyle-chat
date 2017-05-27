@@ -12,7 +12,7 @@ from django.db.models import (
 )
 
 from apps.session.models import User
-from .consts import ROLE_CHOICES
+from django.conf import settings
 
 
 class BaseModel(Model):
@@ -47,7 +47,7 @@ class Room(BaseModel):
     title = CharField(max_length=255, blank=False, null=False)
     password = CharField(max_length=255, blank=True, null=True)
     is_private = BooleanField(default=False, blank=False, null=False)
-    is_anonymous = BooleanField(default=False, blank=False, null=False)
+    is_hidden = BooleanField(default=False, blank=False, null=False)
     # relation
     members = ManyToManyField(User, through='UserRoomRelation')
 
@@ -56,13 +56,13 @@ class Room(BaseModel):
             'room_id': self.room_id,
             'title': self.title,
             'is_private': self.is_private,
-            'is_anonymous': self.is_anonymous,
+            'is_hidden': self.is_hidden,
         }
 
 
 class UserRoomRelation(BaseModel):
     handle_name = CharField(max_length=255, blank=False, null=False)
-    role = PositiveSmallIntegerField(choices=ROLE_CHOICES, default=0)
+    role = PositiveSmallIntegerField(choices=settings.ROLE_CHOICES, default=0)
     # relation
     chat_user = ForeignKey(User, on_delete=CASCADE)
     chat_room = ForeignKey(Room, on_delete=CASCADE)

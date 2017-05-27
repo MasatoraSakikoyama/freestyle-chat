@@ -3,6 +3,14 @@ from datetime import datetime
 from functools import wraps
 
 
+def get_user(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        kwargs['user'] = args[0].user
+        return func(*args, **kwargs)
+    return wrapper
+
+
 def get_user_id(func):
     @wraps(func)
     def wrapper(*args, **kwargs):

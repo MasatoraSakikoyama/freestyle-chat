@@ -2,6 +2,7 @@
 from datetime import datetime
 from json import loads, dumps, JSONDecodeError
 
+from django.conf import settings
 from django.views.decorators.http import require_http_methods
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
@@ -9,7 +10,7 @@ from django.http import HttpResponse
 
 from apps.session.utils import api_login_required, api_token_required
 from apps.orm.forms import RoomForm
-from apps.orm.models import Room
+from apps.orm.models import Room, UserRoomRelation
 from .utils import room_id_generator
 
 
@@ -17,6 +18,7 @@ from .utils import room_id_generator
 @atomic
 def rooms_api(request, order_by='pk', limit=30, offset=0, **kwargs):
     if request.method == 'GET':
+        # ToDo: django ormを使ってis_privateなroomはuserとのひもづきをチェックする
         query = Room.objects.filter(deleted_by='').filter(deleted_at=None)
         search_by = kwargs.get('search_by')
         search = kwargs.get('search')
@@ -48,17 +50,25 @@ def room_api(request, room_id):
             deleted_by='',
             deleted_at=None,
         )
+        if room.is_private and not UserRoomRelation.objects.filter(
+            chat_user=request.user,
+            chat_room=room,
+        ).exists():
+            return HttpResponse(status=403)
+
         return HttpResponse(
             content=dumps(room.to_dict()),
             status=200,
             content_type='application/json',
         )
+
     elif request.method == 'POST':
+        user = request.user
         try:
             data = loads(request.body.decode('utf-8'))
             data['room_id'] = room_id
-            data['created_by'] = request.user.user_id
-            data['modified_by'] = request.user.user_id
+            data['created_by'] = user.user_id
+            data['modified_by'] = user.user_id
             form = RoomForm(data)
         except UnicodeDecodeError or JSONDecodeError or ValueError:
             return HttpResponse(
@@ -68,6 +78,14 @@ def room_api(request, room_id):
             )
         if form.is_valid():
             room = Room.objects.create(**form.cleaned_data)
+            UserRoomRelation.objects.create(
+                handle_name=user.name,
+                role=settings.ROLE_CHOICES[0][0],
+                chat_user=user,
+                chat_room=room,
+                created_by=user.user_id,
+                modified_by=user.user_id,
+            )
             return HttpResponse(
                 content=dumps(room.to_dict()),
                 status=200,
@@ -79,6 +97,7 @@ def room_api(request, room_id):
                 status=400,
                 content_type='application/json',
             )
+
     elif request.method == 'PUT':
         try:
             form = RoomForm(loads(request.body.decode('utf-8')))
@@ -108,6 +127,7 @@ def room_api(request, room_id):
                 status=400,
                 content_type='application/json',
             )
+
     elif request.method == 'DELETE':
         room = get_object_or_404(
             Room,
