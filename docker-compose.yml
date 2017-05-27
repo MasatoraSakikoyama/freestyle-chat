@@ -20,5 +20,9 @@ services:
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--settings=settings.develop"]
     cache:
         build: ./.docker/redis
+        volumes_from:
+            - container:dotfiles
     channel:
         build: ./.docker/redis
+        volumes_from:
+            - container:dotfiles
