@@ -16,5 +16,3 @@ WORKDIR /var/www/websocket-test
 COPY requirements.txt /var/www/websocket-test/
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR src
-
-CMD ["/bin/bash"]

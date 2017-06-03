@@ -8,5 +8,3 @@ RUN apt-get update -y \
 
 RUN mkdir -p /var/www/websocket-test
 WORKDIR /var/www/websocket-test
-
-CMD ["/bin/bash"]
