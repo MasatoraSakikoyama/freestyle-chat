@@ -6,5 +6,7 @@ RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get install -y vim vim-gnome
 
+RUN npm install -g yarn
+
 RUN mkdir -p /var/www/websocket-test
 WORKDIR /var/www/websocket-test

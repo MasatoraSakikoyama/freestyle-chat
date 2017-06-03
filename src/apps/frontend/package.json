@@ -2,7 +2,7 @@
   "name": "freestyle-chat.apps.frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack -w --progress",
+    "watch": "webpack -w --progress",
     "test": "eslint src",
     "build": "cross-env NODE_ENV=production PLATFORM=web webpack --progress"
   },
