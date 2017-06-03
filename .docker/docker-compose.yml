@@ -1,7 +1,7 @@
 version: '2'
 services:
     proxy:
-        build: ./.docker/proxy
+        build: ./proxy
         ports:
             - "80:80"
         volumes_from:
@@ -10,19 +10,25 @@ services:
             - web
         command: ["nginx", "-g", "daemon off;"]
     web:
-        build: ./.docker/web
+        build: ./web
         volumes_from:
             - container:dotfiles
             - container:app-src
         links:
+            - rdb
             - cache
             - channel
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--settings=settings.develop"]
+    rdb:
+        build: ./rdb
+        volumes_from:
+            - container:dotfiles
+            - container:rdb-data
     cache:
-        build: ./.docker/redis
+        build: ./redis
         volumes_from:
             - container:dotfiles
     channel:
-        build: ./.docker/redis
+        build: ./redis
         volumes_from:
             - container:dotfiles

@@ -1,5 +1,6 @@
 #!/bin/bash
 docker create --name dotfiles -v /Users/sakikoyama/Workspace/dotfiles/:/home busybox
+docker create --name rdb-data -v /Users/sakikoyama/Workspace/websocket-test/.docker/rdb/data:/var/lib/mysql busybox
 docker create --name app-src -v /Users/sakikoyama/Workspace/websocket-test/:/var/www/websocket-test busybox
 docker create --name front-src -v /Users/sakikoyama/Workspace/websocket-test/src/apps/frontend/:/var/www/websocket-test busybox
 docker build -t front front/

@@ -55,6 +55,7 @@ def receive(message, room_id, user_id):
             'modified_by': user_id,
             'modified_at': now,
         }
+        # ToDo: room毎に順序付きで保存したい
         if cache.add(message_id, target, timeout=None):
             message = target
         else:

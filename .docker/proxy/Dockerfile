@@ -8,5 +8,3 @@ RUN apt-get update -y \
 WORKDIR /etc/nginx/conf.d
 COPY websocket-test.conf /etc/nginx/conf.d/
 RUN mv default.conf default.conf.kill
-
-CMD ["/bin/bash"]
