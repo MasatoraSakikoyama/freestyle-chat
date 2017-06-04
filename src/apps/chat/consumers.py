@@ -3,13 +3,14 @@ from json import loads, dumps
 from datetime import datetime
 
 from channels import Group
-# from channels.sessions import enforce_ordering
 from channels.auth import channel_session_user, channel_session_user_from_http
 from django.shortcuts import get_object_or_404
-from django.core.cache import caches
+from django_redis import get_redis_connection
 
 from .utils import get_user, get_user_id, datetime_default
-from apps.orm.models import Room
+from apps.orm.models import Room, UserRoomRelation
+
+REDIS_DB_NAME = 'messages'
 
 
 @channel_session_user_from_http
@@ -34,18 +35,15 @@ def connect(message, room_id, user):
 
 
 @channel_session_user
-# @enforce_ordering
 @get_user_id
 def receive(message, room_id, user_id):
     text = loads(message.content['text'])
     method = text['method']
-    cache = caches['messages']
+    connection = get_redis_connection(REDIS_DB_NAME)
 
     if method == 'POST':
         now = datetime.now()
-        message_id = '{}_{}_{}'.format(room_id, user_id, now)
-        target = {
-            'id': message_id,
+        message = {
             'content': text['content'],
             'dest_message': text.get('dest_message'),
             'chat_user': user_id,
@@ -55,28 +53,25 @@ def receive(message, room_id, user_id):
             'modified_by': user_id,
             'modified_at': now,
         }
-        # ToDo: room毎に順序付きで保存したい
-        if cache.add(message_id, target, timeout=None):
-            message = target
+        if connection.get(room_id):
+            with connection.lock(room_id):
+                message['index'] = connection.llen(room_id)
+                connection.rpush(room_id, message)
         else:
-            message = 'fail post message'
-
+            message['index'] = 0
+            connection.rpush(room_id, message)
     elif method == 'PUT':
-        after = text['message']
-        after.modified_by = user_id
-        after.modified_at = datetime.now()
-        with cache.lock(after.id):
-            before = cache.get(after.id)
-            before.update(after)
-            cache.set(before.id, before)
-        message = before
-
+        src = text['message']
+        src.modified_by = user_id
+        src.modified_at = datetime.now()
+        with connection.lock(room_id):
+            message = connection.lindex(room_id, src.index)
+            message.update(src)
+            connection.lset(room_id, message.index, message)
     elif method == 'DELETE':
-        message = text['message']
-        with cache.lock(message.id):
-            cache.delete(message.id)
+        with connection.lock(room_id):
+            connection.rrem(room_id, 0, text['message'])
         message = 'success delete message'
-
     else:
         return
 

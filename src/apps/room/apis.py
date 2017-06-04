@@ -61,7 +61,6 @@ def room_api(request, room_id):
             status=200,
             content_type='application/json',
         )
-
     elif request.method == 'POST':
         user = request.user
         try:
@@ -97,7 +96,6 @@ def room_api(request, room_id):
                 status=400,
                 content_type='application/json',
             )
-
     elif request.method == 'PUT':
         try:
             form = RoomForm(loads(request.body.decode('utf-8')))
@@ -127,7 +125,6 @@ def room_api(request, room_id):
                 status=400,
                 content_type='application/json',
             )
-
     elif request.method == 'DELETE':
         room = get_object_or_404(
             Room,
