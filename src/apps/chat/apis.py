@@ -12,7 +12,7 @@ from .utils import datetime_default
 
 @require_http_methods(['GET'])
 def messages_api(request, room_id):
-    # ToDo: StreamingHttpResponseでSSEにしたい
+    # ToDo: StreamingHttpResponseでSSEにしたい もしくはページネーション
     if request.method == 'GET':
         room = get_object_or_404(
             Room,
@@ -29,7 +29,10 @@ def messages_api(request, room_id):
         cache = caches['messages']
         # redisのprefixを検索文字列に含めると上手く取れない
         keys = cache.keys('{}_*'.format(room_id))
-        messages = list(cache.get_many(keys).values())
+        messages = sorted(
+            cache.get_many(keys).values(),
+            key=lambda x: x['created_at'].timestamp()
+        )
         return HttpResponse(
             content=dumps(messages, default=datetime_default),
             status=200,

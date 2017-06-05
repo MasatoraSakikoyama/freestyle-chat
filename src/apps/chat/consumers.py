@@ -3,13 +3,12 @@ from json import loads, dumps
 from datetime import datetime
 
 from channels import Group
-# from channels.sessions import enforce_ordering
 from channels.auth import channel_session_user, channel_session_user_from_http
 from django.shortcuts import get_object_or_404
 from django.core.cache import caches
 
 from .utils import get_user, get_user_id, datetime_default
-from apps.orm.models import Room
+from apps.orm.models import Room, UserRoomRelation
 
 
 @channel_session_user_from_http
@@ -34,7 +33,6 @@ def connect(message, room_id, user):
 
 
 @channel_session_user
-# @enforce_ordering
 @get_user_id
 def receive(message, room_id, user_id):
     text = loads(message.content['text'])
@@ -55,7 +53,6 @@ def receive(message, room_id, user_id):
             'modified_by': user_id,
             'modified_at': now,
         }
-        # ToDo: room毎に順序付きで保存したい
         if cache.add(message_id, target, timeout=None):
             message = target
         else:
