@@ -10,8 +10,6 @@ from django_redis import get_redis_connection
 from apps.orm.models import Room, UserRoomRelation
 from .utils import datetime_default
 
-REDIS_DB_NAME = 'messages'
-
 
 @require_http_methods(['GET'])
 def messages_api(request, room_id):
