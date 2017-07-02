@@ -5,11 +5,11 @@ import dj_database_url
 
 from .base import *
 
-SECRET_KEY = ''
+SECRET_KEY = os.environ['SEACRET_KEY']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = [os.environ['DOMAIN']]
 
 MIDDLEWARE.insert(3, 'django.middleware.csrf.CsrfViewMiddleware')
 
@@ -31,7 +31,7 @@ LOGGING = {
     },
     'loggers': {
         'django.db.backends': {
-            'handlers': ['console'],  # ToDo: save file
+            'handlers': ['console'],
             'level': 'ERROR',
         },
     },
@@ -41,20 +41,7 @@ DJANGO_REDIS_LOGGER = 'console'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://localhost:6379/1',  # ToDo: change prd redis
-        'KEY_PREFIX': 'cache',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'SOCKET_CONNECT_TIMEOUT': 5,
-            'SOCKET_TIMEOUT': 5,
-            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
-            'CONNECTION_POOL_KWARGS': {'max_connections': 100},
-        }
-    },
-    'messages': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://localhost:6379/2',  # ToDo: change prd redis
-        'KEY_PREFIX': 'message',
+        'LOCATION': os.environ['REDIS_URL'],
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'SOCKET_CONNECT_TIMEOUT': 5,
@@ -72,7 +59,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('localhost', 6379)],
+            'hosts': [os.environ['REDIS_URL']],
         },
         'ROUTING': 'apps.chat.routing.channel_routing',
     },

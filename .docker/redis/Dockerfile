@@ -1,4 +1,4 @@
-FROM redis:3.2.8
+FROM redis:3.2.9
 
 ENV HOME /home
 

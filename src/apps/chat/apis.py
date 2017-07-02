@@ -15,7 +15,7 @@ REDIS_DB_NAME = 'messages'
 
 @require_http_methods(['GET'])
 def messages_api(request, room_id):
-    # ToDo: StreamingHttpResponseでSSEにしたい
+    # ToDo: StreamingHttpResponseでSSEにしたい もしくはページネーション
     if request.method == 'GET':
         room = get_object_or_404(
             Room,
@@ -29,7 +29,7 @@ def messages_api(request, room_id):
         ).exists():
             return HttpResponse(status=403)
 
-        connection = get_redis_connection(REDIS_DB_NAME)
+        connection = get_redis_connection(settings.REDIS_DB_NAME)
         messages = list(connection.lrange(room_id, 0, -1))
         return HttpResponse(
             content=dumps(messages, default=datetime_default),

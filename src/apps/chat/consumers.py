@@ -11,8 +11,6 @@ from django_redis import get_redis_connection
 from .utils import get_user, get_user_id, datetime_default
 from apps.orm.models import Room, UserRoomRelation
 
-REDIS_DB_NAME = 'messages'
-
 
 @channel_session_user_from_http
 @get_user
@@ -40,7 +38,7 @@ def connect(message, room_id, user):
 def receive(message, room_id, user_id):
     text = loads(message.content['text'])
     method = text['method']
-    connection = get_redis_connection(REDIS_DB_NAME)
+    connection = get_redis_connection(settings.REDIS_DB_NAME)
 
     if method == 'POST':
         now = datetime.now()
