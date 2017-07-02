@@ -5,11 +5,11 @@ import dj_database_url
 
 from .base import *
 
-SECRET_KEY = ''
+SECRET_KEY = os.environ['SEACRET_KEY']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = [os.environ['DOMAIN']]
 
 MIDDLEWARE.insert(3, 'django.middleware.csrf.CsrfViewMiddleware')
 
