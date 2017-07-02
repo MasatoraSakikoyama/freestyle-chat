@@ -13,6 +13,7 @@ django-channels==0.7.0
 django-redis==4.8.0
 flake8==3.3.0
 haikunator==2.1.0
+hyperlink==17.2.1
 incremental==16.10.1
 mccabe==0.6.1
 msgpack-python==0.4.8
@@ -29,8 +30,8 @@ redis==2.10.5
 requests==2.13.0
 requests-oauthlib==0.8.0
 six==1.10.0
-Twisted==17.2.1
+Twisted==17.5.0
 txaio==2.8.0
 whitenoise==3.3.0
 zope.interface==4.3.3
-# psycopg2==2.6.2
+psycopg2==2.6.2
