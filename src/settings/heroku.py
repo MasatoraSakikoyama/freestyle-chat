@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+import random
+import string
 
 import dj_database_url
 
 from .base import *
 
-SECRET_KEY = os.environ['SEACRET_KEY']
+SECRET_KEY = os.environ.get("SECRET_KEY", "".join(random.choice(string.printable) for i in range(40)))
 
 DEBUG = False
 
