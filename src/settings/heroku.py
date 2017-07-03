@@ -9,7 +9,7 @@ from .base import *
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "".join(random.choice(string.printable) for i in range(40)))
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [os.environ['DOMAIN']]
 
