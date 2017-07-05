@@ -10,7 +10,6 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   watchOptions: {
-    poll: true,
     ignore: /node_modules/,
   },
   module: {
